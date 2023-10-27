@@ -28,17 +28,17 @@ npm start
 
 ## ToDo
 
-[] Finish .glb of model for import
-    [] Textures 
-    [] Organization
-    [] Focal Points
-    [] Camera Scroll Pan
-    [] Finish Knockout for Pacman Arcade
-    [] Create Pages for InDepth Look
-    [] Position .Gifs/Mp4 on planes
-    [] Shrink Size
-    [] Lighting for Street Lamps
-    [] Signs for Links
-[] Loading Animation
-[] Switch over for old site
-[] Performance testing
+- [ ] Finish .glb of model for import
+    - [ ] Textures 
+    - [ ] Organization
+    - [ ] Focal Points
+    - [ ] Camera Scroll Pan
+    - [ ] Finish Knockout for Pacman Arcade
+    - [ ] Create Pages for InDepth Look
+    - [ ] Position .Gifs/Mp4 on planes
+    - [ ] Shrink Size
+    - [ ] Lighting for Street Lamps
+    - [ ] Signs for Links
+- [ ] Loading Animation
+- [ ] Switch over for old site
+- [ ] Performance testing
