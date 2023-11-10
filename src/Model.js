@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
+import { useVideoTexture } from './VideoTexture';
 import modelPath from './assets/house.glb'
 import { useLoader } from '@react-three/fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'

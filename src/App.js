@@ -1,21 +1,13 @@
-import { useGLTF } from '@react-three/drei'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import React, { useState, Suspense, useEffect, useRef  } from 'react'
-import { useVideoTexture } from './VideoTexture';
-import { Canvas, useFrame, extend, useThree } from '@react-three/fiber'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { useLoader } from '@react-three/fiber'
-import modelPath from './assets/house.glb'
+import React, {  Suspense } from 'react'
+import { Canvas } from '@react-three/fiber'
 import { Environment } from './Environment'
 import { Html, useProgress } from '@react-three/drei'
 import Model from './Model'
 import { CloseUp } from './CloseUp'
+import { CameraControls } from './CameraControls'
 
-extend({ OrbitControls });
 
 export default function App() {
-  const [position, setPosition] = useState(0)
-  const [model, setModel] = useState();
   
   function Loader() {
     const { progress } = useProgress()
@@ -35,24 +27,6 @@ export default function App() {
       </div>
     </Html>)
   }
-
-  const CameraControls = () => {
-    const {
-      camera,
-      gl: { domElement },
-    } = useThree();
-  
-    const controls = useRef();
-    camera.position.set( 11,1,12 );
-    //camera.position.set( 4,1,5 );
-    //const quat = new Quaternion().setFromAxisAngle(camera.up, 3);
-    //camera.position.applyQuaternion(quat);
-    //camera.position.y += 3;
-    //camera.position.applyAxisAngle(camera.right, Math.PI / 20); 
-    useFrame((state) => controls.current.update());
-    return <orbitControls ref={controls} args={[camera, domElement]} />;
-  };
-
 
   return (
     <div className="CanvasTest">

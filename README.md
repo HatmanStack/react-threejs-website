@@ -37,7 +37,7 @@ npm start
         - [ ] Clickable Nodes
     - [X] Camera Scroll Pan
         - [X] Camera Start Position
-        - [ ] Camera Angles
+        - [X] Camera Angles (First Pass)
     - [ ] Finish Knockout for Pacman Arcade
     - [ ] Create Pages for InDepth Look
     - [X] Position .Gifs/Mp4 on planes
