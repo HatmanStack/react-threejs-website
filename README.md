@@ -45,7 +45,7 @@ npm start
         - [ ] GLTF undefined error   
     - [ ] Shrink Size
     - [ ] Lighting for Street Lamps
-    - [ ] Signs for Links
+    - [X] Links for Signs
 - [X] Loading Animation
 - [X] Switch over for old site
 - [ ] Performance testing
