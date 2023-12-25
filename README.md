@@ -32,9 +32,8 @@ npm start
     - [X] Textures 
         - [X] First Pass
         - [ ] Organize and Shrink/Reuse
-    - [ ] Focal Points
-        - [ ] Build Camera Array
-        - [ ] Clickable Nodes
+    - [X] Focal Points
+        - [X] Build Camera Array        
     - [X] Camera Scroll Pan
         - [X] Camera Start Position
         - [X] Camera Angles (First Pass)
@@ -45,7 +44,12 @@ npm start
         - [ ] GLTF undefined error   
     - [ ] Shrink Size
     - [ ] Lighting for Street Lamps
-    - [X] Links for Signs
 - [X] Loading Animation
 - [X] Switch over for old site
+- [ ] Camera Scroll
+    - [X] Rotation Points
+    - [ ] Clickable Nodes
+        - [X] Sign
+        - [ ] Projects
+    - [ ] THREE orbit controls target glitch
 - [ ] Performance testing
