@@ -46,19 +46,19 @@ export default function Model(props) {
     let signName = event.object.name;
     
     if (signName === "Sign_About") {
-      window.location.href = "https://www.gemenielabs.com/about/";
+      window.open("https://www.gemenielabs.com/about/", '_blank');
     }
     else if (signName === "Sign_Articles") {
-      window.location.href = "https://medium.com/@HatmanStack";
+      window.open("https://medium.com/@HatmanStack", '_blank');
     }
     else if (signName === "Sign_Contact") {
-      window.location.href = "https://www.gemenielabs.com/contact/";
+      window.open("https://www.gemenielabs.com/contact/", '_blank');
     }
     else if (signName === "Sign_Privacy") {
-      window.location.href = "https://www.gemenielabs.com/app-privacy-policy/";
+      window.open("https://www.gemenielabs.com/app-privacy-policy/", '_blank');
     }
     else if (signName === "Sign_Old") {
-      window.location.href = "https://www.gemenielabs.com/";
+      window.open("https://www.gemenielabs.com/", '_blank');
     }
   }
 

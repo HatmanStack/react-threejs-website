@@ -46,10 +46,10 @@ npm start
     - [ ] Lighting for Street Lamps
 - [X] Loading Animation
 - [X] Switch over for old site
-- [ ] Camera Scroll
+- [X] Camera Scroll
     - [X] Rotation Points
-    - [ ] Clickable Nodes
-        - [X] Sign
-        - [ ] Projects
-    - [ ] THREE orbit controls target glitch
+    - [X] THREE orbit controls target glitch
+- [ ] Clickable Nodes
+    - [X] Sign
+    - [ ] Projects   
 - [ ] Performance testing
