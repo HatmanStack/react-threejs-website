@@ -49,7 +49,11 @@ npm start
 - [X] Camera Scroll
     - [X] Rotation Points
     - [X] THREE orbit controls target glitch
-- [ ] Clickable Nodes
+- [X] Clickable Nodes
     - [X] Sign
-    - [ ] Projects   
+    - [X] Projects
+- [X] Add Video Textures and Links
+- [ ] Modify Source Video and Canvas for Better Display
+- [ ] SkyBox Night
+- [ ] Add Zelda as PlaceHolder for Knockout   
 - [ ] Performance testing

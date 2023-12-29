@@ -4,8 +4,8 @@ import { OrbitControls as ThreeOrbitControls } from 'three/examples/jsm/controls
 import { Vector3 } from 'three';
 
 // Define positions
-const positions = [[11, 1, 12], [4, 1, 4], [3,1,3.75 ], [1,1,5.5 ], [-12,6,0]]; 
-const rotationPoints = [ [5.1,-2.1,.2], [1.3,.4,3.9], [.1,-3.6,-2.36], [-12.1,5.8,-18.1], [0,0,0]];
+const positions = [[10, 1, 13], [4, 1, 4], [3,1,3.75 ], [0,1,6.5 ], [-12,6,0]]; 
+const rotationPoints = [ [5.1,-2.1,.2], [1.3,.4,3.9], [.1,.6,3.36], [-12.1,5.8,-6.1], [0,0,0]];
 class OrbitControls extends ThreeOrbitControls {
   constructor(...args) {
     super(...args);
