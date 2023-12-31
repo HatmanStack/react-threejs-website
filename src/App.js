@@ -3,7 +3,6 @@ import { Canvas } from '@react-three/fiber'
 import { Environment } from './Environment'
 import { Html, useProgress } from '@react-three/drei'
 import Model from './Model'
-import { CloseUp } from './CloseUp'
 import { CameraControls } from './CameraControls'
 
 

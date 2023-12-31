@@ -16,8 +16,8 @@ export default function Model(props) {
     require("./assets/Italian.mp4"),
     require("./assets/Stocks.mp4"),
   ];
+
   const meshNames = ["Phone_Vocabulary_5", "Phone_Movies_5", "Phone_Looper_5", "Phone_Trachtenberg_5", "Phone_Italian_5", "Phone_Stocks"]
-  
   
   const videoRefs = meshNames.reduce((acc, name) => {
     acc[name] = React.useRef();
@@ -36,6 +36,7 @@ export default function Model(props) {
           const videoTexture = new THREE.VideoTexture(video);
           node.material.map = videoTexture;
           node.material.needsUpdate = true;
+          
         }
       });
     }
@@ -43,7 +44,6 @@ export default function Model(props) {
 
   const About = useRef();
   const Articles = useRef();
-  const Contact = useRef();
   const Privacy = useRef();
   const Old = useRef();
   const PhoneStocks = useRef();
@@ -62,7 +62,6 @@ export default function Model(props) {
   useEffect(() => {
     About.current = gltf.scene.getObjectByName("Sign_About");
     Articles.current = gltf.scene.getObjectByName("Sign_Articles");
-    Contact.current = gltf.scene.getObjectByName("Sign_Contact");
     Privacy.current = gltf.scene.getObjectByName("Sign_Privacy");
     Old.current = gltf.scene.getObjectByName("Sign_Old");
     PhoneStocks.current = gltf.scene.getObjectByName("Phone_Stocks");
@@ -82,13 +81,10 @@ export default function Model(props) {
     let signName = event.object.name;
     console.log(signName);
     if (signName === "Sign_About") {
-      window.open("https://www.gemenielabs.com/about/", '_blank');
+      window.open("https://www.gemenielabs.com/contact/", '_blank');
     }
     else if (signName === "Sign_Articles") {
       window.open("https://medium.com/@HatmanStack", '_blank');
-    }
-    else if (signName === "Sign_Contact") {
-      window.open("https://www.gemenielabs.com/contact/", '_blank');
     }
     else if (signName === "Sign_Privacy") {
       window.open("https://www.gemenielabs.com/app-privacy-policy/", '_blank');
@@ -134,9 +130,6 @@ export default function Model(props) {
       <meshStandardMaterial raycast={true} />
     </mesh>
     <mesh ref={Articles.current}>
-      <meshStandardMaterial raycast={true} />
-    </mesh>
-    <mesh ref={Contact.current}>
       <meshStandardMaterial raycast={true} />
     </mesh>
     <mesh ref={Privacy.current}>

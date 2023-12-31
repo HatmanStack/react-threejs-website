@@ -41,7 +41,7 @@ npm start
     - [ ] Create Pages for InDepth Look
     - [X] Position .Gifs/Mp4 on planes
         - [X] Load GLTF and Swap Textures for Video
-        - [ ] GLTF undefined error   
+        - [X] GLTF undefined error   
     - [ ] Shrink Size
     - [ ] Lighting for Street Lamps
 - [X] Loading Animation
@@ -53,7 +53,10 @@ npm start
     - [X] Sign
     - [X] Projects
 - [X] Add Video Textures and Links
-- [ ] Modify Source Video and Canvas for Better Display
-- [ ] SkyBox Night
+- [X] Modify Source Video and Canvas for Better Display
+- [X] SkyBox Night
+- [X] Navigation Instructions
+- [ ] Post-processing Skybox
+- [ ] Post-processing for Lights
 - [ ] Add Zelda as PlaceHolder for Knockout   
 - [ ] Performance testing

@@ -26,6 +26,8 @@ export function CameraControls() {
   } = useThree();
   const [currentPosIndex, setCurrentPosIndex] = useState(0);
   const controls = useRef();
+  const endViewPosition = new Vector3(10, 10, 10);
+  
   useFrame(() => {
     if (controls.current) {
       controls.current.update();
