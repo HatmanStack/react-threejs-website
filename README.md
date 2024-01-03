@@ -58,6 +58,7 @@ npm start
 - [X] SkyBox Night
 - [X] Navigation Instructions
 - [X] Post-processing for Lights
-- [ ] Close ups for PhoneScreens
+- [X] Close ups for PhoneScreens
+- [ ] Z Rotations for PhoneScreens
 - [ ] Add Zelda as PlaceHolder for Knockout   
 - [ ] Performance testing

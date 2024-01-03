@@ -3,11 +3,9 @@ import * as THREE from 'three';
 import modelPath from './assets/house.glb'
 import { useLoader } from '@react-three/fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import { Html, useTexture } from '@react-three/drei';
-import { useThree } from '@react-three/fiber';
 
 
-export default function Model(props) {
+export default function Model({setClickPoint, closeUp}) {
  
   const gltf = useLoader(GLTFLoader, modelPath);
   const videoPaths = [
@@ -26,25 +24,25 @@ export default function Model(props) {
     return acc;
   }, {});
 
-  if (gltf) {
-    for (let i = 0; i < meshNames.length; i++) {
-      gltf.scene.traverse(node => {
-        if (node.isMesh && node.name === meshNames[i]) {
-          const video = videoRefs[meshNames[i]].current = document.createElement('video');
-          video.src = videoPaths[i];
-          video.loop = true;
-          video.muted = true;
-          video.play();
-          const videoTexture = new THREE.VideoTexture(video);
-          node.material.map = videoTexture;
-          node.material.needsUpdate = true;
-          
-        }
-      });
+  useEffect(() => {
+    if (gltf) {
+      for (let i = 0; i < meshNames.length; i++) {
+        gltf.scene.traverse(node => {
+          if (node.isMesh && node.name === meshNames[i]) {
+            const video = videoRefs[meshNames[i]].current = document.createElement('video');
+            video.src = videoPaths[i];
+            video.loop = true;
+            video.muted = true;
+            video.play();
+            const videoTexture = new THREE.VideoTexture(video);
+            node.material.map = videoTexture;
+            node.material.needsUpdate = true;
+          }
+        });
+      }
     }
-  }
-
-  const { camera } = useThree();
+  }, [gltf]);
+  
 
   const About = useRef();
   const Articles = useRef();
@@ -80,12 +78,12 @@ export default function Model(props) {
     DishReactNative.current = gltf.scene.getObjectByName("Dish_ReactNative");
     DishGoogleForms.current = gltf.scene.getObjectByName("Dish_GoogleForms");
     PacManScreen.current = gltf.scene.getObjectByName("PacManScreen");
+    
   }, [gltf.scene]);
 
 
   const handleClick = (event) => {
     let signName = event.object.name;
-    console.log(signName);
     if (signName === "Sign_About") {
       window.open("https://www.gemenielabs.com/contact/", '_blank');
     }
@@ -99,22 +97,40 @@ export default function Model(props) {
       window.open("https://www.gemenielabs.com/", '_blank');
     }
     else if (signName === "Phone_Stocks") {
-      window.open("https://www.gemenielabs.com/#stocks", '_blank');
+      setClickPoint(signName);
+      if(closeUp){
+        window.open("https://www.gemenielabs.com/#stocks", '_blank');
+      }
     }
     else if (signName === "Phone_Looper_5") {
-      window.open("https://www.gemenielabs.com/#looper", '_blank');
+      setClickPoint(signName);
+      if(closeUp){
+        window.open("https://www.gemenielabs.com/#looper", '_blank');
+      }
     }
     else if (signName === "Phone_Vocabulary_5") {
-      window.open("https://www.gemenielabs.com/#vocabulary", '_blank');
+      setClickPoint(signName);
+      if(closeUp){
+        window.open("https://www.gemenielabs.com/#vocabulary", '_blank');
+      }
     }
     else if (signName === "Phone_Movies_5") {
-      window.open("https://www.gemenielabs.com/#movies", '_blank');
+      setClickPoint(signName);
+      if(closeUp){
+        window.open("https://www.gemenielabs.com/#movies", '_blank');
+      }
     }
     else if (signName === "Phone_Trachtenberg_5") {
-      window.open("https://www.gemenielabs.com/#trachtenberg", '_blank');
+      setClickPoint(signName);
+      if(closeUp){
+        window.open("https://www.gemenielabs.com/#trachtenberg", '_blank');
+      }
     }
     else if (signName === "Phone_Italian_5") {
-      window.open("https://www.gemenielabs.com/#italian", '_blank');
+      setClickPoint(signName);
+      if(closeUp){
+        window.open("https://www.gemenielabs.com/#italian", '_blank');
+      }
     }
     else if (signName === "logo_writersalmanac") {
       window.open("https://d6d8ny9p8jhyg.cloudfront.net/", '_blank');
@@ -129,32 +145,12 @@ export default function Model(props) {
       window.open("https://docs.google.com/forms/d/e/1FAIpQLSce94QihTjunjBvYzFdalz0mYGhVS6Ngy17uRrXkqLI_Da7nA/viewform", '_blank');
     }
     else if (signName === "Cube010_6") {
-      /** This is the Start of creating the closeups for the phone screens and the ArcadeScreen Create a prop to pass to 
-       * App.js and down to CameraControls.js to set the camera position and rotation point for each screen
-      console.log("PacManScreen clicked");
-      camera.position.set(1.8, .8, 3.62); // Adjust these values to center the camera on the PacManScreen
-      camera.lookAt(1.3,.4,3.62); // Adjust these values to make the camera look at the PacManScreen
-      controls.current.target.copy(1.3,.4,3.62);
-
-    // Update the controls to apply the orbiting effect
-      controls.current.update();
-      const iframe = document.createElement('iframe');
-      iframe.src = "https://web.zquestclassic.com/play/"; // Replace with the URL you want to display in the iframe
-      document.body.appendChild(iframe);
-      
-      const texture = useTexture(iframe);
-
-      // Add the texture to a material and apply it to a mesh
-      <mesh>
-        <meshBasicMaterial map={texture} />
-      </mesh>
-      */
+      setClickPoint(signName);
   }
 }
 
   return (
     <>
-    
     <mesh  ref={About.current}>
       <meshStandardMaterial raycast={true} />
     </mesh>
