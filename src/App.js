@@ -33,8 +33,8 @@ export default function App() {
         <Suspense fallback={<Loader />}>
           <Model />
           <CameraControls />     
-          <Environment/>
-        </Suspense>
+          <Environment/>         
+        </Suspense>    
       </Canvas>
     </div>
   )

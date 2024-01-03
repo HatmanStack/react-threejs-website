@@ -1,6 +1,6 @@
 # Gemenie Labs the Site
 
-A site written in React to showcase work from recent projects in 3D design with relevant links and art.
+A site written in React to showcase work from recent projects in 3D design with relevant links and art.  You can see the unfinished project [here](https://d2b6nykhuskd5e.cloudfront.net/).
 
 ## Features
 
@@ -44,6 +44,7 @@ npm start
         - [X] GLTF undefined error   
     - [ ] Shrink Size
     - [ ] Lighting for Street Lamps
+    - [X] Bake Textures for Skybox
 - [X] Loading Animation
 - [X] Switch over for old site
 - [X] Camera Scroll
@@ -56,7 +57,7 @@ npm start
 - [X] Modify Source Video and Canvas for Better Display
 - [X] SkyBox Night
 - [X] Navigation Instructions
-- [ ] Post-processing Skybox
-- [ ] Post-processing for Lights
+- [X] Post-processing for Lights
+- [ ] Close ups for PhoneScreens
 - [ ] Add Zelda as PlaceHolder for Knockout   
 - [ ] Performance testing

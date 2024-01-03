@@ -3,6 +3,8 @@ import * as THREE from 'three';
 import modelPath from './assets/house.glb'
 import { useLoader } from '@react-three/fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { Html, useTexture } from '@react-three/drei';
+import { useThree } from '@react-three/fiber';
 
 
 export default function Model(props) {
@@ -42,6 +44,8 @@ export default function Model(props) {
     }
   }
 
+  const { camera } = useThree();
+
   const About = useRef();
   const Articles = useRef();
   const Privacy = useRef();
@@ -56,9 +60,10 @@ export default function Model(props) {
   const DishNBA = useRef();
   const DishReactNative = useRef();
   const DishGoogleForms = useRef();
+  const PacManScreen = useRef();
   
-  //Navigate to diffent pages based on the sign clicked
 
+  //Navigate to diffent pages based on the sign clicked
   useEffect(() => {
     About.current = gltf.scene.getObjectByName("Sign_About");
     Articles.current = gltf.scene.getObjectByName("Sign_Articles");
@@ -74,6 +79,7 @@ export default function Model(props) {
     DishNBA.current = gltf.scene.getObjectByName("Dish_NBA");
     DishReactNative.current = gltf.scene.getObjectByName("Dish_ReactNative");
     DishGoogleForms.current = gltf.scene.getObjectByName("Dish_GoogleForms");
+    PacManScreen.current = gltf.scene.getObjectByName("PacManScreen");
   }, [gltf.scene]);
 
 
@@ -122,10 +128,33 @@ export default function Model(props) {
     else if (signName === "logo_google_forms") {
       window.open("https://docs.google.com/forms/d/e/1FAIpQLSce94QihTjunjBvYzFdalz0mYGhVS6Ngy17uRrXkqLI_Da7nA/viewform", '_blank');
     }
+    else if (signName === "Cube010_6") {
+      /** This is the Start of creating the closeups for the phone screens and the ArcadeScreen Create a prop to pass to 
+       * App.js and down to CameraControls.js to set the camera position and rotation point for each screen
+      console.log("PacManScreen clicked");
+      camera.position.set(1.8, .8, 3.62); // Adjust these values to center the camera on the PacManScreen
+      camera.lookAt(1.3,.4,3.62); // Adjust these values to make the camera look at the PacManScreen
+      controls.current.target.copy(1.3,.4,3.62);
+
+    // Update the controls to apply the orbiting effect
+      controls.current.update();
+      const iframe = document.createElement('iframe');
+      iframe.src = "https://web.zquestclassic.com/play/"; // Replace with the URL you want to display in the iframe
+      document.body.appendChild(iframe);
+      
+      const texture = useTexture(iframe);
+
+      // Add the texture to a material and apply it to a mesh
+      <mesh>
+        <meshBasicMaterial map={texture} />
+      </mesh>
+      */
   }
+}
 
   return (
     <>
+    
     <mesh  ref={About.current}>
       <meshStandardMaterial raycast={true} />
     </mesh>
