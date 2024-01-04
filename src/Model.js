@@ -18,7 +18,8 @@ export default function Model({setClickPoint, setClickLight, closeUp}) {
   ];
 
   const meshNames = ["Phone_Vocabulary_5", "Phone_Movies_5", "Phone_Looper_5", "Phone_Trachtenberg_5", "Phone_Italian_5", "Phone_Stocks"]
-  
+
+
   const videoRefs = meshNames.reduce((acc, name) => {
     acc[name] = React.useRef();
     return acc;
@@ -47,6 +48,8 @@ export default function Model({setClickPoint, setClickLight, closeUp}) {
       }
     }
   }, [gltf]);
+
+
 
   //Navigate to diffent pages based on the sign clicked
   
@@ -143,6 +146,7 @@ export default function Model({setClickPoint, setClickLight, closeUp}) {
 
   return (
     <>
+    
     <primitive onClick={handleClick} object={gltf.scene} />
   </>)
 

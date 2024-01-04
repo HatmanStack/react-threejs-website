@@ -6,8 +6,8 @@ import { Vector3 } from 'three';
 // Define positions
 const positions = [[10, 1, 13], [4, 1, 4], [3,1,3.75 ], [0,1,6.5 ], [-12,6,0]]; 
 const rotationPoints = [ [5.1,-2.1,.2], [1.3,.4,3.9], [.1,.6,3.36], [-12.1,5.8,-6.1], [0,0,0]];
-const closeUpPositions = [[0, .5, 4.07],[-.6, .3, 4.1],[5.4, .2, 2.1],[5.2, .2, 3.01],[.5, .3, 3.6],[4.5, .2, 2.6],[1.6, .8, 3.62]];
-const closeUpRotations = [[-.2,.3,3.4],[-.6, -1, 4.1],[5.4, -1, 2.1],[5.2, -1, 3.01],[.5, -1, 3.6],[4.5, -.1, 2.6],[1.5,.7,3.62]];
+const closeUpPositions = [[0, .5, 4.07],[-.6, .3, 4.1],[5.4, .2, 2.34],[4.76, .2, 1.72],[.5, .3, 3.6],[4.53, .2, 2.7],[1.6, .8, 3.62]];
+const closeUpRotations = [[-.2,.3,3.4],[-.6, -1, 4.1],[5.4, -1, 2.34],[4.76, -1, 1.72],[.5, -1, 3.6],[4.53, -.1, 2.7],[1.5,.7,3.62]];
 const closeUpZRotations = [0,-45,45,165,-25,75,45]
 
 class OrbitControls extends ThreeOrbitControls {
@@ -31,8 +31,8 @@ export function CameraControls({ clickPoint, setClickPoint, setCloseUp, closeUp}
   } = useThree();
   const [currentPosIndex, setCurrentPosIndex] = useState(0);
   const controls = useRef();
-  const endViewPosition = new Vector3(10, 10, 10);
-  console.log(closeUp);
+  
+  
   useFrame(() => {
     if (controls.current) {
       controls.current.update();
@@ -41,7 +41,6 @@ export function CameraControls({ clickPoint, setClickPoint, setCloseUp, closeUp}
       
       if(closeUp){
         currentRotationPoint = new Vector3(...closeUpRotations[closeUpPosIndex]);
-        
       }else {
         currentRotationPoint = new Vector3(...rotationPoints[currentPosIndex]);
       }
@@ -52,9 +51,7 @@ export function CameraControls({ clickPoint, setClickPoint, setCloseUp, closeUp}
     }
   });
 
-  useEffect(() => {
-    camera.position.set(...positions[0]);
-  },[]);
+  
 
 useEffect(() => {
     
@@ -105,7 +102,6 @@ const handleScroll = (event) => {
     if(clickPoint){
       setCloseUp(true);
       let positionIndex = 0;
-      console.log(`clickPoint ${clickPoint}`);
       if (clickPoint === "Phone_Stocks") {
         positionIndex = 0;
       }
@@ -137,6 +133,9 @@ const handleScroll = (event) => {
     camera.rotation.z = closeUpZRotations[closeUpPosIndex]
   }, [closeUpPosIndex]);
 
+  useEffect(() => {
+    camera.position.set(...positions[0]);
+  },[]);
 
   return null;
 }
