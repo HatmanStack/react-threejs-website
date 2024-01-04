@@ -10,7 +10,9 @@ const ModelContext = React.createContext();
 
 export default function App() {
   const [clickPoint, setClickPoint] = useState(null);
+  const [clickLight, setClickLight] = useState(null);
   const [ closeUp, setCloseUp ] = useState(false);
+  const setClickLightWrapper = (x) =>{setClickLight(x);}
   const setClickPointWrapper = (x) =>{setClickPoint(x);}
   const setCloseUpWrapper = (x) =>{setCloseUp(x);}
 
@@ -37,9 +39,9 @@ export default function App() {
     <div className="CanvasTest">
       <Canvas>
         <Suspense fallback={<Loader />}>
-          <Model setClickPoint={setClickPointWrapper} closeUp={closeUp}/>
-          <CameraControls clickPoint={clickPoint} setClickPoint={setClickPointWrapper} setCloseUp={setCloseUpWrapper} closeUp={closeUp} />     
-          <Environment/>         
+          <Model setClickPoint={setClickPointWrapper} setClickLight={setClickLightWrapper} closeUp={closeUp}/>
+          <CameraControls clickPoint={clickPoint} setClickPoint={setClickPointWrapper} setCloseUp={setCloseUpWrapper}  closeUp={closeUp} />     
+          <Environment clickLight={clickLight}/>         
         </Suspense>    
       </Canvas>
     </div>

@@ -124,7 +124,7 @@ const handleScroll = (event) => {
       else if (clickPoint === "Phone_Italian_5") {
         positionIndex = 5;
       }
-      else if (clickPoint == "Cube010_6"){    
+      else if (clickPoint == "PacManScreen"){    
         positionIndex = 6;
       }
       setCloseUpPosIndex(positionIndex);
