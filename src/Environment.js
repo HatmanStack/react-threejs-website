@@ -14,7 +14,8 @@ const pointLightPositions = [
   { position: [-2.1, .57, 5.05], signName: "lamp_front" }
 ]
 
-export function Environment({ clickLight }) {
+export function Environment({ clickLight, clickCount }) {
+  
   const initialColor = lightColorWheel[Math.floor(Math.random() * lightColorWheel.length)];
   const [lightColors, setLightColors] = useState(
     pointLightPositions.reduce((colors, light) => ({ ...colors, [light.signName]: initialColor }), {})
@@ -27,7 +28,7 @@ export function Environment({ clickLight }) {
         [clickLight]: lightColorWheel[Math.floor(Math.random() * lightColorWheel.length)]
       }));
     }
-  }, [clickLight]);
+  }, [clickLight, clickCount]);
 
   return (
     <>
@@ -36,7 +37,9 @@ export function Environment({ clickLight }) {
       <directionalLight position={[-5, 5, -5]} intensity={0.1} shadow-mapSize={128} castShadow />
       <directionalLight position={[0, 5, 0]} intensity={0.1} shadow-mapSize={128} castShadow />
       {pointLightPositions.map((light, index) => (
-        <pointLight key={index} position={light.position} intensity={lightIntensity * (index === 0 ? 4 : 0.25)} color={lightColors[light.signName] || "#FFFFFF"} />
+        <pointLight key={index} position={light.position} intensity={lightIntensity * (index === 0 ? 4 : 0.25)} 
+        color={lightColors[light.signName] || "#FFFFFF"} 
+        />
       ))}
       <AccumulativeShadows frames={100} alphaTest={0.85} opacity={0.75} scale={30} position={[0, -1.5, 0]}>
         <RandomizedLight amount={8} radius={2.5} ambient={0.5} intensity={1} position={[5, 5, 5]} bias={0.001} />

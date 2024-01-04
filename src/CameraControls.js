@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { extend, useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls as ThreeOrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+//import * as TWEEN from '@tweenjs/tween.js';  Not Importing Correctly
 import { Vector3 } from 'three';
 
 // Define positions
@@ -47,6 +48,7 @@ export function CameraControls({ clickPoint, setClickPoint, setCloseUp, closeUp}
       // Set the target to the current rotation point
       controls.current.target.copy(currentRotationPoint);
       // Update the controls to apply the orbiting effect
+      
       controls.current.update();
     }
   });
@@ -105,19 +107,19 @@ const handleScroll = (event) => {
       if (clickPoint === "Phone_Stocks") {
         positionIndex = 0;
       }
-      else if (clickPoint === "Phone_Looper_5") {
+      else if (clickPoint === "Phone_Looper_5" || clickPoint === "Phone_Looper_Text") {
         positionIndex = 1;
       }
-      else if (clickPoint === "Phone_Vocabulary_5") {
+      else if (clickPoint === "Phone_Vocabulary_5" || clickPoint === "Phone_Vocabulary_Text") {
         positionIndex = 2;
       }
-      else if (clickPoint === "Phone_Movies_5") {
+      else if (clickPoint === "Phone_Movies_5" || clickPoint === "Phone_Movies_Text") {
         positionIndex = 3;
       }
-      else if (clickPoint === "Phone_Trachtenberg_5") {
+      else if (clickPoint === "Phone_Trachtenberg_5" || clickPoint === "Phone_Trachtenberg_Text") {
         positionIndex = 4;
       }
-      else if (clickPoint === "Phone_Italian_5") {
+      else if (clickPoint === "Phone_Italian_5" || clickPoint === "Phone_Italian_Text") {
         positionIndex = 5;
       }
       else if (clickPoint == "PacManScreen"){    
@@ -131,6 +133,28 @@ const handleScroll = (event) => {
   useEffect(() => {
     camera.position.copy(new Vector3(...closeUpPositions[closeUpPosIndex]));
     camera.rotation.z = closeUpZRotations[closeUpPosIndex]
+    /** TWEEN Library Not Importing Correctly
+    const targetPosition = new Vector3(...closeUpPositions[closeUpPosIndex]);
+    const targetRotationZ = closeUpZRotations[closeUpPosIndex];
+  
+    new TWEEN.Tween(camera.position)
+      .to(targetPosition, 2000) // 2000 milliseconds
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .start();
+  
+    new TWEEN.Tween(camera.rotation)
+      .to({ z: targetRotationZ }, 2000) // 2000 milliseconds
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .start();
+  
+    const animate = () => {
+      if (TWEEN.update()) {
+        requestAnimationFrame(animate);
+      }
+    };
+  
+    animate();
+    */
   }, [closeUpPosIndex]);
 
   useEffect(() => {

@@ -1,12 +1,13 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as THREE from 'three';
 import modelPath from './assets/house.glb'
 import { useLoader } from '@react-three/fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
+const closeUpClickThrough = 1;
 
-export default function Model({setClickPoint, setClickLight, closeUp}) {
- 
+export default function Model({setClickPoint, setClickLight, setClickCount, closeUp}) {
+  const [count, setCount] = useState(0);
   const gltf = useLoader(GLTFLoader, modelPath);
   const videoPaths = [
     require("./assets/Vocabulary.mp4"),
@@ -54,10 +55,9 @@ export default function Model({setClickPoint, setClickLight, closeUp}) {
   //Navigate to diffent pages based on the sign clicked
   
 
-
   const handleClick = (event) => {
     let signName = event.object.name;
-    console.log(signName)
+    
     if (signName === "Sign_About") {
       window.open("https://www.gemenielabs.com/contact/", '_blank');
     }
@@ -70,40 +70,64 @@ export default function Model({setClickPoint, setClickLight, closeUp}) {
     else if (signName === "Sign_Old") {
       window.open("https://www.gemenielabs.com/", '_blank');
     }
-    else if (signName === "Phone_Stocks") {
+    else if (signName === "Phone_Stocks" || signName === "Phone_Stocks_Text") {
       setClickPoint(signName);
       if(closeUp){
-        window.open("https://www.gemenielabs.com/#stocks", '_blank');
+        setCount(prevCount => prevCount + 1);
+        if(count >= closeUpClickThrough){
+          window.open("https://www.gemenielabs.com/#stocks", '_blank');
+          setCount(0);
+        }
       }
     }
-    else if (signName === "Phone_Looper_5") {
+    else if (signName === "Phone_Looper_5" || signName === "Phone_Looper_Text") {
       setClickPoint(signName);
       if(closeUp){
-        window.open("https://www.gemenielabs.com/#looper", '_blank');
+        setCount(prevCount => prevCount + 1);
+        if(count >= closeUpClickThrough){
+          window.open("https://www.gemenielabs.com/#looper", '_blank');
+          setCount(0);
+        }
       }
     }
-    else if (signName === "Phone_Vocabulary_5") {
+    else if (signName === "Phone_Vocabulary_5" || signName === "Phone_Vocabulary_Text") {
       setClickPoint(signName);
       if(closeUp){
-        window.open("https://www.gemenielabs.com/#vocabulary", '_blank');
+        setCount(prevCount => prevCount + 1);
+        if(count >= closeUpClickThrough){
+          window.open("https://www.gemenielabs.com/#vocabulary", '_blank');
+          setCount(0);
+        }
       }
     }
-    else if (signName === "Phone_Movies_5") {
+    else if (signName === "Phone_Movies_5" || signName === "Phone_Movies_Text") {
       setClickPoint(signName);
       if(closeUp){
-        window.open("https://www.gemenielabs.com/#movies", '_blank');
+        setCount(prevCount => prevCount + 1);
+        if(count >= closeUpClickThrough){
+          window.open("https://www.gemenielabs.com/#movies", '_blank');
+          setCount(0);
+        }
       }
     }
-    else if (signName === "Phone_Trachtenberg_5") {
+    else if (signName === "Phone_Trachtenberg_5" || signName === "Phone_Trachtenberg_Text") {
       setClickPoint(signName);
       if(closeUp){
-        window.open("https://www.gemenielabs.com/#trachtenberg", '_blank');
+        setCount(prevCount => prevCount + 1);
+        if(count >= closeUpClickThrough){
+          window.open("https://www.gemenielabs.com/#trachtenberg", '_blank');
+          setCount(0);
+        }
       }
     }
-    else if (signName === "Phone_Italian_5") {
+    else if (signName === "Phone_Italian_5" || signName === "Phone_Italian_Text") {
       setClickPoint(signName);
       if(closeUp){
-        window.open("https://www.gemenielabs.com/#italian", '_blank');
+        setCount(prevCount => prevCount + 1);
+        if(count >= closeUpClickThrough){
+          window.open("https://www.gemenielabs.com/#italian", '_blank');
+          setCount(0);
+        }
       }
     }
     else if (signName === "logo_writersalmanac") {
@@ -120,33 +144,40 @@ export default function Model({setClickPoint, setClickLight, closeUp}) {
     }
     else if (signName === "PacManScreen") {
       setClickPoint(signName);
+      setClickCount(prevCount => prevCount + 1);
     }
     else if (signName === "small_right") {
       setClickLight(signName);
+      setClickCount(prevCount => prevCount + 1);
     }
     else if (signName === "small_left") {
       setClickLight(signName);
+      setClickCount(prevCount => prevCount + 1);
     }
     else if (signName === "small_middle_left") {
       setClickLight(signName);
+      setClickCount(prevCount => prevCount + 1);
     }
     else if (signName === "small_middle_right") {
       setClickLight(signName);
+      setClickCount(prevCount => prevCount + 1);
     }
     else if (signName === "lamppost"){
       setClickLight(signName);
+      setClickCount(prevCount => prevCount + 1);
     }
     else if (signName === "lamp_back"){
       setClickLight(signName);
+      setClickCount(prevCount => prevCount + 1);
     }
     else if (signName === "lamp_front"){
       setClickLight(signName);
+      setClickCount(prevCount => prevCount + 1);
     }
 }
 
   return (
     <>
-    
     <primitive onClick={handleClick} object={gltf.scene} />
   </>)
 
