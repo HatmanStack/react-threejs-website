@@ -38,13 +38,16 @@ npm start
         - [X] Camera Start Position
         - [X] Camera Angles (First Pass)
     - [ ] Finish Knockout for Pacman Arcade
-    - [ ] Create Pages for InDepth Look
+    - [X] Create Pages for InDepth Look
     - [X] Position .Gifs/Mp4 on planes
         - [X] Load GLTF and Swap Textures for Video
         - [X] GLTF undefined error   
     - [ ] Shrink Size
-    - [ ] Lighting for Street Lamps
+    - [X] Lighting for Street Lamps
     - [X] Bake Textures for Skybox
+    - [X] Controlers for Light/Sound
+    - [ ] Second Pass Objects / Textures
+    - [ ] Debug: Pacman Click through to Stocks
 - [X] Loading Animation
 - [X] Switch over for old site
 - [X] Camera Scroll
@@ -59,6 +62,10 @@ npm start
 - [X] Navigation Instructions
 - [X] Post-processing for Lights
 - [X] Close ups for PhoneScreens
+- [ ] Animations for Controllers
+- [ ] Animation for Lamp
+- [ ] Animations for Phone descriptions
+- [ ] Debug: Second Click for same Position CloseUp
 - [ ] Z Rotations for PhoneScreens
 - [ ] Add Zelda as PlaceHolder for Knockout   
 - [ ] Performance testing

@@ -24,7 +24,8 @@ const phoneUrls = [
   {"signName":["Phone_Trachtenberg_5", "Phone_Trachtenberg_Text"],"url":"https://www.gemenielabs.com/#trachtenberg"},
   {"signName":["Phone_Italian_5", "Phone_Italian_Text"],"url":"https://www.gemenielabs.com/#italian"},
   {"signName":["Phone_Looper_5", "Phone_Looper_Text"],"url":"https://www.gemenielabs.com/#looper"},
-  {"signName":["PacManScreen_3"],"url":"https://www.google.com"}
+  {"signName":["PacManScreen_3"],"url":"https://www.google.com"},
+  {"signName":["Music_Control_Box", "Light_Control_Box"],"url":"https://www.google.com"}
 ]
 
 const lightNames = ["small_middle_left", "small_middle_right", "lamppost", "lamp_back", "lamp_front", "small_right", "small_left", "PacManScreen"];
@@ -74,6 +75,7 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setC
 
 const handleClick = (event) => {
   const signName = event.object.name;
+  console.log(signName);
   if (urlMap[signName]) {
     window.open(urlMap[signName], '_blank');
   } else if (lightNames.includes(signName)) {
@@ -83,7 +85,6 @@ const handleClick = (event) => {
     for (let phoneUrl of phoneUrls) {
       if (phoneUrl.signName.includes(signName)) {
         setClickPoint(signName);
-        setClickPhone(prevCount => prevCount + 1)
         if(closeUp){
           setCount(prevCount => prevCount + 1);
           if(count >= closeUpClickThrough){
