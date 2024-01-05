@@ -4,19 +4,20 @@ import { OrbitControls as ThreeOrbitControls } from 'three/examples/jsm/controls
 //import * as TWEEN from '@tweenjs/tween.js';  Not Importing Correctly
 import { Vector3 } from 'three';
 
-// Define positions
 const positions = [[10, 1, 13], [4, 1, 4], [3,1,3.75 ], [0,1,6.5 ], [-12,6,0]]; 
 const rotationPoints = [ [5.1,-2.1,.2], [1.3,.4,3.9], [.1,.6,3.36], [-12.1,5.8,-6.1], [0,0,0]];
 const closeUpPositions = [[0, .5, 4.07],[-.6, .3, 4.1],[5.4, .2, 2.34],[4.76, .2, 1.72],[.5, .3, 3.6],[4.53, .2, 2.7],[1.6, .8, 3.62]];
-const closeUpRotations = [[-.2,.3,3.4],[-.6, -1, 4.1],[5.4, -1, 2.34],[4.76, -1, 1.72],[.5, -1, 3.6],[4.53, -.1, 2.7],[1.5,.7,3.62]];
+const closeUpRotations = [[-.2,.3,3.4],[-.6, -1, 4.1],[5.4, -1, 2.34],[4.76, -1, 1.72],[.5, -1, 3.6],[4.53, -.1, 2.7],[1.5,.7,3.62]]; 
 const closeUpZRotations = [0,-45,45,165,-25,75,45]
-
+const positionMap = {"Phone_Stocks": 0, "Phone_Looper_5": 1, "Phone_Looper_Text": 1, "Phone_Vocabulary_5": 2, "Phone_Vocabulary_Text": 2,
+      "Phone_Movies_5": 3, "Phone_Movies_Text": 3, "Phone_Trachtenberg_5": 4, "Phone_Trachtenberg_Text": 4, "Phone_Italian_5": 5, "Phone_Italian_Text": 5,
+    "PacManScreen_3": 6};
+      
 class OrbitControls extends ThreeOrbitControls {
   constructor(...args) {
     super(...args);
     this.currentPosIndex = 0;
   }
-
   update() {
     super.update();
   }
@@ -26,6 +27,8 @@ extend({ OrbitControls });
 
 export function CameraControls({ clickPoint, setClickPoint, setCloseUp, closeUp}) {
   const [closeUpPosIndex, setCloseUpPosIndex] = useState(0);
+  const [rotationPoint, setRotationPoint] = useState(new Vector3());
+
   const {
     camera,
     gl: { domElement },
@@ -33,64 +36,41 @@ export function CameraControls({ clickPoint, setClickPoint, setCloseUp, closeUp}
   const [currentPosIndex, setCurrentPosIndex] = useState(0);
   const controls = useRef();
   
-  
   useFrame(() => {
     if (controls.current) {
       controls.current.update();
-      // Calculate the current rotation point
-      let currentRotationPoint = 0;
-      
-      if(closeUp){
-        currentRotationPoint = new Vector3(...closeUpRotations[closeUpPosIndex]);
-      }else {
-        currentRotationPoint = new Vector3(...rotationPoints[currentPosIndex]);
-      }
-      // Set the target to the current rotation point
-      controls.current.target.copy(currentRotationPoint);
-      // Update the controls to apply the orbiting effect
-      
+      controls.current.target.copy(rotationPoint);
       controls.current.update();
     }
   });
 
-  
+  useEffect(() => {
+    let newRotationPoint;
+    if (closeUp) {
+      newRotationPoint = new Vector3(...closeUpRotations[closeUpPosIndex]);
+    } else {
+      newRotationPoint = new Vector3(...rotationPoints[currentPosIndex]);
+    }
+    setRotationPoint(newRotationPoint);
+  }, [closeUp, closeUpPosIndex, currentPosIndex]);
 
 useEffect(() => {
-    
-    controls.current = new OrbitControls(camera, domElement);
-
-// Define a variable to keep track of the progress towards the next position
-let progress = 0;
-// Define the number of steps to move from one position to the next
-
-
-const handleScroll = (event) => {
-  setCloseUp(false);
-    // Calculate the scroll amount (you may need to adjust the multiplier)
-    const scrollAmount = Math.abs(event.deltaY) * 0.001; // Adjust this value as needed
-    
-    // Increment or decrement the progress by the scroll amount
-    progress += scrollAmount; // Subtract to make scroll up move towards the next position
-
-    // Calculate the current and next positions
-    const currentPos = new Vector3(...positions[currentPosIndex]);
-    const nextPos = new Vector3(...positions[(currentPosIndex + 1) % positions.length]);
-
-    // Set the flight speed between positions
-    const steps = (currentPosIndex >= 1 && currentPosIndex <= 3) ? 3 : 2;
-    
-    // Calculate the new position of the camera
-    const newPos = new Vector3().lerpVectors(currentPos, nextPos, Math.max(0, Math.min(1, progress / steps)));
-
-    // Update the camera's position
-    camera.position.copy(newPos);
-    
-    // If we've reached the next position, move to the next target position
-      if (progress >= steps) {
-        progress = 0;
-        setCurrentPosIndex((currentPosIndex + 1) % positions.length);
-      } 
-  }
+  controls.current = new OrbitControls(camera, domElement);
+  let progress = 0;
+  const handleScroll = (event) => {
+    setCloseUp(false);
+      const scrollAmount = Math.abs(event.deltaY) * 0.001; 
+      progress += scrollAmount; 
+      const currentPos = new Vector3(...positions[currentPosIndex]);
+      const nextPos = new Vector3(...positions[(currentPosIndex + 1) % positions.length]);
+      const steps = (currentPosIndex >= 1 && currentPosIndex <= 3) ? 3 : 2;
+      const newPos = new Vector3().lerpVectors(currentPos, nextPos, Math.max(0, Math.min(1, progress / steps)));
+      camera.position.copy(newPos);
+        if (progress >= steps) {
+          progress = 0;
+          setCurrentPosIndex((currentPosIndex + 1) % positions.length);
+        } 
+    }
 
     domElement.addEventListener('wheel', handleScroll);
 
@@ -103,28 +83,7 @@ const handleScroll = (event) => {
   useEffect(() => {
     if(clickPoint){
       setCloseUp(true);
-      let positionIndex = 0;
-      if (clickPoint === "Phone_Stocks") {
-        positionIndex = 0;
-      }
-      else if (clickPoint === "Phone_Looper_5" || clickPoint === "Phone_Looper_Text") {
-        positionIndex = 1;
-      }
-      else if (clickPoint === "Phone_Vocabulary_5" || clickPoint === "Phone_Vocabulary_Text") {
-        positionIndex = 2;
-      }
-      else if (clickPoint === "Phone_Movies_5" || clickPoint === "Phone_Movies_Text") {
-        positionIndex = 3;
-      }
-      else if (clickPoint === "Phone_Trachtenberg_5" || clickPoint === "Phone_Trachtenberg_Text") {
-        positionIndex = 4;
-      }
-      else if (clickPoint === "Phone_Italian_5" || clickPoint === "Phone_Italian_Text") {
-        positionIndex = 5;
-      }
-      else if (clickPoint == "PacManScreen"){    
-        positionIndex = 6;
-      }
+      let positionIndex = positionMap[clickPoint] || 0;
       setCloseUpPosIndex(positionIndex);
       setClickPoint(null);
     }
