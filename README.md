@@ -64,8 +64,9 @@ npm start
 - [X] Close ups for PhoneScreens
 - [ ] Animations for Controllers
 - [ ] Animation for Lamp
-- [ ] Animations for Phone descriptions
+- [X] Animations for Phone descriptions
 - [ ] Debug: Second Click for same Position CloseUp
 - [ ] Z Rotations for PhoneScreens
-- [ ] Add Zelda as PlaceHolder for Knockout   
+- [ ] Add Zelda as PlaceHolder for Knockout
+- [ ] Come up with a Solution for Mobile Scroll   
 - [ ] Performance testing

@@ -30,8 +30,9 @@ const phoneUrls = [
 
 const lightNames = ["small_middle_left", "small_middle_right", "lamppost", "lamp_back", "lamp_front", "small_right", "small_left", "PacManScreen"];
 
-export default function Model({setClickPoint, setClickLight, setClickCount, setClickPhone, closeUp}) {
-  const [count, setCount] = useState(0);
+export default function Model({setClickPoint, setClickLight, setClickCount, setGLTF, closeUp}) {
+  const [count, setCount] = useState(true);
+  
   const gltf = useLoader(GLTFLoader, modelPath);
   const videoPaths = [
     require("./assets/Vocabulary.mp4"),
@@ -70,12 +71,13 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setC
           }
         });
       }
+      setGLTF(gltf);
     }
   }, [gltf]);
 
 const handleClick = (event) => {
   const signName = event.object.name;
-  console.log(signName);
+ 
   if (urlMap[signName]) {
     window.open(urlMap[signName], '_blank');
   } else if (lightNames.includes(signName)) {
@@ -87,7 +89,7 @@ const handleClick = (event) => {
         setClickPoint(signName);
         if(closeUp){
           setCount(prevCount => prevCount + 1);
-          if(count >= closeUpClickThrough){
+          if(count >= closeUpClickThrough && !phoneUrl.signName.includes("Music_Control_Box")){
             window.open(phoneUrl.url, '_blank');
             setCount(0);
           }

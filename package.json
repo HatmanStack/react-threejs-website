@@ -5,9 +5,10 @@
     "keywords": [],
     "main": "src/index.js",
     "dependencies": {
-        "@react-spring/three": "9.7.2",
+        "@react-spring/three": "^9.7.3",
+        "@react-spring/web": "^9.7.3",
         "@react-three/drei": "^9.92.7",
-        "@react-three/fiber": "^8.15.10",
+        "@react-three/fiber": "^8.15.13",
         "@react-three/postprocessing": "2.11.4",
         "expo": "^49.0.16",
         "expo-cli": "^6.3.10",
@@ -18,7 +19,6 @@
         "react-native": "^0.72.6",
         "react-scripts": "5.0.1",
         "three": "^0.160.0"
-        
     },
     "scripts": {
         "start": "react-scripts start",

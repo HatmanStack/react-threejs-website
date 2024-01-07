@@ -4,6 +4,7 @@ import { Environment } from './Environment'
 import { Html, useProgress } from '@react-three/drei'
 import Model from './Model'
 import { CameraControls } from './CameraControls'
+import { Animations } from './Animations'
 
 const ModelContext = React.createContext();
 
@@ -12,10 +13,12 @@ export default function App() {
   const [clickLight, setClickLight] = useState(null);
   const [clickCount, setClickCount] = useState(0);
   const [closeUp, setCloseUp ] = useState(false);
+  const [gltf, setGLTF] = useState(null);
   const setClickCountWrapper = (x) =>{setClickCount(x);}
   const setClickLightWrapper = (x) =>{setClickLight(x);}
   const setClickPointWrapper = (x) =>{setClickPoint(x);}
   const setCloseUpWrapper = (x) =>{setCloseUp(x);}
+  const setGLTFWrapper = (x) =>{setGLTF(x);}
 
   function Loader() {
     const { progress } = useProgress()
@@ -40,9 +43,10 @@ export default function App() {
     <div className="CanvasTest">
       <Canvas>
         <Suspense fallback={<Loader />}>
-          <Model setClickPoint={setClickPointWrapper} setClickLight={setClickLightWrapper} setClickCount={setClickCountWrapper} closeUp={closeUp}/>
+          <Model setClickPoint={setClickPointWrapper} setClickLight={setClickLightWrapper} setClickCount={setClickCountWrapper} setGLTF={setGLTFWrapper} closeUp={closeUp}/>
           <CameraControls clickPoint={clickPoint} setClickPoint={setClickPointWrapper} setCloseUp={setCloseUpWrapper} closeUp={closeUp} />     
-          <Environment clickLight={clickLight} clickCount={clickCount}/>         
+          <Environment clickLight={clickLight} clickCount={clickCount}/> 
+          <Animations gltf={gltf} closeUp={closeUp}/>    
         </Suspense>    
       </Canvas>
     </div>
