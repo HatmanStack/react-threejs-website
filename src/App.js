@@ -14,11 +14,13 @@ export default function App() {
   const [clickCount, setClickCount] = useState(0);
   const [closeUp, setCloseUp ] = useState(false);
   const [gltf, setGLTF] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
   const setClickCountWrapper = (x) =>{setClickCount(x);}
   const setClickLightWrapper = (x) =>{setClickLight(x);}
   const setClickPointWrapper = (x) =>{setClickPoint(x);}
   const setCloseUpWrapper = (x) =>{setCloseUp(x);}
   const setGLTFWrapper = (x) =>{setGLTF(x);}
+  const setIsDraggingWrapper = (x) =>{setIsDragging(x);}
 
   function Loader() {
     const { progress } = useProgress()
@@ -43,10 +45,10 @@ export default function App() {
     <div className="CanvasTest">
       <Canvas>
         <Suspense fallback={<Loader />}>
-          <Model setClickPoint={setClickPointWrapper} setClickLight={setClickLightWrapper} setClickCount={setClickCountWrapper} setGLTF={setGLTFWrapper} closeUp={closeUp}/>
-          <CameraControls clickPoint={clickPoint} setClickPoint={setClickPointWrapper} setCloseUp={setCloseUpWrapper} closeUp={closeUp} />     
+          <Model setClickPoint={setClickPointWrapper} setClickLight={setClickLightWrapper} setClickCount={setClickCountWrapper} setGLTF={setGLTFWrapper} setIsDragging={setIsDraggingWrapper} closeUp={closeUp}/>
+          <CameraControls clickPoint={clickPoint} setClickPoint={setClickPointWrapper} setCloseUp={setCloseUpWrapper} isDragging={isDragging} closeUp={closeUp} />     
           <Environment clickLight={clickLight} clickCount={clickCount}/> 
-          <Animations gltf={gltf} closeUp={closeUp}/>    
+          <Animations gltf={gltf} setIsDragging={setIsDraggingWrapper} closeUp={closeUp}/>    
         </Suspense>    
       </Canvas>
     </div>

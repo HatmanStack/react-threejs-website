@@ -28,9 +28,30 @@ const phoneUrls = [
   {"signName":["Music_Control_Box", "Light_Control_Box"],"url":"https://www.google.com"}
 ]
 
+const sliderAndButtons = [
+  "Slider_1_3",
+  "Slider_2_3",
+  "Slider_3_3",
+  "Slider_4_3",
+  "Slider_5_3",
+  "Slider_6_3",
+  "Slider_7_3",
+  "Slider_Music_3",
+  "Button_Light_1",
+  "Button_Light_2",
+  "Button_Light_3",
+  "Button_Light_4",
+  "Button_Light_5",
+  "Button_Light_6",
+  "Button_Light_7",
+  "Button_Music_Back",
+  "Button_Music_Pause",
+  "Button_Music_Play"
+]
+
 const lightNames = ["small_middle_left", "small_middle_right", "lamppost", "lamp_back", "lamp_front", "small_right", "small_left", "PacManScreen"];
 
-export default function Model({setClickPoint, setClickLight, setClickCount, setGLTF, closeUp}) {
+export default function Model({setClickPoint, setClickLight, setClickCount, setGLTF, isDragging, closeUp}) {
   const [count, setCount] = useState(true);
   
   const gltf = useLoader(GLTFLoader, modelPath);
@@ -63,8 +84,6 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setG
             const videoTexture = new THREE.VideoTexture(video);
             videoTexture.wrapS = THREE.RepeatWrapping;
             videoTexture.repeat.x = -1;
-
-            // Then use the videoTexture in your material:
             const material = new THREE.MeshBasicMaterial({ map: videoTexture });
             node.material.map = videoTexture;
             node.material.needsUpdate = true;
@@ -75,34 +94,35 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setG
     }
   }, [gltf]);
 
-const handleClick = (event) => {
-  const signName = event.object.name;
- 
-  if (urlMap[signName]) {
-    window.open(urlMap[signName], '_blank');
-  } else if (lightNames.includes(signName)) {
-    setClickLight(signName);
-    setClickCount(prevCount => prevCount + 1);
-  } else {
-    for (let phoneUrl of phoneUrls) {
-      if (phoneUrl.signName.includes(signName)) {
-        setClickPoint(signName);
-        if(closeUp){
-          setCount(prevCount => prevCount + 1);
-          if(count >= closeUpClickThrough && !phoneUrl.signName.includes("Music_Control_Box")){
-            window.open(phoneUrl.url, '_blank');
-            setCount(0);
+  const handleClick = (event) => {
+    const signName = event.object.name;
+  console.log(signName);
+    if (urlMap[signName]) {
+      window.open(urlMap[signName], '_blank');
+    } else if (lightNames.includes(signName)) {
+      setClickLight(signName);
+      setClickCount(prevCount => prevCount + 1);
+    } else {
+      for (let phoneUrl of phoneUrls) {
+        if (phoneUrl.signName.includes(signName)) {
+          setClickPoint(signName);
+          if(closeUp){
+            setCount(prevCount => prevCount + 1);
+            if(count >= closeUpClickThrough && !phoneUrl.signName.includes("Music_Control_Box")){
+              window.open(phoneUrl.url, '_blank');
+              setCount(0);
+            }
           }
+          break;
         }
-        break;
       }
     }
   }
-}
-
+  
   return (
     <>
-    <primitive onClick={handleClick} object={gltf.scene} />
+    <primitive onClick={handleClick} 
+    object={gltf.scene} />
   </>)
 
 }

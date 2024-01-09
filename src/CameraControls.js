@@ -25,7 +25,7 @@ class OrbitControls extends ThreeOrbitControls {
 
 extend({ OrbitControls });
 
-export function CameraControls({ clickPoint, setClickPoint, setCloseUp, closeUp}) {
+export function CameraControls({ clickPoint, setClickPoint, setCloseUp, isDragging, closeUp}) {
   const [closeUpPosIndex, setCloseUpPosIndex] = useState(0);
   const [rotationPoint, setRotationPoint] = useState(new Vector3());
 
@@ -40,9 +40,18 @@ export function CameraControls({ clickPoint, setClickPoint, setCloseUp, closeUp}
     if (controls.current) {
       controls.current.update();
       controls.current.target.copy(rotationPoint);
+      console.log(`isDragging: ${isDragging}`)
       controls.current.update();
     }
   });
+
+  useEffect(() => {
+    if(isDragging){
+    controls.current.update();
+    controls.enabled = !isDragging;
+    controls.current.update();
+    }
+  }, [isDragging]);
 
   useEffect(() => {
     let newRotationPoint;

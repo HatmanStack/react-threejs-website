@@ -1,5 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useSpring, animated } from '@react-spring/three';
+import { useDrag } from '@use-gesture/react';
+
+const slidersList = [
+  'Slider_1',
+  'Slider_2',
+  'Slider_3',
+  'Slider_4',
+  'Slider_5',
+  'Slider_6',
+  'Slider_7',
+  'Slider_Music'];
 
 const nodesList = [
   'Phone_Looper_Text',
@@ -19,38 +30,76 @@ const position = [
 
 const rotation = [
   [0, 44.7, 0],
-  [0, 44.6, 0],
-  [0, 44.17, 0],
+  [0, 44.612, 0],
+  [0, 44.145, 0],
   [0, -9.97, 0],
   [0, 35.17, 0],
 ];
 
-export function Animations({gltf, closeUp}) {
+export function Animations({gltf, setIsDragging, closeUp}) {
   const [nodes, setNodes] = useState();
+  
 
-  const springs = nodesList.map((node) => useSpring({
+  const textSpring = nodesList.map((node) => useSpring({
     scale: closeUp ? [100, 100, 100] : [1, 1, 1],
     config: { duration: closeUp ? 1000 : 50 },
   }));
+
+  const sliderSpring = slidersList.map((slider) => {
+    const [{ z }, set] = useSpring(() => ({ z: 0 }));
+    
+    const bind = useDrag(({down, movement: [, my]}) => {
+      set.start({ z: down ? my / 100 : 0 });
+      setIsDragging(down);
+      console.log(`z: ${z.get()}`)
+    });
+  
+    return { z, bind };
+  });
 
   useEffect(() => {
     if (gltf) {
       const { nodes } = gltf;
       console.log(nodes);
       setNodes(nodes);
+      gltf.scene.traverse((object) => {
+        if (object.isMesh && nodesList.includes(object.name)) {
+          // This is a mesh in nodesList
+          console.log(object);
+        } else if (object.isGroup && slidersList.includes(object.name)) {
+          // This is a group in slidersList
+          console.log(object);
+        }
+      });
     }
   }, [gltf]);
 
   return (
-    nodes && nodesList.map((node, index) => (
+    <>
+    <group onClick={() => console.log('Group clicked')}>
+    {nodes && slidersList.map((slider, index) => (
+      <animated.mesh
+        key={slider}
+        {...sliderSpring[index].bind()}
+        position-z={sliderSpring[index].z}
+        geometry={nodes[slider].geometry}
+        material={nodes[slider].material}
+        onClick={() => console.log('Slider has been clicked')}
+      />
+    ))}
+    {nodes && nodesList.map((node, index) => (
       <animated.mesh
         key={node}
         position={position[index]}
         rotation={rotation[index]}
-        scale={springs[index].scale}
+        scale={textSpring[index].scale}
         geometry={nodes[node].geometry}
         material={nodes[node].material}
       />
-    ))
+    ))}
+    
+    </group>
+    </>
+    
   );
 }
