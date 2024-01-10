@@ -15,12 +15,16 @@ export default function App() {
   const [closeUp, setCloseUp ] = useState(false);
   const [gltf, setGLTF] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [lightIntensity, setLightIntensity] = useState(['Slider_7', 10]);
   const setClickCountWrapper = (x) =>{setClickCount(x);}
   const setClickLightWrapper = (x) =>{setClickLight(x);}
   const setClickPointWrapper = (x) =>{setClickPoint(x);}
   const setCloseUpWrapper = (x) =>{setCloseUp(x);}
   const setGLTFWrapper = (x) =>{setGLTF(x);}
   const setIsDraggingWrapper = (x) =>{setIsDragging(x);}
+  const setLightIntensityWrapper = (x) =>{
+    
+    setLightIntensity(x);}
 
   function Loader() {
     const { progress } = useProgress()
@@ -47,8 +51,8 @@ export default function App() {
         <Suspense fallback={<Loader />}>
           <Model setClickPoint={setClickPointWrapper} setClickLight={setClickLightWrapper} setClickCount={setClickCountWrapper} setGLTF={setGLTFWrapper} setIsDragging={setIsDraggingWrapper} closeUp={closeUp}/>
           <CameraControls clickPoint={clickPoint} setClickPoint={setClickPointWrapper} setCloseUp={setCloseUpWrapper} isDragging={isDragging} closeUp={closeUp} />     
-          <Environment clickLight={clickLight} clickCount={clickCount}/> 
-          <Animations gltf={gltf} setIsDragging={setIsDraggingWrapper} closeUp={closeUp}/>    
+          <Environment clickLight={clickLight} lightIntensity={lightIntensity} clickCount={clickCount}/> 
+          <Animations gltf={gltf} setIsDragging={setIsDraggingWrapper} setLightIntensity={setLightIntensityWrapper} closeUp={closeUp}/>    
         </Suspense>    
       </Canvas>
     </div>

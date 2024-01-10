@@ -28,6 +28,19 @@ const phoneUrls = [
   {"signName":["Music_Control_Box", "Light_Control_Box"],"url":"https://www.google.com"}
 ]
 
+const buttonsList = [
+  'Button_Light_1',
+  'Button_Light_2',
+  'Button_Light_3',
+  'Button_Light_4',
+  'Button_Light_5',
+  'Button_Light_6',
+  'Button_Light_7',
+  'Button_Music_Back',
+  'Button_Music_Forward',
+  'Button_Music_Pause'
+  ];
+
 const sliderAndButtons = [
   "Slider_1_3",
   "Slider_2_3",
@@ -49,7 +62,16 @@ const sliderAndButtons = [
   "Button_Music_Play"
 ]
 
-const lightNames = ["small_middle_left", "small_middle_right", "lamppost", "lamp_back", "lamp_front", "small_right", "small_left", "PacManScreen"];
+const lightNames = ["small_middle_left", "small_middle_right", "lamppost", "lamp_back", "lamp_front", "small_right", "small_left", 'Button_Light_1',
+'Button_Light_2',
+'Button_Light_3',
+'Button_Light_4',
+'Button_Light_5',
+'Button_Light_6',
+'Button_Light_7',
+'Button_Music_Back',
+'Button_Music_Forward',
+'Button_Music_Pause'];
 
 export default function Model({setClickPoint, setClickLight, setClickCount, setGLTF, isDragging, closeUp}) {
   const [count, setCount] = useState(true);
@@ -96,7 +118,7 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setG
 
   const handleClick = (event) => {
     const signName = event.object.name;
-  console.log(signName);
+  //console.log(signName);
     if (urlMap[signName]) {
       window.open(urlMap[signName], '_blank');
     } else if (lightNames.includes(signName)) {

@@ -40,7 +40,6 @@ export function CameraControls({ clickPoint, setClickPoint, setCloseUp, isDraggi
     if (controls.current) {
       controls.current.update();
       controls.current.target.copy(rotationPoint);
-      console.log(`isDragging: ${isDragging}`)
       controls.current.update();
     }
   });
@@ -97,6 +96,15 @@ useEffect(() => {
       setClickPoint(null);
     }
   }, [clickPoint]);
+
+  useEffect(() => {
+    if (isDragging) {
+      controls.current.enabled = false;
+     }else {
+      controls.current.enabled = true;
+     } 
+    
+  }, [isDragging]);
 
   useEffect(() => {
     camera.position.copy(new Vector3(...closeUpPositions[closeUpPosIndex]));
