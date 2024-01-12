@@ -5,8 +5,7 @@ import { Html, useProgress } from '@react-three/drei'
 import Model from './Model'
 import { CameraControls } from './CameraControls'
 import { Animations } from './Animations'
-
-const ModelContext = React.createContext();
+import { Sounds } from './Sounds'
 
 export default function App() {
   const [clickPoint, setClickPoint] = useState(null);
@@ -15,16 +14,14 @@ export default function App() {
   const [closeUp, setCloseUp ] = useState(false);
   const [gltf, setGLTF] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [lightIntensity, setLightIntensity] = useState(['Slider_7', 10]);
+  const [lightIntensity, setLightIntensity] = useState({sliderName: 'Slider_7', intensity: 10});
   const setClickCountWrapper = (x) =>{setClickCount(x);}
   const setClickLightWrapper = (x) =>{setClickLight(x);}
   const setClickPointWrapper = (x) =>{setClickPoint(x);}
   const setCloseUpWrapper = (x) =>{setCloseUp(x);}
   const setGLTFWrapper = (x) =>{setGLTF(x);}
   const setIsDraggingWrapper = (x) =>{setIsDragging(x);}
-  const setLightIntensityWrapper = (x) =>{
-    
-    setLightIntensity(x);}
+  const setLightIntensityWrapper = (x) =>{setLightIntensity(x);}
 
   function Loader() {
     const { progress } = useProgress()
@@ -32,8 +29,8 @@ export default function App() {
       <div style={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center', // Center horizontally
-        justifyContent: 'center', // Center vertically
+        alignItems: 'center', 
+        justifyContent: 'center', 
         color: 'white',
         background: '#171519',
         height: '100%',
@@ -49,10 +46,11 @@ export default function App() {
     <div className="CanvasTest">
       <Canvas>
         <Suspense fallback={<Loader />}>
+          <Sounds clickLight={clickLight} clickCount={clickCount}/>
           <Model setClickPoint={setClickPointWrapper} setClickLight={setClickLightWrapper} setClickCount={setClickCountWrapper} setGLTF={setGLTFWrapper} setIsDragging={setIsDraggingWrapper} closeUp={closeUp}/>
           <CameraControls clickPoint={clickPoint} setClickPoint={setClickPointWrapper} setCloseUp={setCloseUpWrapper} isDragging={isDragging} closeUp={closeUp} />     
           <Environment clickLight={clickLight} lightIntensity={lightIntensity} clickCount={clickCount}/> 
-          <Animations gltf={gltf} setIsDragging={setIsDraggingWrapper} setLightIntensity={setLightIntensityWrapper} closeUp={closeUp}/>    
+          <Animations gltf={gltf} setIsDragging={setIsDraggingWrapper} setLightIntensity={setLightIntensityWrapper} clickPoint={clickPoint} closeUp={closeUp}/>    
         </Suspense>    
       </Canvas>
     </div>

@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useSpring, animated } from '@react-spring/three';
 import { useDrag } from '@use-gesture/react';
-
 
 const slidersList = [
   'Slider_1',
@@ -14,19 +13,6 @@ const slidersList = [
   'Slider_Music'
   ];
 
-const buttonsList = [
-  'Button_Light_1',
-  'Button_Light_2',
-  'Button_Light_3',
-  'Button_Light_4',
-  'Button_Light_5',
-  'Button_Light_6',
-  'Button_Light_7',
-  'Button_Music_Back',
-  'Button_Music_Forward',
-  'Button_Music_Pause'
-  ];
-
 const nodesList = [
   'Phone_Looper_Text',
   'Phone_Vocabulary_Text',
@@ -35,7 +21,18 @@ const nodesList = [
   'Phone_Movies_Text'
 ];
 
-const sliderPosition = [
+const phoneList = [
+"Phone_Looper_5" ,
+"Phone_Vocabulary_5",
+"Phone_Italian_5", 
+"Phone_Trachtenberg_5",
+"Phone_Movies_5"
+]
+
+const sliderRotation = [7.36, 0, 0];
+const sliderScale = [.5, .5, .5];
+
+let sliderPosition = [
   [.837, 0.538, 3.986],
   [.867, 0.538, 3.986],
   [.897, 0.538, 3.986],
@@ -46,12 +43,6 @@ const sliderPosition = [
   [.893, 0.375, 3.986]
 ];
 
-const sliderStartingPosition = [0.538, 0.538, 0.538, 0.538, 0.538, 0.538, 0.538, 0.375];
-
-const sliderRotation = [7.36, 0, 0];
-
-const sliderScale = [.5, .5, .5];
-  
 const position = [
   [-0.668423, 0.008689, 4.06791],
   [5.53658, -0.1, 2.3211],
@@ -68,37 +59,46 @@ const rotation = [
   [0, 35.17, 0],
 ];
 
-export function Animations({gltf, setIsDragging, setLightIntensity, closeUp}) {
-  const [nodes, setNodes] = useState();
-  const [currentY, setCurrentY] = useState(sliderStartingPosition);
 
-  //const [sliderPositionState, setSliderPosition] = useState(sliderPosition);
-  const textSpring = nodesList.map((node) => useSpring({
-    scale: closeUp ? [100, 100, 100] : [1, 1, 1],
-    config: { duration: closeUp ? 1000 : 50},
-  }));
+export function Animations({gltf, setIsDragging, setLightIntensity, clickPoint, closeUp}) {
+  const [nodes, setNodes] = useState();
+  const [phoneClicked, setPhoneClicked] = useState();
+  
+  const textSpring = nodesList.map((node, index) => {
+    const isMatch = phoneList.indexOf(phoneClicked) === index;
+    return useSpring({
+      scale: isMatch && closeUp ? [100, 100, 100] : [1, 1, 1],
+      config: { duration: isMatch && closeUp ? 1000 : 50 },
+    });
+  });
 
   const sliderSpring = slidersList.map((slider, index) => {
-    const initialY = sliderStartingPosition[index]; // Slider not holding State properly
-    const [{ y }, set] = useSpring(() => ({ y: initialY }));  
-    const bind = useDrag(({down, movement: [, my]}) => {
-      const movementY = my / 100;
-      const newY = down ? Math.min(Math.max(movementY, initialY - 0.033), initialY + 0.025) : initialY;
-    
+    const initialY = sliderPosition[index][1]
+    const [{ y }, set] = useSpring(() => ({ 
+      y: initialY,
+      config: {
+        tension: 15, // Needs to be more Tactile
+        friction: 10,
+      },
+    }));
+    const bind = useDrag(({down, movement: [, my]}) => { 
+      let movementY = (-my * .001)  + sliderPosition[index][1];
+      const newY = down ? Math.min(Math.max(movementY, index === 7 ? .375 - 0.033 : .538 - 0.033),
+       index === 7 ? .375 + 0.025 : .538 + 0.025) : sliderPosition[index][1];
+      
       set.start({ y: newY });
       setIsDragging(down);
-      console.log(newY);
-      setCurrentY(prevY => {
-        const newYValues = [...prevY];
-        newYValues[index] = newY;
-        return newYValues;
-      });
-      setLightIntensity({sliderName: slider, intensity: newY});
-      
-    });
-    
+      sliderPosition[index][1] = newY;
+      setLightIntensity({ sliderName: slider, intensity: newY });  
+    }, { filterTaps: true });
     return { y, bind };
   });
+
+  useEffect(() => {
+    if (phoneList.includes(clickPoint)) {
+      setPhoneClicked(clickPoint);
+    }
+  }, [clickPoint]);
 
   useEffect(() => {
     if (gltf) {
@@ -108,11 +108,10 @@ export function Animations({gltf, setIsDragging, setLightIntensity, closeUp}) {
     }
   }, [gltf]);
 
-
+/** Blender not exporting/Loader not importing position and rotation properly **HARDCODED**
 const meshRefs = nodesList.map(() => useRef());
 const sliderRefs = slidersList.map(() => useRef());
 
-/** 
 let position = [];
 let rotation = [];
 let size = [];
@@ -122,7 +121,6 @@ let size = [];
       nodesList.forEach((node, index) => {
         const mesh = nodes[node];
         if (mesh) {
-          // Get the position, rotation and size from the mesh
           position[index] = mesh.position.toArray();
           rotation[index] = mesh.rotation.toArray();
           size[index] = mesh.scale.toArray();
@@ -132,10 +130,10 @@ let size = [];
       slidersList.forEach((slider, index) => {
         const mesh = nodes[slider];
         if (mesh) {
-          // Get the position, rotation and size from the mesh
-          position[index] = mesh.position.toArray();
-          rotation[index] = mesh.rotation.toArray();
-          size[index] = mesh.scale.toArray();
+          const newPositionIndex = index + nodesList.length;
+          position[newPositionIndex] = mesh.position.toArray();
+          rotation[newPositionIndex] = mesh.rotation.toArray();
+          size[newPositionIndex] = mesh.scale.toArray();
         }
       });
       
@@ -155,9 +153,7 @@ let size = [];
 
   return (
     <>
-    <group onClick={() => console.log('Group clicked')}>
     {nodes && slidersList.map((slider, index) => {
-      const initialY = sliderPosition[index][1];
       return (
         <animated.primitive
           key={slider}
@@ -170,17 +166,17 @@ let size = [];
         />
       );
     })}
-    {nodes && nodesList.map((node, index) => (
-      <animated.primitive
-        key={node}
-        position={position[index]}
-        rotation={rotation[index]}
-        scale={textSpring[index].scale}
-        object={nodes[node]}
-        ref={meshRefs[index]}
-      />
-    ))}
-    </group>
+    {nodes && nodesList.map((node, index) => {
+      return (
+        <animated.primitive
+          key={node}
+          scale={textSpring[index].scale}
+          object={nodes[node]}
+          position={position[index]}
+          rotation={rotation[index]}
+        />
+      );
+    })}
     </>
     
   );

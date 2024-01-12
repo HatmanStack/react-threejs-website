@@ -4,7 +4,7 @@ import modelPath from './assets/house.glb'
 import { useLoader } from '@react-three/fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
-const closeUpClickThrough = 1;
+const closeUpClickThrough = 1;  // How many times to click before opening the link
 
 const urlMap = {
   "Sign_About": "https://www.gemenielabs.com/contact/",
@@ -28,40 +28,6 @@ const phoneUrls = [
   {"signName":["Music_Control_Box", "Light_Control_Box"],"url":"https://www.google.com"}
 ]
 
-const buttonsList = [
-  'Button_Light_1',
-  'Button_Light_2',
-  'Button_Light_3',
-  'Button_Light_4',
-  'Button_Light_5',
-  'Button_Light_6',
-  'Button_Light_7',
-  'Button_Music_Back',
-  'Button_Music_Forward',
-  'Button_Music_Pause'
-  ];
-
-const sliderAndButtons = [
-  "Slider_1_3",
-  "Slider_2_3",
-  "Slider_3_3",
-  "Slider_4_3",
-  "Slider_5_3",
-  "Slider_6_3",
-  "Slider_7_3",
-  "Slider_Music_3",
-  "Button_Light_1",
-  "Button_Light_2",
-  "Button_Light_3",
-  "Button_Light_4",
-  "Button_Light_5",
-  "Button_Light_6",
-  "Button_Light_7",
-  "Button_Music_Back",
-  "Button_Music_Pause",
-  "Button_Music_Play"
-]
-
 const lightNames = ["small_middle_left", "small_middle_right", "lamppost", "lamp_back", "lamp_front", "small_right", "small_left", 'Button_Light_1',
 'Button_Light_2',
 'Button_Light_3',
@@ -73,21 +39,21 @@ const lightNames = ["small_middle_left", "small_middle_right", "lamppost", "lamp
 'Button_Music_Forward',
 'Button_Music_Pause'];
 
+const meshNames = ["Phone_Vocabulary_5", "Phone_Movies_5", "Phone_Looper_5", "Phone_Trachtenberg_5", "Phone_Italian_5", "Phone_Stocks"]
+
+const videoPaths = [
+  require("./assets/Vocabulary.mp4"),
+  require("./assets/Movies.mp4"),
+  require("./assets/Looper.mp4"),
+  require("./assets/Trachtenberg.mp4"),
+  require("./assets/Italian.mp4"),
+  require("./assets/Stocks.mp4"),
+];
+
 export default function Model({setClickPoint, setClickLight, setClickCount, setGLTF, isDragging, closeUp}) {
   const [count, setCount] = useState(true);
   
   const gltf = useLoader(GLTFLoader, modelPath);
-  const videoPaths = [
-    require("./assets/Vocabulary.mp4"),
-    require("./assets/Movies.mp4"),
-    require("./assets/Looper.mp4"),
-    require("./assets/Trachtenberg.mp4"),
-    require("./assets/Italian.mp4"),
-    require("./assets/Stocks.mp4"),
-  ];
-
-  const meshNames = ["Phone_Vocabulary_5", "Phone_Movies_5", "Phone_Looper_5", "Phone_Trachtenberg_5", "Phone_Italian_5", "Phone_Stocks"]
-
   const videoRefs = meshNames.reduce((acc, name) => {
     acc[name] = React.useRef();
     return acc;
@@ -118,7 +84,6 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setG
 
   const handleClick = (event) => {
     const signName = event.object.name;
-  //console.log(signName);
     if (urlMap[signName]) {
       window.open(urlMap[signName], '_blank');
     } else if (lightNames.includes(signName)) {

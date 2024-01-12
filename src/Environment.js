@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react'
 
 const lightColorWheel = ['#FFD700', '#FDFD96', '#FFFF00', '#FFFFE0', '#FFFACD', '#FAFAD2', '#FFEFD5', '#FFE4B5', '#FFDAB9', '#EEE8AA', '#F0E68C', '#BDB76B', '#E6E6FA', '#D8BFD8', '#DDA0DD', '#EE82EE', '#FF00FF', '#DA70D6', '#FFC0CB', '#FFB6C1', '#FF69B4', '#FF1493', '#C71585', '#DB7093', '#FFA07A', '#FA8072', '#F08080', '#CD5C5C', '#DC143C', '#B22222', '#8B0000', '#FF0000', '#FF4500', '#FF6347', '#FF7F50', '#FF8C00', '#FFA500', '#FFD700', '#FFFF00', '#FFFFE0', '#FFFACD', '#FAFAD2', '#FFEFD5', '#FFE4B5', '#FFDAB9', '#EEE8AA', '#F0E68C', '#BDB76B', '#E6E6FA', '#D8BFD8', '#DDA0DD', '#EE82EE', '#FF00FF', '#DA70D6', '#FFC0CB', '#FFB6C1', '#FF69B4', '#FF1493', '#C71585', '#DB7093', '#FFA07A', '#FA8072', '#F08080', '#CD5C5C', '#DC143C', '#B22222', '#8B0000', '#FF0000', '#FF4500', '#FF6347', '#FF7F50', '#FF8C00', '#FFA500']
 
+const lightIntensityStarter = 30;
+
 const pointLightPositions = [
   { position: [10.5, 2.8, 9.35], signName: ["lamppost"] },
   { position: [6.07, .57, .6], signName: ["small_right",'Button_Light_6'], sliderName: "Slider_6" },
@@ -32,16 +34,18 @@ export function Environment({ clickLight, lightIntensity, clickCount }) {
   );
 
   useEffect(() => {
-    const { sliderName, intensity } = lightIntensity;
-    const adjustedIntensity = intensity * 50;
+    const sliderName = lightIntensity.sliderName;
+    const  intensity = lightIntensity.intensity;
+    const oldRange = .563 - .503;
+    const normalizedIntensity = ((intensity - .503) / oldRange) * lightIntensityStarter ;
     setLightIntensities(prevIntensities => {
       const newIntensities = { ...prevIntensities };
       if (sliderName === 'Slider_7') {
         Object.keys(newIntensities).forEach(name => {
-          newIntensities[name] = adjustedIntensity;
+          newIntensities[name] = normalizedIntensity;
         });
       } else {
-        newIntensities[sliderName] = adjustedIntensity;
+        newIntensities[sliderName] = normalizedIntensity;
       }
       return newIntensities;
     });
@@ -76,13 +80,15 @@ export function Environment({ clickLight, lightIntensity, clickCount }) {
       <directionalLight position={[-5, 5, -5]} intensity={0.1} shadow-mapSize={128} castShadow />
       <directionalLight position={[0, 5, 0]} intensity={0.1} shadow-mapSize={128} castShadow />
       {pointLightPositions.map((light, index) => {
-        console.log(`lightIntensities[${light.sliderName}]: ${lightIntensities[light.sliderName]}`);
-        const intensity = lightIntensities[light.sliderName]
+        let intensity = lightIntensities[light.sliderName];
+        if (lightIntensities[light.sliderName] > lightIntensityStarter + 1) {
+          intensity = 10;
+        }
         return light.signName.map((name, nameIndex) => (
           <pointLight
             key={`${index}-${nameIndex}`}
             position={light.position}
-            intensity={ 10 * (index === 0 ? 4 : 0.25)} //figure out why this is turning the scene black
+            intensity={ intensity * (index === 0 ? 4 : 0.25)} 
             color={lightColors[name] || "#FFFFFF"}
           />
         ));

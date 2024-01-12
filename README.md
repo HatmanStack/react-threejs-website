@@ -46,7 +46,7 @@ npm start
     - [X] Lighting for Street Lamps
     - [X] Bake Textures for Skybox
     - [X] Controlers for Light/Sound
-    - [ ] Second Pass Objects / Textures
+    - [ ] <strong>Second Pass Objects / Textures</strong>
     - [ ] Debug: Pacman Click through to Stocks
 - [X] Loading Animation
 - [X] Switch over for old site
@@ -62,7 +62,7 @@ npm start
 - [X] Navigation Instructions
 - [X] Post-processing for Lights
 - [X] Close ups for PhoneScreens
-- [ ] Animations for Controllers
+- [X] Animations for Controllers
 - [ ] Animation for Lamp
 - [X] Animations for Phone descriptions
 - [ ] Debug: Second Click for same Position CloseUp
@@ -70,3 +70,6 @@ npm start
 - [ ] Add Zelda as PlaceHolder for Knockout
 - [ ] Come up with a Solution for Mobile Scroll   
 - [ ] Performance testing
+- [ ] Sound Environment
+- [ ] Add Personal Info to Lawn
+- [ ] Better Way to Display Controls
