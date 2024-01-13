@@ -50,7 +50,7 @@ const videoPaths = [
   require("./assets/Stocks.mp4"),
 ];
 
-export default function Model({setClickPoint, setClickLight, setClickCount, setGLTF, isDragging, closeUp}) {
+export default function Model({setClickPoint, setClickLight, setClickCount, setGLTF, closeUp}) {
   const [count, setCount] = useState(true);
   
   const gltf = useLoader(GLTFLoader, modelPath);

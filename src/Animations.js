@@ -59,6 +59,40 @@ const rotation = [
   [0, 35.17, 0],
 ];
 
+const rubberBandEffectAmp = 1; 
+const vibrationFrequency = 1;
+const vibrationAmplitude = .1;
+
+const rubberBandEffect = t => {
+  let eased;
+  if (t < 0.5) {
+    eased = cubicIn(t * 2 );
+  } else {
+    eased = 1 - cubicOut((t - 0.5) * 2);
+  }
+
+  const vibrated =  eased + Math.sin(t * vibrationFrequency * Math.PI) * vibrationAmplitude * (1 - t) ;
+  let distorted = vibrated * rubberBandEffectAmp;
+
+  if (distorted >= 0.5) {
+    const min = 0.7 + 0.3 * (1 - distorted) * 2; 
+    const max = 1.25 - 0.25 * (1 - distorted) * 2; 
+    distorted = Math.min(Math.max(distorted, min), max);
+  }
+  if (distorted >= 0.5) {
+    distorted = Math.max(distorted, 0.5);
+  }
+  return distorted;
+}
+
+function cubicIn(t) {
+  return t * t * t;
+}
+
+function cubicOut(t) {
+  const f = t - 1;
+  return f * f * f + 1;
+}
 
 export function Animations({gltf, setIsDragging, setLightIntensity, clickPoint, closeUp}) {
   const [nodes, setNodes] = useState();
@@ -68,7 +102,7 @@ export function Animations({gltf, setIsDragging, setLightIntensity, clickPoint, 
     const isMatch = phoneList.indexOf(phoneClicked) === index;
     return useSpring({
       scale: isMatch && closeUp ? [100, 100, 100] : [1, 1, 1],
-      config: { duration: isMatch && closeUp ? 1000 : 50 },
+      config: { duration: isMatch && closeUp ? 2000 : 50, tension: 100, friction: 3, easing: rubberBandEffect },
     });
   });
 

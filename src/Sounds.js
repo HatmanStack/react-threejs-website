@@ -1,30 +1,31 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { Html } from '@react-three/drei';
 import useSound from 'use-sound';
 import buttonClickSound from './assets/click.mp3';
 
-const buttonsList = [
-  'Button_Light_1',
-  'Button_Light_2',
-  'Button_Light_3',
-  'Button_Light_4',
-  'Button_Light_5',
-  'Button_Light_6',
-  'Button_Light_7',
-  'Button_Music_Back',
-  'Button_Music_Forward',
-  'Button_Music_Pause'
-];
-
-export function Sounds({ clickLight, clickCount }) {
+export function Sounds({ clickLight, clickCount, gltf }) {
     const [playActive] = useSound(buttonClickSound, { volume: 0.25 });
 
+    const meshRef = useRef();
+    const iframeRef = useRef();
+
   useEffect(() => {
-    if (buttonsList.includes(clickLight)) {
       playActive();
-    }
-    
     console.log("clickCount", clickCount);
   }, [clickLight, clickCount, playActive]);
 
+  
   return null;
+  /** 
+  return (
+    <mesh>
+      <Html position={[.893, 0.375, 3.886]}>
+        
+          <iframe src="https://www.youtube.com/embed/8NB2ioIuh8M?si=ss92uJm13NEaVnHL" title="description" style={{ position: 'absolute', width: '100px', height: '100px' }} />
+          
+        
+      </Html>
+    </mesh>
+  );
+  */
 }
