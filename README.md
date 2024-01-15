@@ -65,11 +65,11 @@ npm start
 - [X] Animations for Controllers
 - [ ] Animation for Lamp
 - [X] Animations for Phone descriptions
-- [ ] Debug: Second Click for same Position CloseUp
+- [X] Debug: Second Click for same Position CloseUp
 - [ ] Z Rotations for PhoneScreens
 - [ ] Add Zelda as PlaceHolder for Knockout
 - [ ] Come up with a Solution for Mobile Scroll   
 - [ ] Performance testing
 - [ ] Sound Environment
-- [ ] Add Personal Info to Lawn
-- [ ] Better Way to Display Controls
+- [X] Add Personal Info to Lawn
+- [X] Better Way to Display Controls

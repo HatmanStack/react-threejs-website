@@ -15,6 +15,7 @@ export default function App() {
   const [gltf, setGLTF] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const [lightIntensity, setLightIntensity] = useState({sliderName: 'Slider_7', intensity: 10});
+  const [scrollStarted, setScrollStarted] = useState(false);
   const setClickCountWrapper = (x) =>{setClickCount(x);}
   const setClickLightWrapper = (x) =>{setClickLight(x);}
   const setClickPointWrapper = (x) =>{setClickPoint(x);}
@@ -22,6 +23,7 @@ export default function App() {
   const setGLTFWrapper = (x) =>{setGLTF(x);}
   const setIsDraggingWrapper = (x) =>{setIsDragging(x);}
   const setLightIntensityWrapper = (x) =>{setLightIntensity(x);}
+  const setScrollStartedWrapper = (x) =>{setScrollStarted(x);}
 
   function Loader() {
     const { progress } = useProgress()
@@ -46,11 +48,11 @@ export default function App() {
     <div className="CanvasTest">
       <Canvas>
         <Suspense fallback={<Loader />}>
-          <Sounds clickLight={clickLight} clickCount={clickCount}/>
+          <Sounds clickLight={clickLight} clickCount={clickCount} clickPoint={clickPoint}/>
           <Model setClickPoint={setClickPointWrapper} setClickLight={setClickLightWrapper} setClickCount={setClickCountWrapper} setGLTF={setGLTFWrapper} setIsDragging={setIsDraggingWrapper} closeUp={closeUp}/>
-          <CameraControls clickPoint={clickPoint} setClickPoint={setClickPointWrapper} setCloseUp={setCloseUpWrapper} isDragging={isDragging} closeUp={closeUp} />     
+          <CameraControls clickPoint={clickPoint} setClickPoint={setClickPointWrapper} setCloseUp={setCloseUpWrapper} setScrollStarted={setScrollStartedWrapper} isDragging={isDragging} closeUp={closeUp} />     
           <Environment clickLight={clickLight} lightIntensity={lightIntensity} clickCount={clickCount}/> 
-          <Animations gltf={gltf} setIsDragging={setIsDraggingWrapper} setLightIntensity={setLightIntensityWrapper} clickPoint={clickPoint} closeUp={closeUp}/>    
+          <Animations gltf={gltf} setIsDragging={setIsDraggingWrapper} setLightIntensity={setLightIntensityWrapper} scrollStarted={scrollStarted} clickPoint={clickPoint} closeUp={closeUp}/>    
         </Suspense>    
       </Canvas>
     </div>

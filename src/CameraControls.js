@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { extend, useThree, useFrame } from '@react-three/fiber';
 import { OrbitControls as ThreeOrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-//import * as TWEEN from '@tweenjs/tween.js';  Not Importing Correctly
 import { Vector3 } from 'three';
 
 const positions = [[10, 1, 13], [4, 1, 4], [3,1,3.75 ], [0,1,6.5 ], [-12,6,0]]; 
 const rotationPoints = [ [5.1,-2.1,.2], [1.3,.4,3.9], [.1,.6,3.36], [-12.1,5.8,-6.1], [0,0,0]];
-const closeUpPositions = [[0, .5, 4.07],[-.6, .3, 4.1],[5.4, .2, 2.34],[4.76, .2, 1.72],[.5, .3, 3.6],[4.53, .2, 2.7],[1.6, .8, 3.62],[.93, .68, 4.55]];
+const closeUpPositions = [[0, .5, 4.07],[-.6, .3, 4.1],[5.4, .2, 2.34],[4.76, .2, 1.72],[.5, .3, 3.6],[4.53, .2, 2.7],[1.6, .8, 3.62],[.93, .68, 4.55],[]];
 const closeUpRotations = [[-.2,.3,3.4],[-.6, -1, 4.1],[5.4, -1, 2.34],[4.76, -1, 1.72],[.5, -1, 3.6],[4.53, -.1, 2.7],[1.5,.7,3.62],[.93, .53, 3.95]]; 
 const closeUpZRotations = [0,-45,45,165,-25,75,45]
 const positionMap = {"Phone_Stocks": 0, "Phone_Looper_5": 1, "Phone_Looper_Text": 1, "Phone_Vocabulary_5": 2, "Phone_Vocabulary_Text": 2,
@@ -25,7 +24,7 @@ class OrbitControls extends ThreeOrbitControls {
 
 extend({ OrbitControls });
 
-export function CameraControls({ clickPoint, setClickPoint, setCloseUp, isDragging, closeUp}) {
+export function CameraControls({ clickPoint, setClickPoint, setCloseUp, setScrollStarted, isDragging, closeUp}) {
   const [closeUpPosIndex, setCloseUpPosIndex] = useState(0);
   const [rotationPoint, setRotationPoint] = useState(new Vector3());
 
@@ -66,7 +65,9 @@ useEffect(() => {
   controls.current = new OrbitControls(camera, domElement);
   let progress = 0;
   const handleScroll = (event) => {
-    setCloseUp(false);
+      setScrollStarted(true);
+      setCloseUp(false);
+      setCloseUpPosIndex(8);
       const scrollAmount = Math.abs(event.deltaY) * 0.001; 
       progress += scrollAmount; 
       const currentPos = new Vector3(...positions[currentPosIndex]);
@@ -103,34 +104,13 @@ useEffect(() => {
      }else {
       controls.current.enabled = true;
      } 
-    
   }, [isDragging]);
 
   useEffect(() => {
+    if(closeUpPosIndex !==8) {
     camera.position.copy(new Vector3(...closeUpPositions[closeUpPosIndex]));
     camera.rotation.z = closeUpZRotations[closeUpPosIndex]
-    /** TWEEN Library Not Importing Correctly
-    const targetPosition = new Vector3(...closeUpPositions[closeUpPosIndex]);
-    const targetRotationZ = closeUpZRotations[closeUpPosIndex];
-  
-    new TWEEN.Tween(camera.position)
-      .to(targetPosition, 2000) // 2000 milliseconds
-      .easing(TWEEN.Easing.Quadratic.Out)
-      .start();
-  
-    new TWEEN.Tween(camera.rotation)
-      .to({ z: targetRotationZ }, 2000) // 2000 milliseconds
-      .easing(TWEEN.Easing.Quadratic.Out)
-      .start();
-  
-    const animate = () => {
-      if (TWEEN.update()) {
-        requestAnimationFrame(animate);
-      }
-    };
-  
-    animate();
-    */
+    }
   }, [closeUpPosIndex]);
 
   useEffect(() => {

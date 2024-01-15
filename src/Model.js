@@ -85,6 +85,7 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setG
   const handleClick = (event) => {
     const signName = event.object.name;
     if (urlMap[signName]) {
+      setClickCount(prevCount => prevCount + 1);
       window.open(urlMap[signName], '_blank');
     } else if (lightNames.includes(signName)) {
       setClickLight(signName);

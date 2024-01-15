@@ -13,6 +13,14 @@ const slidersList = [
   'Slider_Music'
   ];
 
+const instructionsList = [
+  'text_navigate',
+  'text_rotate',
+  'text_scroll',
+  'text_middle',
+  'text_click'
+]
+
 const nodesList = [
   'Phone_Looper_Text',
   'Phone_Vocabulary_Text',
@@ -43,6 +51,22 @@ let sliderPosition = [
   [.893, 0.375, 3.986]
 ];
 
+const navigationPosition = [
+  [5.019, -.307, 10.185],
+  [5.438, -.470, 11.318],
+  [5.802, -.598, 11.41],
+  [6.236, -.698, 11.951],
+  [6.415, -.809, 12.207],
+];
+
+const navigationRotation = [
+  [54.9, 3.2,14.7],
+  [54.9, 3.2,14.7],
+  [54.9, 3.2,14.7],
+  [54.9, 3.2,14.7],
+  [54.9, 3.2,14.7],
+];
+
 const position = [
   [-0.668423, 0.008689, 4.06791],
   [5.53658, -0.1, 2.3211],
@@ -59,42 +83,7 @@ const rotation = [
   [0, 35.17, 0],
 ];
 
-const rubberBandEffectAmp = 1; 
-const vibrationFrequency = 1;
-const vibrationAmplitude = .1;
-
-const rubberBandEffect = t => {
-  let eased;
-  if (t < 0.5) {
-    eased = cubicIn(t * 2 );
-  } else {
-    eased = 1 - cubicOut((t - 0.5) * 2);
-  }
-
-  const vibrated =  eased + Math.sin(t * vibrationFrequency * Math.PI) * vibrationAmplitude * (1 - t) ;
-  let distorted = vibrated * rubberBandEffectAmp;
-
-  if (distorted >= 0.5) {
-    const min = 0.7 + 0.3 * (1 - distorted) * 2; 
-    const max = 1.25 - 0.25 * (1 - distorted) * 2; 
-    distorted = Math.min(Math.max(distorted, min), max);
-  }
-  if (distorted >= 0.5) {
-    distorted = Math.max(distorted, 0.5);
-  }
-  return distorted;
-}
-
-function cubicIn(t) {
-  return t * t * t;
-}
-
-function cubicOut(t) {
-  const f = t - 1;
-  return f * f * f + 1;
-}
-
-export function Animations({gltf, setIsDragging, setLightIntensity, clickPoint, closeUp}) {
+export function Animations({gltf, setIsDragging, setLightIntensity, scrollStarted, clickPoint, closeUp}) {
   const [nodes, setNodes] = useState();
   const [phoneClicked, setPhoneClicked] = useState();
   
@@ -102,7 +91,16 @@ export function Animations({gltf, setIsDragging, setLightIntensity, clickPoint, 
     const isMatch = phoneList.indexOf(phoneClicked) === index;
     return useSpring({
       scale: isMatch && closeUp ? [100, 100, 100] : [1, 1, 1],
-      config: { duration: isMatch && closeUp ? 2000 : 50, tension: 100, friction: 3, easing: rubberBandEffect },
+      config: 
+        { tension: 200, friction: 5},
+    });
+  });
+
+  const navigationSpring = instructionsList.map((node, index) => {
+    return useSpring({
+      scale: scrollStarted ? [0,0,0] : [.5, .5, .5],
+      config: 
+        { tension: 1000, friction: 50, duration: scrollStarted ? 1000 : 0},
     });
   });
 
@@ -181,7 +179,6 @@ let size = [];
         const mesh = nodes[slider];
         return mesh ? mesh.position.toArray() : [0, 0, 0];
       });
-      console.log(sliderPositions);
     }
   }, [nodes, slidersList]);
 
@@ -208,6 +205,17 @@ let size = [];
           object={nodes[node]}
           position={position[index]}
           rotation={rotation[index]}
+        />
+      );
+    })}
+    {nodes && instructionsList.map((node, index) => {
+      return (
+        <animated.primitive
+          key={node}
+          scale={navigationSpring[index].scale}
+          object={nodes[node]}
+          position={navigationPosition[index]}
+          rotation={navigationRotation[index]}
         />
       );
     })}
