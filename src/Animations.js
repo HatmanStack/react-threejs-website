@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSpring, animated } from '@react-spring/three';
+import { Html } from '@react-three/drei';
 import { useDrag } from '@use-gesture/react';
 
 const slidersList = [
@@ -9,8 +10,7 @@ const slidersList = [
   'Slider_4',
   'Slider_5',
   'Slider_6',
-  'Slider_7',
-  'Slider_Music'
+  'Slider_7'
   ];
 
 const instructionsList = [
@@ -60,11 +60,11 @@ const navigationPosition = [
 ];
 
 const navigationRotation = [
-  [54.9, 3.2,14.7],
-  [54.9, 3.2,14.7],
-  [54.9, 3.2,14.7],
-  [54.9, 3.2,14.7],
-  [54.9, 3.2,14.7],
+  [54.8, 3,14.7],
+  [54.8, 3.01,14.7],
+  [54.8, 3.04,14.7],
+  [54.8, 3.07,14.7],
+  [54.8, 3.1,14.7],
 ];
 
 const position = [
@@ -98,9 +98,9 @@ export function Animations({gltf, setIsDragging, setLightIntensity, scrollStarte
 
   const navigationSpring = instructionsList.map((node, index) => {
     return useSpring({
-      scale: scrollStarted ? [0,0,0] : [.5, .5, .5],
+      scale: scrollStarted ? [0,0,0] : [1, 1, 1],
       config: 
-        { tension: 1000, friction: 50, duration: scrollStarted ? 1000 : 0},
+        { tension: 280, friction: 60},
     });
   });
 
@@ -219,6 +219,28 @@ let size = [];
         />
       );
     })}
+    {nodes &&
+    <>
+         <primitive
+          key="zelda_screen"
+          object={nodes["zelda_screen"]}>
+          <Html className="arcadewrapper" position={[-4.065, -2.7, -1.55]} transform distanceFactor={1.16} >
+          <div className="arcade">
+            <iframe  src="https://web.zquestclassic.com/play/" />
+            </div>
+          </Html>
+        </primitive>
+        <primitive
+          key="music_screen"
+          object={nodes["music_screen"]}>
+          <Html className="musicwrapper" position={[.939, 0.379, 3.986]} transform distanceFactor={1.16} >
+          <div className="music">
+            <iframe src="https://www.youtube.com/embed/JvNQLJ1_HQ0?autoplay=1&loop=1" allow="autoplay" title="description"  />
+            </div>
+          </Html>
+        </primitive>
+      </>
+    }
     </>
     
   );

@@ -4,9 +4,11 @@ import modelPath from './assets/house.glb'
 import { useLoader } from '@react-three/fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
+
 const closeUpClickThrough = 1;  // How many times to click before opening the link
 
 const urlMap = {
+  "text_name": "https://www.gemenielabs.com/contact/",
   "Sign_About": "https://www.gemenielabs.com/contact/",
   "Sign_Articles": "https://medium.com/@HatmanStack",
   "Sign_Privacy": "https://www.gemenielabs.com/app-privacy-policy/",
@@ -24,7 +26,7 @@ const phoneUrls = [
   {"signName":["Phone_Trachtenberg_5", "Phone_Trachtenberg_Text"],"url":"https://www.gemenielabs.com/#trachtenberg"},
   {"signName":["Phone_Italian_5", "Phone_Italian_Text"],"url":"https://www.gemenielabs.com/#italian"},
   {"signName":["Phone_Looper_5", "Phone_Looper_Text"],"url":"https://www.gemenielabs.com/#looper"},
-  {"signName":["PacManScreen_3"],"url":"https://www.google.com"},
+  {"signName":["PacManScreen_4"],"url":"https://www.google.com"},
   {"signName":["Music_Control_Box", "Light_Control_Box"],"url":"https://www.google.com"}
 ]
 
@@ -75,7 +77,7 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setG
             const material = new THREE.MeshBasicMaterial({ map: videoTexture });
             node.material.map = videoTexture;
             node.material.needsUpdate = true;
-          }
+            }
         });
       }
       setGLTF(gltf);
@@ -84,6 +86,7 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setG
 
   const handleClick = (event) => {
     const signName = event.object.name;
+    console.log(signName);
     if (urlMap[signName]) {
       setClickCount(prevCount => prevCount + 1);
       window.open(urlMap[signName], '_blank');
@@ -110,7 +113,7 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setG
   return (
     <>
     <primitive onClick={handleClick} 
-    object={gltf.scene} />
+    object={gltf.scene} />   
   </>)
 
 }

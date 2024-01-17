@@ -10,7 +10,7 @@ const closeUpRotations = [[-.2,.3,3.4],[-.6, -1, 4.1],[5.4, -1, 2.34],[4.76, -1,
 const closeUpZRotations = [0,-45,45,165,-25,75,45]
 const positionMap = {"Phone_Stocks": 0, "Phone_Looper_5": 1, "Phone_Looper_Text": 1, "Phone_Vocabulary_5": 2, "Phone_Vocabulary_Text": 2,
       "Phone_Movies_5": 3, "Phone_Movies_Text": 3, "Phone_Trachtenberg_5": 4, "Phone_Trachtenberg_Text": 4, "Phone_Italian_5": 5, "Phone_Italian_Text": 5,
-    "PacManScreen_3": 6, "Light_Control_Box": 7, "Music_Control_Box": 7};
+    "PacManScreen_4": 6, "Light_Control_Box": 7, "Music_Control_Box": 7};
       
 class OrbitControls extends ThreeOrbitControls {
   constructor(...args) {
@@ -111,6 +111,7 @@ useEffect(() => {
     camera.position.copy(new Vector3(...closeUpPositions[closeUpPosIndex]));
     camera.rotation.z = closeUpZRotations[closeUpPosIndex]
     }
+    
   }, [closeUpPosIndex]);
 
   useEffect(() => {

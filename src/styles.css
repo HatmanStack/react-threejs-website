@@ -18,4 +18,46 @@
   body {
     background: #f0f0f0;
   }
+
+  .arcadewrapper{
+    width: 125px;
+    height: 145px;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .arcade iframe {
+    width: 600px;
+    height: 700px;
+    transform-style: preserve-3d;
+    border: none;
+    -ms-zoom: 0.8;
+    -moz-transform: scale(0.8);
+    -moz-transform-origin: 0 0;
+    -o-transform: scale(0.8);
+    -o-transform-origin: 0 0;
+    -webkit-transform: scale(0.8);
+    -webkit-transform-origin: 0 0;
+  }
+
+  .musicwrapper{
+    width: 45px;
+    height: 35px;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .music iframe {
+    width: 600px;
+    height: 700px;
+    transform-style: preserve-3d;
+    border: none;
+    -ms-zoom: 0.8;
+    -moz-transform: scale(0.8);
+    -moz-transform-origin: 0 0;
+    -o-transform: scale(0.8);
+    -o-transform-origin: 0 0;
+    -webkit-transform: scale(0.8);
+    -webkit-transform-origin: 0 0;
+  }
   

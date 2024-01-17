@@ -67,9 +67,11 @@ npm start
 - [X] Animations for Phone descriptions
 - [X] Debug: Second Click for same Position CloseUp
 - [ ] Z Rotations for PhoneScreens
-- [ ] Add Zelda as PlaceHolder for Knockout
+- [X] Add Zelda as PlaceHolder for Knockout
 - [ ] Come up with a Solution for Mobile Scroll   
 - [ ] Performance testing
-- [ ] Sound Environment
+- [X] Sound Environment
 - [X] Add Personal Info to Lawn
 - [X] Better Way to Display Controls
+- [ ] Dial in Iframe zoom and scale 
+- [ ] Raycaster intersect to hide Iframe display
