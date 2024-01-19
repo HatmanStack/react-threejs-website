@@ -60,7 +60,7 @@ export function CameraControls({ clickPoint, setClickPoint, setCloseUp, setScrol
       controls.current.update();
       controls.current.target.copy(rotationPoint);
       controls.current.update();
-      if(camera.position.x > 1.16 && camera.position.y > 0 && camera.position.z > 1.4){ //PLaceholder Till Raycasting is implemented
+      if(camera.position.x > 1.16 && camera.position.y > 0 && camera.position.z > 1.4){ //PLaceholder Till Raycasting 
         setIframe1(true);
       }else {
         setIframe1(false);

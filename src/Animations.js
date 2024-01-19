@@ -90,7 +90,7 @@ export function Animations({gltf, setIsDragging, setLightIntensity, scrollStarte
   const iframe1Ref = useRef(null);
   const iframe2Ref = useRef(null);
    
-  useEffect(() => { //PLaceholder Till Raycasting is implemented
+  useEffect(() => { //PLaceholder Till Raycasting 
     if(nodes){
       if(iframe1){
         iframe1Ref.current.style.display = 'block'; 
@@ -192,6 +192,12 @@ let size = [];
   */
 
   useEffect(() => {
+    if (scrollStarted) {
+      iframe2Ref.current.src = "https://www.youtube.com/embed/JvNQLJ1_HQ0?autoplay=1&loop=1";
+    }
+  }, [scrollStarted]);
+
+  useEffect(() => {
     if (nodes) {
       const sliderPositions = slidersList.map((slider) => {
         const mesh = nodes[slider];
@@ -257,7 +263,7 @@ let size = [];
         object={nodes["music_screen"]}>
         <Html className="musicwrapper" position={[.939, 0.379, 3.986]} transform distanceFactor={1.16} >
         <div className="music">
-          <iframe ref={iframe2Ref} src="https://www.youtube.com/embed/JvNQLJ1_HQ0?autoplay=1&loop=1" playerVars={{autoplay: 1 }} allow="autoplay" title="description"  />
+          <iframe ref={iframe2Ref} src="https://www.youtube.com/embed/JvNQLJ1_HQ0?autoplay=1&loop=1&mute=1" allow="autoplay" title="description"  />
           </div>
         </Html>
       </primitive>
