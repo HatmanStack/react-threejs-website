@@ -16,6 +16,8 @@ export default function App() {
   const [isDragging, setIsDragging] = useState(false);
   const [lightIntensity, setLightIntensity] = useState({sliderName: 'Slider_7', intensity: 10});
   const [scrollStarted, setScrollStarted] = useState(false);
+  const [iframe1, setIframe1] = useState(true); //PLaceholder Till Raycasting is implemented
+  const [iframe2, setIframe2] = useState(true); //PLaceholder Till Raycasting is implemented
   const setClickCountWrapper = (x) =>{setClickCount(x);}
   const setClickLightWrapper = (x) =>{setClickLight(x);}
   const setClickPointWrapper = (x) =>{setClickPoint(x);}
@@ -24,6 +26,8 @@ export default function App() {
   const setIsDraggingWrapper = (x) =>{setIsDragging(x);}
   const setLightIntensityWrapper = (x) =>{setLightIntensity(x);}
   const setScrollStartedWrapper = (x) =>{setScrollStarted(x);}
+  const setIframe1Wrapper = (x) =>{setIframe1(x);}//PLaceholder Till Raycasting is implemented
+  const setIframe2Wrapper = (x) =>{setIframe2(x);}//PLaceholder Till Raycasting is implemented
 
   function Loader() {
     const { progress } = useProgress()
@@ -49,10 +53,14 @@ export default function App() {
       <Canvas>
         <Suspense fallback={<Loader />}>
           <Sounds clickLight={clickLight} clickCount={clickCount} clickPoint={clickPoint}/>
-          <Model setClickPoint={setClickPointWrapper} setClickLight={setClickLightWrapper} setClickCount={setClickCountWrapper} setGLTF={setGLTFWrapper} setIsDragging={setIsDraggingWrapper} closeUp={closeUp}/>
-          <CameraControls clickPoint={clickPoint} setClickPoint={setClickPointWrapper} setCloseUp={setCloseUpWrapper} setScrollStarted={setScrollStartedWrapper} isDragging={isDragging} closeUp={closeUp} />     
+          <Model setClickPoint={setClickPointWrapper} setClickLight={setClickLightWrapper} setClickCount={setClickCountWrapper}
+            setGLTF={setGLTFWrapper} setIsDragging={setIsDraggingWrapper} closeUp={closeUp}/>
+          <CameraControls clickPoint={clickPoint} setClickPoint={setClickPointWrapper} 
+            setCloseUp={setCloseUpWrapper} setScrollStarted={setScrollStartedWrapper}
+            isDragging={isDragging} setIframe1={setIframe1Wrapper} setIframe2={setIframe2Wrapper} closeUp={closeUp} />     
           <Environment clickLight={clickLight} lightIntensity={lightIntensity} clickCount={clickCount}/> 
-          <Animations gltf={gltf} setIsDragging={setIsDraggingWrapper} setLightIntensity={setLightIntensityWrapper} scrollStarted={scrollStarted} clickPoint={clickPoint} closeUp={closeUp}/>    
+          <Animations gltf={gltf} setIsDragging={setIsDraggingWrapper} setLightIntensity={setLightIntensityWrapper} 
+            scrollStarted={scrollStarted} clickPoint={clickPoint} iframe1={iframe1} iframe2={iframe2} closeUp={closeUp}/>    
         </Suspense>    
       </Canvas>
     </div>

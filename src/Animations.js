@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useSpring, animated } from '@react-spring/three';
+import { useState, useEffect, useRef } from 'react';
+import { useSpring, animated} from '@react-spring/three';
 import { Html } from '@react-three/drei';
 import { useDrag } from '@use-gesture/react';
 
@@ -83,9 +83,27 @@ const rotation = [
   [0, 35.17, 0],
 ];
 
-export function Animations({gltf, setIsDragging, setLightIntensity, scrollStarted, clickPoint, closeUp}) {
+export function Animations({gltf, setIsDragging, setLightIntensity, scrollStarted, clickPoint, iframe1, iframe2, camera, closeUp}) {
   const [nodes, setNodes] = useState();
   const [phoneClicked, setPhoneClicked] = useState();
+
+  const iframe1Ref = useRef(null);
+  const iframe2Ref = useRef(null);
+   
+  useEffect(() => { //PLaceholder Till Raycasting is implemented
+    if(nodes){
+      if(iframe1){
+        iframe1Ref.current.style.display = 'block'; 
+      }else {
+        iframe1Ref.current.style.display = 'none'; 
+      }
+      if(iframe2){
+        iframe2Ref.current.style.display = 'block';
+      }else {
+        iframe2Ref.current.style.display = 'none';
+      } 
+    }
+  },[iframe1, iframe2]);
   
   const textSpring = nodesList.map((node, index) => {
     const isMatch = phoneList.indexOf(phoneClicked) === index;
@@ -180,6 +198,7 @@ let size = [];
         return mesh ? mesh.position.toArray() : [0, 0, 0];
       });
     }
+    
   }, [nodes, slidersList]);
 
   return (
@@ -220,25 +239,28 @@ let size = [];
       );
     })}
     {nodes &&
+    
+    
     <>
-         <primitive
-          key="zelda_screen"
-          object={nodes["zelda_screen"]}>
-          <Html className="arcadewrapper" position={[-4.065, -2.7, -1.55]} transform distanceFactor={1.16} >
-          <div className="arcade">
-            <iframe  src="https://web.zquestclassic.com/play/" />
-            </div>
-          </Html>
-        </primitive>
-        <primitive
-          key="music_screen"
-          object={nodes["music_screen"]}>
-          <Html className="musicwrapper" position={[.939, 0.379, 3.986]} transform distanceFactor={1.16} >
-          <div className="music">
-            <iframe src="https://www.youtube.com/embed/JvNQLJ1_HQ0?autoplay=1&loop=1" allow="autoplay" title="description"  />
-            </div>
-          </Html>
-        </primitive>
+      <primitive
+        key="zelda_screen"
+        object={nodes["zelda_screen"]}
+         >
+        <Html className="arcadewrapper" position={[-4.065, -2.7, -1.55]} transform distanceFactor={1.16} >
+        <div className="arcade">
+          <iframe ref={iframe1Ref} src="https://freepacman.org/" />
+          </div>
+        </Html>
+      </primitive>
+      <primitive
+        key="music_screen"
+        object={nodes["music_screen"]}>
+        <Html className="musicwrapper" position={[.939, 0.379, 3.986]} transform distanceFactor={1.16} >
+        <div className="music">
+          <iframe ref={iframe2Ref} src="https://www.youtube.com/embed/JvNQLJ1_HQ0?autoplay=1&loop=1" playerVars={{autoplay: 1 }} allow="autoplay" title="description"  />
+          </div>
+        </Html>
+      </primitive>
       </>
     }
     </>

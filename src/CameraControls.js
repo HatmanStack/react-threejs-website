@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { extend, useThree, useFrame } from '@react-three/fiber';
+import { useSpring, config, animated} from '@react-spring/three';
 import { OrbitControls as ThreeOrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Vector3 } from 'three';
 
@@ -10,7 +11,7 @@ const closeUpRotations = [[-.2,.3,3.4],[-.6, -1, 4.1],[5.4, -1, 2.34],[4.76, -1,
 const closeUpZRotations = [0,-45,45,165,-25,75,45]
 const positionMap = {"Phone_Stocks": 0, "Phone_Looper_5": 1, "Phone_Looper_Text": 1, "Phone_Vocabulary_5": 2, "Phone_Vocabulary_Text": 2,
       "Phone_Movies_5": 3, "Phone_Movies_Text": 3, "Phone_Trachtenberg_5": 4, "Phone_Trachtenberg_Text": 4, "Phone_Italian_5": 5, "Phone_Italian_Text": 5,
-    "PacManScreen_4": 6, "Light_Control_Box": 7, "Music_Control_Box": 7};
+    "Cube009_4": 6, "Light_Control_Box": 7, "Music_Control_Box": 7};
       
 class OrbitControls extends ThreeOrbitControls {
   constructor(...args) {
@@ -24,7 +25,26 @@ class OrbitControls extends ThreeOrbitControls {
 
 extend({ OrbitControls });
 
-export function CameraControls({ clickPoint, setClickPoint, setCloseUp, setScrollStarted, isDragging, closeUp}) {
+/** 
+const CameraWrapper = animated(({ cameraPosition, camera }) => {  
+  useEffect(() => {
+    camera.position.copy(cameraPosition);
+  }, [cameraPosition, camera]);
+  return null;
+});
+
+function AnimateEyeToTarget({ currentPosition, position, camera }) {   // NaN when setting Current Position 
+  console.log(currentPosition)
+  const springPosition = useSpring({
+    from: [0,0,0],
+    to: position,
+    config: config.wobbly
+  });
+  return <CameraWrapper cameraPosition={springPosition} camera={camera} />;
+}
+*/
+
+export function CameraControls({ clickPoint, setClickPoint, setCloseUp, setScrollStarted, isDragging, setIframe1, setIframe2, closeUp}) {
   const [closeUpPosIndex, setCloseUpPosIndex] = useState(0);
   const [rotationPoint, setRotationPoint] = useState(new Vector3());
 
@@ -40,6 +60,17 @@ export function CameraControls({ clickPoint, setClickPoint, setCloseUp, setScrol
       controls.current.update();
       controls.current.target.copy(rotationPoint);
       controls.current.update();
+      if(camera.position.x > 1.16 && camera.position.y > 0 && camera.position.z > 1.4){ //PLaceholder Till Raycasting is implemented
+        setIframe1(true);
+      }else {
+        setIframe1(false);
+      }
+      if( camera.position.y > -.5 && camera.position.z > 3.9){
+        setIframe2(true);
+      }else {
+        setIframe2(false);
+      }
+      
     }
   });
 
@@ -106,6 +137,7 @@ useEffect(() => {
      } 
   }, [isDragging]);
 
+  
   useEffect(() => {
     if(closeUpPosIndex !==8) {
     camera.position.copy(new Vector3(...closeUpPositions[closeUpPosIndex]));
@@ -118,7 +150,20 @@ useEffect(() => {
     camera.position.set(...positions[0]);
   },[]);
 
-  return null;
+  return(null);
+  /*
+  return (
+    <>
+      {closeUp ? (
+      <AnimateEyeToTarget
+        currentPosition={camera.position.toArray()}
+        position={closeUpPositions[closeUpPosIndex]}
+        camera={camera}
+      />
+    ) : null}
+    </>
+  );
+  **/
 }
 
 

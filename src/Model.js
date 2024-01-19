@@ -5,7 +5,7 @@ import { useLoader } from '@react-three/fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
 
-const closeUpClickThrough = 1;  // How many times to click before opening the link
+const closeUpClickThrough = 2;  // How many times to click before opening the link
 
 const urlMap = {
   "text_name": "https://www.gemenielabs.com/contact/",
@@ -26,7 +26,7 @@ const phoneUrls = [
   {"signName":["Phone_Trachtenberg_5", "Phone_Trachtenberg_Text"],"url":"https://www.gemenielabs.com/#trachtenberg"},
   {"signName":["Phone_Italian_5", "Phone_Italian_Text"],"url":"https://www.gemenielabs.com/#italian"},
   {"signName":["Phone_Looper_5", "Phone_Looper_Text"],"url":"https://www.gemenielabs.com/#looper"},
-  {"signName":["PacManScreen_4"],"url":"https://www.google.com"},
+  {"signName":["Cube009_4"],"url":"https://www.google.com"},
   {"signName":["Music_Control_Box", "Light_Control_Box"],"url":"https://www.google.com"}
 ]
 
@@ -86,7 +86,6 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setG
 
   const handleClick = (event) => {
     const signName = event.object.name;
-    console.log(signName);
     if (urlMap[signName]) {
       setClickCount(prevCount => prevCount + 1);
       window.open(urlMap[signName], '_blank');
@@ -99,7 +98,7 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setG
           setClickPoint(signName);
           if(closeUp){
             setCount(prevCount => prevCount + 1);
-            if(count >= closeUpClickThrough && !phoneUrl.signName.includes("Music_Control_Box")){
+            if(count >= closeUpClickThrough && (!phoneUrl.signName.includes("Music_Control_Box") && !phoneUrl.signName.includes("Cube009_4"))){
               window.open(phoneUrl.url, '_blank');
               setCount(0);
             }

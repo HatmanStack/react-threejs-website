@@ -14,6 +14,8 @@
         "expo": "^49.0.16",
         "expo-cli": "^6.3.10",
         "expo-gl": "~13.0.1",
+        "google-auth-library": "^9.4.2",
+        "googleapis": "^131.0.0",
         "html2canvas": "^1.4.1",
         "install-expo-modules": "^0.6.4",
         "react": "18.2.0",

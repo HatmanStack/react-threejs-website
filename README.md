@@ -1,4 +1,4 @@
-# Gemenie Labs the Site
+# Gemenie Labs Site
 
 A site written in React to showcase work from recent projects in 3D design with relevant links and art.  You can see the unfinished project [here](https://d2b6nykhuskd5e.cloudfront.net/).
 
@@ -47,7 +47,7 @@ npm start
     - [X] Bake Textures for Skybox
     - [X] Controlers for Light/Sound
     - [ ] <strong>Second Pass Objects / Textures</strong>
-    - [ ] Debug: Pacman Click through to Stocks
+    - [X] Debug: Pacman Click through to Stocks
 - [X] Loading Animation
 - [X] Switch over for old site
 - [X] Camera Scroll
@@ -67,11 +67,12 @@ npm start
 - [X] Animations for Phone descriptions
 - [X] Debug: Second Click for same Position CloseUp
 - [ ] Z Rotations for PhoneScreens
-- [X] Add Zelda as PlaceHolder for Knockout
+- [X] Add Pacman as PlaceHolder for Knockout
 - [ ] Come up with a Solution for Mobile Scroll   
 - [ ] Performance testing
 - [X] Sound Environment
 - [X] Add Personal Info to Lawn
 - [X] Better Way to Display Controls
-- [ ] Dial in Iframe zoom and scale 
-- [ ] Raycaster intersect to hide Iframe display
+- [X] Dial in Iframe zoom and scale 
+- [X] Raycaster intersect to hide Iframe display (Placeholder)
+- [ ] Pixelation of Pacman
