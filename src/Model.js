@@ -65,6 +65,7 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setG
     if (gltf) {
       for (let i = 0; i < meshNames.length; i++) {
         gltf.scene.traverse(node => {
+          
           if (node.isMesh && node.name === meshNames[i]) {
             const video = videoRefs[meshNames[i]].current = document.createElement('video');
             video.src = videoPaths[i];
@@ -78,6 +79,16 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setG
             node.material.map = videoTexture;
             node.material.needsUpdate = true;
             }
+          if(node.name == "Base"){
+            const circle = node.children.find(child => child.name === "Circle_1");
+            if (circle) {
+              const material = circle.material;
+              if (material && material.name === "Glass1.002") {
+                material.transparent = true;
+              }
+            }
+            console.log(node);
+          }
         });
       }
       setGLTF(gltf);
