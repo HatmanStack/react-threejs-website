@@ -28,51 +28,15 @@ npm start
 
 ## ToDo
 
-- [ ] Finish .glb of model for import
-    - [X] Textures 
-        - [X] First Pass
-        - [ ] Organize and Shrink/Reuse
-    - [X] Focal Points
-        - [X] Build Camera Array        
-    - [X] Camera Scroll Pan
-        - [X] Camera Start Position
-        - [X] Camera Angles (First Pass)
-    - [ ] Finish Knockout for Pacman Arcade
-    - [X] Create Pages for InDepth Look
-    - [X] Position .Gifs/Mp4 on planes
-        - [X] Load GLTF and Swap Textures for Video
-        - [X] GLTF undefined error   
-    - [ ] Shrink Size
-    - [X] Lighting for Street Lamps
-    - [X] Bake Textures for Skybox
-    - [X] Controlers for Light/Sound
-    - [ ] <strong>Second Pass Objects / Textures</strong>
-    - [X] Debug: Pacman Click through to Stocks
-- [X] Loading Animation
-- [X] Switch over for old site
-- [X] Camera Scroll
-    - [X] Rotation Points
-    - [X] THREE orbit controls target glitch
-- [X] Clickable Nodes
-    - [X] Sign
-    - [X] Projects
-- [X] Add Video Textures and Links
-- [X] Modify Source Video and Canvas for Better Display
-- [X] SkyBox Night
-- [X] Navigation Instructions
-- [X] Post-processing for Lights
-- [X] Close ups for PhoneScreens
-- [X] Animations for Controllers
-- [ ] Animation for Lamp
-- [X] Animations for Phone descriptions
-- [X] Debug: Second Click for same Position CloseUp
-- [ ] Z Rotations for PhoneScreens
-- [X] Add Pacman as PlaceHolder for Knockout
-- [ ] Come up with a Solution for Mobile Scroll   
-- [ ] Performance testing
-- [X] Sound Environment
-- [X] Add Personal Info to Lawn
-- [X] Better Way to Display Controls
-- [X] Dial in Iframe zoom and scale 
-- [X] Raycaster intersect to hide Iframe display (Placeholder)
-- [ ] Pixelation of Pacman
+- ⬜ Finish .glb of model for import
+    - ⬛ Textures
+        - ⬜ Organize and Shrink/Reuse
+    - ⬜ Finish Knockout for Pacman Arcade  
+    - ⬜ Shrink Size
+    - ⬜ <strong>Second Pass Objects / Textures</strong>
+    - ⬜ Debug: Pacman Click through to Stocks
+- ⬜ Animation for Lamp
+- ⬜ Z Rotations for PhoneScreens
+- ⬜ Come up with a Solution for Mobile Scroll   
+- ⬜ Performance testing
+- ⬜ Pixelation of Pacman
