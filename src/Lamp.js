@@ -3,9 +3,8 @@ import { useMemo, useRef } from "react";
 
 import * as THREE from "three";
 
-
-import vertexShader from "!!raw-loader!./shaders/vertex.glsl";
-import fragmentShader from "!!raw-loader!./shaders/fragment.glsl";
+//import vertexShader from "!!raw-loader!./shaders/vertex.glsl";
+//import fragmentShader from "!!raw-loader!./shaders/fragment.glsl";
 
 const CustomGeometryParticles = (props) => {
   const { count } = props;
@@ -47,6 +46,8 @@ const CustomGeometryParticles = (props) => {
 
     points.current.material.uniforms.uTime.value = clock.elapsedTime;
   });
+ 
+
 
   return (
     <points ref={points}>
@@ -64,15 +65,14 @@ const CustomGeometryParticles = (props) => {
         fragmentShader={fragmentShader}
         vertexShader={vertexShader}
         uniforms={uniforms}
-      />
+        />
     </points>
   );
 };
 
-const lamp_animation = () => {
+export function Lamp({ CustomGeometryParticles}) {
   return (
       <CustomGeometryParticles count={4000} />   
   );
 };
 
-export default lamp_animation;

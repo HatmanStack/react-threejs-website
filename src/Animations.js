@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useSpring, animated} from '@react-spring/three';
 import { Html } from '@react-three/drei';
 import { useDrag } from '@use-gesture/react';
-import { lamp_animation } from './Lamp';
+//import { Lamp } from './Lamp';
 
 const slidersList = [
   'Slider_1',
@@ -249,7 +249,7 @@ let size = [];
     
     
     <>
-      <lamp_animation/>
+      
       <primitive
         key="zelda_screen"
         object={nodes["zelda_screen"]}
