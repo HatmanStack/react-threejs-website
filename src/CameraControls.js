@@ -5,8 +5,8 @@ import { Vector3 } from 'three';
 
 const positions = [[10, 1, 13], [4, 1, 4], [3,1,3.75 ], [0,1,6.5 ], [-12,6,0]]; 
 const rotationPoints = [ [5.1,-2.1,.2], [1.3,.4,3.9], [.1,.6,3.36], [-12.1,5.8,-6.1], [0,0,0]];
-const closeUpPositions = [[0, .5, 4.07],[-.6, .3, 4.1],[5.4, .2, 2.34],[4.76, .2, 1.72],[.5, .3, 3.6],[4.53, .2, 2.7],[1.65, .8, 3.62],[.93, .68, 4.55],[]];
-const closeUpRotations = [[-.2,.3,3.4],[-.6, -1, 4.1],[5.4, -1, 2.34],[4.76, -1, 1.72],[.5, -1, 3.6],[4.53, -.1, 2.7],[1.5,.65,3.62],[.93, .53, 3.95]]; 
+const closeUpPositions = [[0, .5, 4.07],[-.6, .3, 4.1],[5.4, .2, 2.34],[4.76, .2, 1.72],[.5, .3, 3.6],[4.53, .2, 2.7],[1.8, .9, 3.62],[.93, .68, 4.55],[]];
+const closeUpRotations = [[-.2,.3,3.4],[-.6, -1, 4.1],[5.4, -1, 2.34],[4.76, -1, 1.72],[.5, -1, 3.6],[4.53, -.1, 2.7],[1.5,.6,3.62],[.93, .53, 3.95]]; 
 const closeUpZRotations = [0,-45,45,165,-25,75,45]
 const positionMap = {"Phone_Stocks": 0, "Phone_Looper_5": 1, "Phone_Looper_Text": 1, "Phone_Vocabulary_5": 2, "Phone_Vocabulary_Text": 2,
       "Phone_Movies_5": 3, "Phone_Movies_Text": 3, "Phone_Trachtenberg_5": 4, "Phone_Trachtenberg_Text": 4, "Phone_Italian_5": 5, "Phone_Italian_Text": 5,

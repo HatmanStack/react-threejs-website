@@ -35,8 +35,8 @@ npm start
     - ⬜ Shrink Size
     - ⬜ <strong>Second Pass Objects / Textures</strong>
     - ⬜ Debug: Pacman Click through to Stocks
-- ⬜ Animation for Lamp
+- ⬛ Animation for Lamp
 - ⬜ Z Rotations for PhoneScreens
 - ⬜ Come up with a Solution for Mobile Scroll   
 - ⬜ Performance testing
-- ⬜ Pixelation of Pacman
+- ⬛ Pixelation of Pacman

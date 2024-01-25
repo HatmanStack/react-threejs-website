@@ -20,23 +20,23 @@
   }
 
   .arcadewrapper{
-    width: 125px;
-    height: 145px;
+    width: 140px;
+    height: 160px;
     padding: 0;
     overflow: hidden;
   }
 
   .arcade iframe {
-    width: 630px;
-    height: 900px;
+    width: 560px;
+    height: 840px;
     transform-style: preserve-3d;
     border: none;
     -ms-zoom: 0.2;
-    -moz-transform: scale(0.2);
+    -moz-transform: scale(0.25);
     -moz-transform-origin: 0 0;
-    -o-transform: scale(0.2);
+    -o-transform: scale(0.25);
     -o-transform-origin: 0 0;
-    -webkit-transform: scale(0.2);
+    -webkit-transform: scale(0.25);
     -webkit-transform-origin: 0 0;
   }
 
