@@ -16,8 +16,8 @@ export default function App() {
   const [isDragging, setIsDragging] = useState(false);
   const [lightIntensity, setLightIntensity] = useState({sliderName: 'Slider_7', intensity: 10});
   const [scrollStarted, setScrollStarted] = useState(false);
-  const [iframe1, setIframe1] = useState(true); //PLaceholder Till Raycasting 
-  const [iframe2, setIframe2] = useState(true); //PLaceholder Till Raycasting 
+  const [iframe1, setIframe1] = useState(true); 
+  const [iframe2, setIframe2] = useState(true); 
   const setClickCountWrapper = (x) =>{setClickCount(x);}
   const setClickLightWrapper = (x) =>{setClickLight(x);}
   const setClickPointWrapper = (x) =>{setClickPoint(x);}
@@ -26,8 +26,8 @@ export default function App() {
   const setIsDraggingWrapper = (x) =>{setIsDragging(x);}
   const setLightIntensityWrapper = (x) =>{setLightIntensity(x);}
   const setScrollStartedWrapper = (x) =>{setScrollStarted(x);}
-  const setIframe1Wrapper = (x) =>{setIframe1(x);}//PLaceholder Till Raycasting 
-  const setIframe2Wrapper = (x) =>{setIframe2(x);}//PLaceholder Till Raycasting 
+  const setIframe1Wrapper = (x) =>{setIframe1(x);}
+  const setIframe2Wrapper = (x) =>{setIframe2(x);}
 
   function Loader() {
     const { progress } = useProgress()
@@ -43,7 +43,7 @@ export default function App() {
       }}>
         <a href="https://gemenielabs.com" style={{ color: 'white', textDecoration: 'none' }}>Original Site</a>
         <img src="https://www.gemenielabs.com/wp-content/uploads/2023/11/hand.gif" width="250" />
-        {progress} % loaded
+        {Math.round(progress)} % loaded
       </div>
     </Html>)
   }

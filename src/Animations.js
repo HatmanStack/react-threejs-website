@@ -8,7 +8,7 @@ function useSliderSpring(slider, index, initialY, sliderPosition, setIsDragging,
   const [{ y }, set] = useSpring(() => ({ 
     y: initialY,
     config: {
-      tension: 15, // Needs to be more Tactile
+      tension: 15, 
       friction: 10,
     },
   }));
@@ -34,7 +34,7 @@ export function Animations({gltf, setIsDragging, setLightIntensity, scrollStarte
   const iframe1Ref = useRef(null);
   const iframe2Ref = useRef(null);
    
-  useEffect(() => { //PLaceholder Till Raycasting 
+  useEffect(() => { 
     if(nodes){
       if(iframe1){
         iframe1Ref.current.style.display = 'block'; 
@@ -80,39 +80,6 @@ export function Animations({gltf, setIsDragging, setLightIntensity, scrollStarte
       setNodes(nodes);
     }
   }, [gltf]);
-
-/** Blender not exporting/Loader not importing position and rotation properly **HARDCODED**
-const meshRefs = nodesList.map(() => useRef());
-const sliderRefs = slidersList.map(() => useRef());
-
-let position = [];
-let rotation = [];
-let size = [];
-
-  useEffect(() => {
-    if (nodes) {
-      nodesList.forEach((node, index) => {
-        const mesh = nodes[node];
-        if (mesh) {
-          position[index] = mesh.position.toArray();
-          rotation[index] = mesh.rotation.toArray();
-          size[index] = mesh.scale.toArray();
-        }
-      });
-       
-      slidersList.forEach((slider, index) => {
-        const mesh = nodes[slider];
-        if (mesh) {
-          const newPositionIndex = index + nodesList.length;
-          position[newPositionIndex] = mesh.position.toArray();
-          rotation[newPositionIndex] = mesh.rotation.toArray();
-          size[newPositionIndex] = mesh.scale.toArray();
-        }
-      });
-      
-    }
-  }, [nodes]);
-  */
 
   useEffect(() => {
     if (scrollStarted) {

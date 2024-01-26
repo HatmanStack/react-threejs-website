@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import * as THREE from 'three';
 import modelPath from './assets/house.glb'
 import { useLoader } from '@react-three/fiber'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { GLTFLoader as GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 export default function Model({setClickPoint, setClickLight, setClickCount, setGLTF, closeUp}) {
   const [count, setCount] = useState(true);
   
-  const gltf = useLoader(GLTFLoader, modelPath);
+  const gltf = useLoader(GLTF, modelPath);
+  
   const videoRefs = meshNames.reduce((acc, name) => {
     acc[name] = React.useRef();
     return acc;
@@ -103,8 +104,7 @@ const phoneUrls = [
   {"signName":["Phone_Trachtenberg_5", "Phone_Trachtenberg_Text"],"url":"https://www.gemenielabs.com/#trachtenberg"},
   {"signName":["Phone_Italian_5", "Phone_Italian_Text"],"url":"https://www.gemenielabs.com/#italian"},
   {"signName":["Phone_Looper_5", "Phone_Looper_Text"],"url":"https://www.gemenielabs.com/#looper"},
-  {"signName":["Cube009_4"],"url":"https://www.google.com"},
-  {"signName":["PacManScreen_2"],"url":"https://www.google.com"},
+  {"signName":["Cube009_2"],"url":"https://www.google.com"},
   {"signName":["Music_Control_Box", "Light_Control_Box"],"url":"https://www.google.com"}
 ]
 
