@@ -1,13 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import * as THREE from 'three';
-import modelPath from './assets/house.glb'
-import { useLoader } from '@react-three/fiber'
-import { GLTFLoader as GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { useThree } from '@react-three/fiber';
+import modelPath from './assets/compressed.glb'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { useGLTF } from '@react-three/drei';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+
+function useGLTFLoaderWithDRACO(path) {
+  const { gl, scene } = useThree();
+  const dracoLoader = new DRACOLoader();
+  dracoLoader.setDecoderConfig({ type: 'js' });
+  dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+  const loader = new GLTFLoader();
+  loader.setDRACOLoader(dracoLoader);
+  const gltf = useGLTF(path, loader);
+  dracoLoader.dispose();
+  return gltf;
+}
 
 export default function Model({setClickPoint, setClickLight, setClickCount, setGLTF, closeUp}) {
   const [count, setCount] = useState(true);
   
-  const gltf = useLoader(GLTF, modelPath);
+  const gltf = useGLTFLoaderWithDRACO(modelPath);
   
   const videoRefs = meshNames.reduce((acc, name) => {
     acc[name] = React.useRef();

@@ -17,7 +17,6 @@ function useSliderSpring(slider, index, initialY, sliderPosition, setIsDragging,
     let movementY = (-my * .001)  + sliderPosition[index][1];
     const newY = down ? Math.min(Math.max(movementY, index === 7 ? .375 - 0.033 : .538 - 0.033),
      index === 7 ? .375 + 0.025 : .538 + 0.025) : sliderPosition[index][1];
-    
     set.start({ y: newY });
     setIsDragging(down);
     sliderPosition[index][1] = newY;
@@ -27,7 +26,7 @@ function useSliderSpring(slider, index, initialY, sliderPosition, setIsDragging,
   return { y, bind };
 }
 
-export function Animations({gltf, setIsDragging, setLightIntensity, scrollStarted, clickPoint, iframe1, iframe2, camera, closeUp}) {
+export function Animations({closeUpPosIndex, gltf, setIsDragging, setLightIntensity, scrollStarted, clickPoint, iframe1, iframe2, camera, closeUp}) {
   const [nodes, setNodes] = useState();
   const [phoneClicked, setPhoneClicked] = useState();
 
@@ -88,11 +87,18 @@ export function Animations({gltf, setIsDragging, setLightIntensity, scrollStarte
   }, [scrollStarted]);
 
   useEffect(() => {
+    if (closeUp && closeUpPosIndex === 6) {
+      iframe1Ref.current.src = "https://freepacman.org/";
+    }
+  }, [closeUp, closeUpPosIndex]);
+
+  useEffect(() => {
     if (nodes) {
       const sliderPositions = slidersList.map((slider) => {
         const mesh = nodes[slider];
         return mesh ? mesh.position.toArray() : [0, 0, 0];
       });
+      console.log(nodes);
     }
     
   }, [nodes, slidersList]);
@@ -138,7 +144,7 @@ export function Animations({gltf, setIsDragging, setLightIntensity, scrollStarte
     <>
     <primitive
     scale={.15}
-    object={nodes["Mball"]}
+    object={nodes["Tball"]}
     position={[5.12, 0.33, 2.13]}>
     <CustomGeometryParticles count={3000} /> 
     </primitive>
@@ -147,14 +153,14 @@ export function Animations({gltf, setIsDragging, setLightIntensity, scrollStarte
         object={nodes["zelda_screen"]}>
         <Html className="arcadewrapper" position={[-4.055, -2.7, -1.6]} transform distanceFactor={1.16} >
         <div className="arcade">
-          <iframe ref={iframe1Ref} src="https://freepacman.org/" />
+          <iframe ref={iframe1Ref} src="https://freepacman.org"/>
           </div>
         </Html>
       </primitive>
       <primitive
         key="music_screen"
         object={nodes["music_screen"]}>
-        <Html className="musicwrapper" position={[.939, 0.379, 3.986]} transform distanceFactor={1.16} >
+        <Html className="musicwrapper" position={[-.07, -.145, -.01]} transform distanceFactor={1.16} >
         <div className="music">
           <iframe ref={iframe2Ref} src="https://www.youtube.com/embed/JvNQLJ1_HQ0?autoplay=1&loop=1&mute=1" allow="autoplay" title="description"  />
           </div>

@@ -18,6 +18,7 @@ export default function App() {
   const [scrollStarted, setScrollStarted] = useState(false);
   const [iframe1, setIframe1] = useState(true); 
   const [iframe2, setIframe2] = useState(true); 
+  const [closeUpPosIndex, setCloseUpPosIndex] = useState(0);
   const setClickCountWrapper = (x) =>{setClickCount(x);}
   const setClickLightWrapper = (x) =>{setClickLight(x);}
   const setClickPointWrapper = (x) =>{setClickPoint(x);}
@@ -28,6 +29,7 @@ export default function App() {
   const setScrollStartedWrapper = (x) =>{setScrollStarted(x);}
   const setIframe1Wrapper = (x) =>{setIframe1(x);}
   const setIframe2Wrapper = (x) =>{setIframe2(x);}
+  const setCloseUpPosIndexWrapper = (x) =>{setCloseUpPosIndex(x);}
 
   function Loader() {
     const { progress } = useProgress()
@@ -48,6 +50,11 @@ export default function App() {
     </Html>)
   }
 
+  let element = document.getElementById('body');
+
+
+  console.log([element]);
+
   return (
     <div className="CanvasTest">
       <Canvas>
@@ -56,10 +63,10 @@ export default function App() {
           <Model setClickPoint={setClickPointWrapper} setClickLight={setClickLightWrapper} setClickCount={setClickCountWrapper}
             setGLTF={setGLTFWrapper} setIsDragging={setIsDraggingWrapper} closeUp={closeUp}/>
           <CameraControls clickPoint={clickPoint} setClickPoint={setClickPointWrapper} 
-            setCloseUp={setCloseUpWrapper} setScrollStarted={setScrollStartedWrapper}
+            setCloseUp={setCloseUpWrapper} setCloseUpPosIndex={setCloseUpPosIndexWrapper} setScrollStarted={setScrollStartedWrapper}
             isDragging={isDragging} setIframe1={setIframe1Wrapper} setIframe2={setIframe2Wrapper} closeUp={closeUp} />     
           <Environment clickLight={clickLight} lightIntensity={lightIntensity} clickCount={clickCount}/> 
-          <Animations gltf={gltf} setIsDragging={setIsDraggingWrapper} setLightIntensity={setLightIntensityWrapper} 
+          <Animations closeUpPosIndex={closeUpPosIndex} gltf={gltf} setIsDragging={setIsDraggingWrapper} setLightIntensity={setLightIntensityWrapper} 
             scrollStarted={scrollStarted} clickPoint={clickPoint} iframe1={iframe1} iframe2={iframe2} closeUp={closeUp}/>    
         </Suspense>    
       </Canvas>
