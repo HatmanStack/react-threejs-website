@@ -1,6 +1,6 @@
 # Gemenie Labs Site
 
-A site written in React to showcase work from recent projects in 3D design with relevant links and art.  You can see the unfinished project [here](https://d2b6nykhuskd5e.cloudfront.net/).
+A site written in React to showcase work from recent projects in 3D design with relevant links and art.  You can see the unfinished project [here](https://cg-portfolio.site/).
 
 ## Features
 
