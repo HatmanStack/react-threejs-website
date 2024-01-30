@@ -54,7 +54,7 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setG
                 material.transparent = true;
               }
             }
-            console.log(node);
+            
           }
         });
       }
@@ -64,7 +64,6 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setG
 
   const handleClick = (event) => {
     const signName = event.object.name;
-    console.log(signName);
     if (urlMap[signName]) {
       setClickCount(prevCount => prevCount + 1);
       window.open(urlMap[signName], '_blank');
@@ -118,7 +117,7 @@ const phoneUrls = [
   {"signName":["Phone_Trachtenberg_5", "Phone_Trachtenberg_Text"],"url":"https://www.gemenielabs.com/#trachtenberg"},
   {"signName":["Phone_Italian_5", "Phone_Italian_Text"],"url":"https://www.gemenielabs.com/#italian"},
   {"signName":["Phone_Looper_5", "Phone_Looper_Text"],"url":"https://www.gemenielabs.com/#looper"},
-  {"signName":["Cube009_2"],"url":"https://www.google.com"},
+  {"signName":["Cube009_2"],"url":""},
   {"signName":["Music_Control_Box", "Light_Control_Box"],"url":"https://www.google.com"}
 ]
 

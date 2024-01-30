@@ -26,7 +26,7 @@ function useSliderSpring(slider, index, initialY, sliderPosition, setIsDragging,
   return { y, bind };
 }
 
-export function Animations({closeUpPosIndex, gltf, setIsDragging, setLightIntensity, scrollStarted, clickPoint, iframe1, iframe2, camera, closeUp}) {
+export function Animations({closeUpPosIndex, gltf, setIsDragging, setLightIntensity, scrollStarted, setClickPoint, clickPoint, iframe1, iframe2, camera, closeUp}) {
   const [nodes, setNodes] = useState();
   const [phoneClicked, setPhoneClicked] = useState();
 
@@ -75,7 +75,6 @@ export function Animations({closeUpPosIndex, gltf, setIsDragging, setLightIntens
   useEffect(() => {
     if (gltf) {
       const { nodes } = gltf;
-      console.log(nodes);
       setNodes(nodes);
     }
   }, [gltf]);
@@ -83,14 +82,9 @@ export function Animations({closeUpPosIndex, gltf, setIsDragging, setLightIntens
   useEffect(() => {
     if (scrollStarted) {
       iframe2Ref.current.src = "https://www.youtube.com/embed/JvNQLJ1_HQ0?autoplay=1&loop=1";
-    }
-  }, [scrollStarted]);
-
-  useEffect(() => {
-    if (closeUp && closeUpPosIndex === 6) {
       iframe1Ref.current.src = "https://freepacman.org/";
     }
-  }, [closeUp, closeUpPosIndex]);
+  }, [scrollStarted]);
 
   useEffect(() => {
     if (nodes) {
@@ -98,7 +92,6 @@ export function Animations({closeUpPosIndex, gltf, setIsDragging, setLightIntens
         const mesh = nodes[slider];
         return mesh ? mesh.position.toArray() : [0, 0, 0];
       });
-      console.log(nodes);
     }
     
   }, [nodes, slidersList]);
@@ -145,15 +138,16 @@ export function Animations({closeUpPosIndex, gltf, setIsDragging, setLightIntens
     <primitive
     scale={.15}
     object={nodes["Tball"]}
-    position={[5.12, 0.33, 2.13]}>
+    position={[5.12, 0.33, 2.16]}>
     <CustomGeometryParticles count={3000} /> 
     </primitive>
       <primitive
         key="zelda_screen"
-        object={nodes["zelda_screen"]}>
+        object={nodes["zelda_screen"]}
+        >
         <Html className="arcadewrapper" position={[-4.055, -2.7, -1.6]} transform distanceFactor={1.16} >
         <div className="arcade">
-          <iframe ref={iframe1Ref} src="https://freepacman.org"/>
+          <iframe ref={iframe1Ref} src=""/>
           </div>
         </Html>
       </primitive>

@@ -24,8 +24,8 @@ class OrbitControls extends ThreeOrbitControls {
 
 extend({ OrbitControls });
 
-export function CameraControls({ clickPoint, setClickPoint, setCloseUp, setCloseUpPosIndex, setScrollStarted, isDragging, setIframe1, setIframe2, closeUp}) {
-  const [cuPosIndex, setCuPosIndex] = useState(0);
+export function CameraControls({ clickPoint, setClickPoint, setCloseUp, setScrollStarted, isDragging, setIframe1, setIframe2, closeUp}) {
+  const [closeUpPosIndex, setCloseUpPosIndex] = useState(0);
   const [rotationPoint, setRotationPoint] = useState(new Vector3());
   const [patchCamera, setPatchCamera] = useState(true);
 
@@ -70,12 +70,12 @@ export function CameraControls({ clickPoint, setClickPoint, setCloseUp, setClose
   useEffect(() => {
     let newRotationPoint;
     if (closeUp) {
-      newRotationPoint = new Vector3(...closeUpRotations[cuPosIndex]);
+      newRotationPoint = new Vector3(...closeUpRotations[closeUpPosIndex]);
     } else {
       newRotationPoint = new Vector3(...rotationPoints[currentPosIndex]);
     }
     setRotationPoint(newRotationPoint);
-  }, [closeUp, cuPosIndex, currentPosIndex]);
+  }, [closeUp, closeUpPosIndex, currentPosIndex]);
 
 useEffect(() => {
   controls.current = new OrbitControls(camera, domElement);
@@ -110,7 +110,6 @@ useEffect(() => {
       setCloseUp(true);
       let positionIndex = positionMap[clickPoint] || 0;
       setCloseUpPosIndex(positionIndex);
-      setCuPosIndex(positionIndex);
       setClickPoint(null);
     }
   }, [clickPoint]);
@@ -125,12 +124,12 @@ useEffect(() => {
 
   
   useEffect(() => {
-    if(cuPosIndex !==8) {
-    camera.position.copy(new Vector3(...closeUpPositions[cuPosIndex]));
-    camera.rotation.z = closeUpZRotations[cuPosIndex]
+    if(closeUpPosIndex !==8) {
+    camera.position.copy(new Vector3(...closeUpPositions[closeUpPosIndex]));
+    camera.rotation.z = closeUpZRotations[closeUpPosIndex]
     }
     
-  }, [cuPosIndex]);
+  }, [closeUpPosIndex]);
 
   useEffect(() => {
     camera.position.set(...positions[0]);

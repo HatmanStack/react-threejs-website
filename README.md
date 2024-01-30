@@ -29,14 +29,8 @@ npm start
 ## ToDo
 
 - ⬜ Finish .glb of model for import
-    - ⬛ Textures
-        - ⬛ Organize and Shrink/Reuse
     - ⬜ Finish Knockout for Pacman Arcade  
-    - ⬛ Shrink Size / Draco Shenanigans Ongoing
     - ⬜ <strong>Second Pass Objects / Textures</strong>
-    - ⬛ Debug: Pacman Click through to Stocks
-- ⬛ Animation for Lamp
-- ⬛ Z Rotations for PhoneScreens
+- ⬜ Z Rotations for PhoneScreens
 - ⬜ Come up with a Solution for Mobile Scroll   
 - ⬜ Performance testing
-- ⬛ Pixelation of Pacman
