@@ -6,6 +6,7 @@ import Model from './Model'
 import { CameraControls } from './CameraControls'
 import { Animations } from './Animations'
 import { Sounds } from './Sounds'
+import { Bear } from './Bear'
 
 export default function App() {
   const [clickPoint, setClickPoint] = useState(null);
@@ -18,6 +19,8 @@ export default function App() {
   const [scrollStarted, setScrollStarted] = useState(false);
   const [iframe1, setIframe1] = useState(true); 
   const [iframe2, setIframe2] = useState(true); 
+  const [loadProgress, setLoadProgress] = useState(0);
+  const [vibe, setVibe] = useState(0);
   const setClickCountWrapper = (x) =>{setClickCount(x);}
   const setClickLightWrapper = (x) =>{setClickLight(x);}
   const setClickPointWrapper = (x) =>{setClickPoint(x);}
@@ -31,7 +34,9 @@ export default function App() {
 
   function Loader() {
     const { progress } = useProgress()
-    return (<Html fullscreen>
+    return (
+    <>
+    <Html >
       
       <div style={{
         display: 'flex',
@@ -52,26 +57,31 @@ export default function App() {
       onMouseLeave={e => e.target.style.transform = 'scale(1)'} 
       >Gemenie Labs</a>
         <img src="https://www.gemenielabs.com/wp-content/uploads/2023/11/hand.gif" width="250" />
-        {Math.round(progress)} % loaded
+        {Math.round(progress)} % loaded 
       </div>
       
-    </Html>)
+    </Html>
+    <Bear onClick={() => setVibe(1)} />
+    </>)
   }
 
   return (
     <div className="CanvasTest" >
       <Canvas>
         <Suspense fallback={<Loader />}>
-          <Sounds clickLight={clickLight} clickCount={clickCount} clickPoint={clickPoint}/>
-          <Model setClickPoint={setClickPointWrapper} setClickLight={setClickLightWrapper} setClickCount={setClickCountWrapper}
-            setGLTF={setGLTFWrapper} setIsDragging={setIsDraggingWrapper} closeUp={closeUp}/>
-          <CameraControls clickPoint={clickPoint} setClickPoint={setClickPointWrapper} 
-            setCloseUp={setCloseUpWrapper} setScrollStarted={setScrollStartedWrapper}
-            isDragging={isDragging} setIframe1={setIframe1Wrapper} setIframe2={setIframe2Wrapper} closeUp={closeUp} />     
-          <Environment clickLight={clickLight} lightIntensity={lightIntensity} clickCount={clickCount}/> 
-          <Animations gltf={gltf} setIsDragging={setIsDraggingWrapper} setLightIntensity={setLightIntensityWrapper} 
-            scrollStarted={scrollStarted} setClickPoint={setClickPointWrapper} clickPoint={clickPoint} iframe1={iframe1} iframe2={iframe2} closeUp={closeUp}/>    
-        </Suspense>    
+          { 
+            <>
+              <Sounds clickLight={clickLight} clickCount={clickCount} clickPoint={clickPoint}/>
+              <Model setClickPoint={setClickPointWrapper} setClickLight={setClickLightWrapper} setClickCount={setClickCountWrapper}
+                setGLTF={setGLTFWrapper} setIsDragging={setIsDraggingWrapper} closeUp={closeUp}/>
+              <CameraControls clickPoint={clickPoint} setClickPoint={setClickPointWrapper} 
+                setCloseUp={setCloseUpWrapper} setScrollStarted={setScrollStartedWrapper}
+                isDragging={isDragging} setIframe1={setIframe1Wrapper} setIframe2={setIframe2Wrapper} closeUp={closeUp} />     
+              <Environment clickLight={clickLight} lightIntensity={lightIntensity} clickCount={clickCount}/> 
+              <Animations gltf={gltf} setIsDragging={setIsDraggingWrapper} setLightIntensity={setLightIntensityWrapper} 
+                scrollStarted={scrollStarted} setClickPoint={setClickPointWrapper} clickPoint={clickPoint} iframe1={iframe1} iframe2={iframe2} closeUp={closeUp}/>    
+            </>}
+            </Suspense>    
       </Canvas>
     </div>
   )
