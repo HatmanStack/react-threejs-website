@@ -1,12 +1,35 @@
 import React, {  Suspense, useState } from 'react'
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { Environment } from './Environment'
 import { Html, useProgress } from '@react-three/drei'
 import Model from './Model'
 import { CameraControls } from './CameraControls'
 import { Animations } from './Animations'
 import { Sounds } from './Sounds'
+import {LaunchScreen} from './LaunchScreen'
 import { Bear } from './Bear'
+
+
+
+function createRestartButton() {
+  const restartButton = document.querySelector(".reset");
+  const textAnimation = document.querySelector(".text-stroke");
+
+  const setAnimationName = (element, animationName) => {
+      element && (element.style.animationName = animationName);
+  };
+
+  restartButton.addEventListener(
+      "click",
+      () => {
+          setAnimationName(textAnimation, "none");
+          requestAnimationFrame(() =>
+              setTimeout(() => setAnimationName(textAnimation, ""), 0)
+          );
+      },
+      false
+  );
+}
 
 export default function App() {
   const [clickPoint, setClickPoint] = useState(null);
@@ -19,8 +42,8 @@ export default function App() {
   const [scrollStarted, setScrollStarted] = useState(false);
   const [iframe1, setIframe1] = useState(true); 
   const [iframe2, setIframe2] = useState(true); 
-  const [loadProgress, setLoadProgress] = useState(0);
-  const [vibe, setVibe] = useState(0);
+  const [vibe, setVibe] = useState(null);
+  const [cameraPosition, setCameraPosition] = useState([0, 0, 0]);
   const setClickCountWrapper = (x) =>{setClickCount(x);}
   const setClickLightWrapper = (x) =>{setClickLight(x);}
   const setClickPointWrapper = (x) =>{setClickPoint(x);}
@@ -31,9 +54,15 @@ export default function App() {
   const setScrollStartedWrapper = (x) =>{setScrollStarted(x);}
   const setIframe1Wrapper = (x) =>{setIframe1(x);}
   const setIframe2Wrapper = (x) =>{setIframe2(x);}
+  const setCameraPositionWrapper = (x) =>{setCameraPosition(x);}
+  const setVibeWrapper = (x) =>{setVibe(x);}
+  
+  
+ 
 
   function Loader() {
     const { progress } = useProgress()
+    //<Bear onClick={() => setVibe(1)} />
     return (
     <>
     <Html >
@@ -61,27 +90,29 @@ export default function App() {
       </div>
       
     </Html>
-    <Bear onClick={() => setVibe(1)} />
+    
     </>)
   }
 
   return (
     <div className="CanvasTest" >
       <Canvas>
-        <Suspense fallback={<Loader />}>
-          { 
-            <>
+      {vibe != null ? 
+        (<Suspense fallback={<Loader />}>
               <Sounds clickLight={clickLight} clickCount={clickCount} clickPoint={clickPoint}/>
               <Model setClickPoint={setClickPointWrapper} setClickLight={setClickLightWrapper} setClickCount={setClickCountWrapper}
                 setGLTF={setGLTFWrapper} setIsDragging={setIsDraggingWrapper} closeUp={closeUp}/>
-              <CameraControls clickPoint={clickPoint} setClickPoint={setClickPointWrapper} 
+              <CameraControls setCameraPosition={setCameraPositionWrapper} clickPoint={clickPoint} setClickPoint={setClickPointWrapper} 
                 setCloseUp={setCloseUpWrapper} setScrollStarted={setScrollStartedWrapper}
                 isDragging={isDragging} setIframe1={setIframe1Wrapper} setIframe2={setIframe2Wrapper} closeUp={closeUp} />     
               <Environment clickLight={clickLight} lightIntensity={lightIntensity} clickCount={clickCount}/> 
-              <Animations gltf={gltf} setIsDragging={setIsDraggingWrapper} setLightIntensity={setLightIntensityWrapper} 
-                scrollStarted={scrollStarted} setClickPoint={setClickPointWrapper} clickPoint={clickPoint} iframe1={iframe1} iframe2={iframe2} closeUp={closeUp}/>    
-            </>}
-            </Suspense>    
+              <Animations vibe={vibe} gltf={gltf} setIsDragging={setIsDraggingWrapper} setLightIntensity={setLightIntensityWrapper} 
+                scrollStarted={scrollStarted} setClickPoint={setClickPointWrapper} clickPoint={clickPoint} iframe1={iframe1} iframe2={iframe2} closeUp={closeUp}/>  
+        </Suspense>  ):(
+          <Html>
+            <LaunchScreen setVibe={setVibeWrapper}/>
+          </Html>
+        ) }
       </Canvas>
     </div>
   )

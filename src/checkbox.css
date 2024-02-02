@@ -1,0 +1,161 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    min-height: 100vh;
+    font-size: 2em;
+  }
+  
+  .toggle-container {
+    position: relative;
+    border-radius: 3.125em;
+    width: 3.25em;
+    height: 1.875em;
+  }
+  
+  .toggle-checkbox {
+    -webkit-appearance: none;
+    appearance: none;
+    position: absolute;
+    z-index: 1;
+    border-radius: inherit;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .toggle-track {
+    display: flex;
+    align-items: center;
+    position: relative;
+    border-radius: inherit;
+    padding: 0.25em;
+    width: 100%;
+    height: 100%;
+    background-color: #aeaeae;
+    box-shadow: inset 0 0.0625em 0.125em rgba(0, 0, 0, 0.2);
+    transition: background-color 0.4s linear;
+  }
+  .toggle-container.rural > .toggle-checkbox:checked + .toggle-track {
+    background-color: #4ccf59;
+  }
+  .toggle-container.urban > .toggle-checkbox:checked + .toggle-track {
+    background-color: #3384fb;
+  }
+  .toggle-container.classy > .toggle-checkbox:checked + .toggle-track {
+    background-color: #ff3372;
+  }
+  .toggle-container.chill > .toggle-checkbox:checked + .toggle-track {
+    background-color: #ff3372;
+  }
+  
+  .toggle-thumb {
+    position: relative;
+    border-radius: 0.6875em;
+    transform-origin: left;
+    width: 1.375em;
+    height: 1.375em;
+    background-color: #fff;
+    box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.2), inset 0 -0.125em 0.25em rgba(0, 0, 0, 0.2);
+  }
+  .toggle-checkbox.toggled-once + .toggle-track > .toggle-thumb {
+    animation-name: grow-out, bounce-out;
+    animation-duration: 0.2s;
+    animation-timing-function: cubic-bezier(0.75, 0, 1, 1), cubic-bezier(0, 0, 0.3, 1.5);
+    animation-delay: 0s, 0.2s;
+    animation-fill-mode: forwards;
+  }
+  .toggle-checkbox.toggled-once:checked + .toggle-track > .toggle-thumb {
+    animation-name: grow-in, bounce-in;
+  }
+.toggle-container.rural .toggle-thumb::after,
+.toggle-container.chill .toggle-thumb::after,
+.toggle-container.urban .toggle-thumb::after,
+.toggle-container.classy .toggle-thumb::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: inherit;
+    width: 100%;
+    height: 100%;
+    background-size: 63.6363636364% 54.5454545455%;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: inset 0 -0.125em 0.25em rgba(0, 0, 0, 0.2);
+    image-rendering: pixelated;
+    opacity: 0;
+    transition: opacity 0.2s linear;
+  }
+  .toggle-container.rural .toggle-thumb::after{
+    background-image: url("https://www.gemenielabs.com/wp-content/uploads/2022/08/music.svg");
+  }
+  .toggle-container.chill .toggle-thumb::after{
+    background-image: url("https://www.gemenielabs.com/wp-content/uploads/2022/08/stock.svg");
+  }
+  .toggle-container.urban .toggle-thumb::after{
+    background-image: url("https://www.gemenielabs.com/wp-content/uploads/2022/08/italian.svg");
+  }
+  .toggle-container.classy .toggle-thumb::after{
+    background-image: url("https://www.gemenielabs.com/wp-content/uploads/2022/08/trachtenberg.svg");
+  }
+  
+  .toggle-container.rural > .toggle-checkbox:checked + .toggle-track > .toggle-thumb::after,
+  .toggle-container.chill > .toggle-checkbox:checked + .toggle-track > .toggle-thumb::after,
+  .toggle-container.urban > .toggle-checkbox:checked + .toggle-track > .toggle-thumb::after,
+  .toggle-container.classy > .toggle-checkbox:checked + .toggle-track > .toggle-thumb::after {
+    opacity: 1;
+  }
+  
+  @media (hover: hover) {
+    .toggle-container.rural > .toggle-checkbox:hover + .toggle-track > .toggle-thumb::after,
+    .toggle-container.chill > .toggle-checkbox:hover + .toggle-track > .toggle-thumb::after,
+    .toggle-container.urban > .toggle-checkbox:hover + .toggle-track > .toggle-thumb::after,
+    .toggle-container.classy > .toggle-checkbox:hover + .toggle-track > .toggle-thumb::after {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes grow-in {
+    0% {
+      border-radius: 0.6875em;
+      transform: translateX(0) scale(1);
+    }
+    100% {
+      border-radius: 0.4448529412em / 0.9453125em;
+      transform: translateX(0.5em) scale(1.5454545455, 0.7272727273);
+    }
+  }
+  @keyframes bounce-in {
+    0% {
+      border-radius: 0.4448529412em / 0.9453125em;
+      transform: translateX(0.5em) scale(1.5454545455, 0.7272727273);
+    }
+    100% {
+      border-radius: 0.6875em;
+      transform: translateX(100%) scale(1);
+    }
+  }
+  @keyframes grow-out {
+    0% {
+      border-radius: 0.6875em;
+      transform: translateX(100%) scale(1);
+    }
+    100% {
+      border-radius: 0.4448529412em / 0.9453125em;
+      transform: translateX(0.125em) scale(1.5454545455, 0.7272727273);
+    }
+  }
+  @keyframes bounce-out {
+    0% {
+      border-radius: 0.4448529412em / 0.9453125em;
+      transform: translateX(0.125em) scale(1.5454545455, 0.7272727273);
+    }
+    100% {
+      border-radius: 0.6875em;
+      transform: translateX(0) scale(1);
+    }
+  }

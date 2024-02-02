@@ -24,7 +24,7 @@ class OrbitControls extends ThreeOrbitControls {
 
 extend({ OrbitControls });
 
-export function CameraControls({ clickPoint, setClickPoint, setCloseUp, setScrollStarted, isDragging, setIframe1, setIframe2, closeUp}) {
+export function CameraControls({ setCameraPosition, clickPoint, setClickPoint, setCloseUp, setScrollStarted, isDragging, setIframe1, setIframe2, closeUp}) {
   const [closeUpPosIndex, setCloseUpPosIndex] = useState(0);
   const [rotationPoint, setRotationPoint] = useState(new Vector3());
   const [patchCamera, setPatchCamera] = useState(true);
@@ -46,6 +46,7 @@ export function CameraControls({ clickPoint, setClickPoint, setCloseUp, setScrol
       controls.current.update();
       controls.current.target.copy(rotationPoint);
       controls.current.update();
+      setCameraPosition(camera.position.toArray());
       if(camera.position.x > 1.78 && camera.position.y > 0 && camera.position.z > .25){ 
         setIframe1(true);
       }else {
