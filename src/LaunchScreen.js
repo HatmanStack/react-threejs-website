@@ -13,7 +13,7 @@ export function LaunchScreen({ setVibe }) {
     }
   };
 
-  const handleClick = (color) => {
+  const handleClick = (color) => { 
     setSelectedVibe(color);
   };
 
@@ -24,43 +24,55 @@ export function LaunchScreen({ setVibe }) {
       setTimeout(() => setAnimationName("textStrokeAnim"), 0)
     );
   };
-  /**<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>  
-    <svg className="text-stroke" ref={textAnimationRef}>
-        <text y="50%" dy=".3em">URBAN</text>
-    </svg>
-    <svg className="text-stroke" ref={textAnimationRef}>
-        <text y="50%" dy=".3em">RURAL</text>
-    </svg>
-    <svg className="text-stroke" ref={textAnimationRef}>
-        <text y="50%" dy=".3em">CLASSY</text>
-    </svg>
-    <svg className="text-stroke" ref={textAnimationRef}>
-        <text y="50%" dy=".3em">CHILL</text>
-    </svg>
-    <svg className="text-stroke" ref={textAnimationRef}>
-        <text y="50%" dy=".3em">BAD</text>
-    </svg>
-    </div> */
+
+  /**
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <svg className="text-stroke" ref={textAnimationRef}>
+          <text y="50%" dy=".3em">BAD</text>
+        </svg>
+        <Checkbox color="chill" active={selectedVibe === '3'} onClick={() => handleClick('3')} />
+      </div>
+   */
 
   return (
-    <>
-    
-    <svg className="text-stroke" ref={textAnimationRef}>
-        <text y="50%" dy=".3em">VIBES</text>
+    <>   
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '2em' }}>
+    <svg className="title-stroke" ref={textAnimationRef}>
+        <text y="50%" dy=".3em">VIBE</text>
     </svg>
-    
-    
-    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>  
-      <Checkbox color="urban" active={selectedVibe === '0'} onClick={() => handleClick('0')} />
-      <Checkbox color="rural" active={selectedVibe === '1'} onClick={() => handleClick('1')} />
-      <Checkbox color="classy" active={selectedVibe === '2'} onClick={() => handleClick('2')} />
-      <Checkbox color="chill" active={selectedVibe === '3'} onClick={() => handleClick('3')} />
-    
+    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}> 
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '2em' }}> 
+        <svg className="text-stroke" ref={textAnimationRef}>
+          <text y="50%" dy=".3em">URBAN</text>
+        </svg>
+        <Checkbox color="urban" active={selectedVibe === '0'} onClick={() => handleClick('0')} />
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '2em' }}>
+        <svg className="text-stroke" ref={textAnimationRef}>
+          <text y="50%" dy=".3em">RURAL</text>
+        </svg>
+        <Checkbox color="rural" active={selectedVibe === '1'} onClick={() => handleClick('1')} />
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '2em' }}>
+        <svg className="text-stroke" ref={textAnimationRef}>
+          <text y="50%" dy=".3em">CLASS</text>
+        </svg>
+        <Checkbox color="classy" active={selectedVibe === '2'} onClick={() => handleClick('2')} />
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '2em' }}>
+        <svg className="text-stroke" ref={textAnimationRef}>
+          <text y="50%" dy=".3em">CHILL</text>
+        </svg>
+        <Checkbox color="chill" active={selectedVibe === '3'} onClick={() => handleClick('3')} />
+      </div>
+      
     </div>
     <button className="reset" onClick={handleLaunchClick}>
       LAUNCH
     </button>
+    </div>
     </>
   );
+ 
 }
 

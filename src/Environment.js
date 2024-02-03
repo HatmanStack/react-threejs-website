@@ -15,7 +15,7 @@ const pointLightPositions = [
   { position: [-2.1, .57, 5.05], signName: ["lamp_front", "Button_Light_1"], sliderName: "Slider_1" },
 ]
 
-export function Environment({ clickLight, lightIntensity, clickCount }) {
+export function Environment({ vibe, clickLight, lightIntensity, clickCount }) {
   
   const initialColor = lightColorWheel[Math.floor(Math.random() * lightColorWheel.length)];
   const [lightColors, setLightColors] = useState(

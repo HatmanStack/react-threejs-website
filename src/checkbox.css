@@ -1,6 +1,4 @@
 body {
-    display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 1em;
@@ -40,16 +38,16 @@ body {
     transition: background-color 0.4s linear;
   }
   .toggle-container.rural > .toggle-checkbox:checked + .toggle-track {
-    background-color: #4ccf59;
+    background-color:  #80C080;
   }
   .toggle-container.urban > .toggle-checkbox:checked + .toggle-track {
-    background-color: #3384fb;
+    background-color: #E96929;
   }
   .toggle-container.classy > .toggle-checkbox:checked + .toggle-track {
-    background-color: #ff3372;
+    background-color: #9FA8DA;
   }
   .toggle-container.chill > .toggle-checkbox:checked + .toggle-track {
-    background-color: #ff3372;
+    background-color: #EF5555;
   }
   
   .toggle-thumb {
@@ -91,16 +89,16 @@ body {
     transition: opacity 0.2s linear;
   }
   .toggle-container.rural .toggle-thumb::after{
-    background-image: url("https://www.gemenielabs.com/wp-content/uploads/2022/08/music.svg");
+    background-image: url("./assets/stock.svg");
   }
   .toggle-container.chill .toggle-thumb::after{
-    background-image: url("https://www.gemenielabs.com/wp-content/uploads/2022/08/stock.svg");
+    background-image: url("./assets/music.svg");
   }
   .toggle-container.urban .toggle-thumb::after{
-    background-image: url("https://www.gemenielabs.com/wp-content/uploads/2022/08/italian.svg");
+    background-image: url("./assets/logo.svg");
   }
   .toggle-container.classy .toggle-thumb::after{
-    background-image: url("https://www.gemenielabs.com/wp-content/uploads/2022/08/trachtenberg.svg");
+    background-image: url("./assets/trachtenberg.svg");
   }
   
   .toggle-container.rural > .toggle-checkbox:checked + .toggle-track > .toggle-thumb::after,

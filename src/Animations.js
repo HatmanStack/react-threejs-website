@@ -4,7 +4,7 @@ import { Html } from '@react-three/drei';
 import { useDrag } from '@use-gesture/react';
 import { CustomGeometryParticles } from './Lamp';
 
-function useSliderSpring(slider, index, initialY, sliderPosition, setIsDragging, setLightIntensity) {
+function useSliderSpring( slider, index, initialY, sliderPosition, setIsDragging, setLightIntensity) {
   const [{ y }, set] = useSpring(() => ({ 
     y: initialY,
     config: {
@@ -26,7 +26,7 @@ function useSliderSpring(slider, index, initialY, sliderPosition, setIsDragging,
   return { y, bind };
 }
 
-export function Animations({closeUpPosIndex, gltf, setIsDragging, setLightIntensity, scrollStarted, setClickPoint, clickPoint, iframe1, iframe2, camera, closeUp}) {
+export function Animations({scrollStarted, vibe, gltf, setIsDragging, setLightIntensity, clickPoint, iframe1, iframe2, closeUp}) {
   const [nodes, setNodes] = useState();
   const [phoneClicked, setPhoneClicked] = useState();
 
@@ -79,12 +79,7 @@ export function Animations({closeUpPosIndex, gltf, setIsDragging, setLightIntens
     }
   }, [gltf]);
 
-  useEffect(() => {
-    if (scrollStarted) {
-      iframe2Ref.current.src = "https://www.youtube.com/embed/JvNQLJ1_HQ0?autoplay=1&loop=1";
-      iframe1Ref.current.src = "https://freepacman.org/";
-    }
-  }, [scrollStarted]);
+  
 
   useEffect(() => {
     if (nodes) {
@@ -147,16 +142,16 @@ export function Animations({closeUpPosIndex, gltf, setIsDragging, setLightIntens
         >
         <Html className="arcadewrapper" position={[-4.055, -2.7, -1.6]} transform distanceFactor={1.16} >
         <div className="arcade">
-          <iframe ref={iframe1Ref} src=""/>
+          <iframe ref={iframe1Ref} src={vibeURLs[vibe].iframe1}  />
           </div>
         </Html>
       </primitive>
       <primitive
         key="music_screen"
         object={nodes["music_screen"]}>
-        <Html className="musicwrapper" position={[-.07, -.145, -.01]} transform distanceFactor={1.16} >
+        <Html className="musicwrapper" position={[-.073, -.145, -.01]} transform distanceFactor={1.16} >
         <div className="music">
-          <iframe ref={iframe2Ref} src="https://www.youtube.com/embed/JvNQLJ1_HQ0?autoplay=1&loop=1&mute=1" allow="autoplay" title="description"  />
+          <iframe ref={iframe2Ref} src={vibeURLs[vibe].iframe2} allow="autoplay" title="description"  />
           </div>
         </Html>
       </primitive>
@@ -183,6 +178,21 @@ const instructionsList = [
   'text_middle',
   'text_click'
 ]
+
+const vibeURLs = [{
+  iframe1: "https://freesonic.org/",
+  iframe2: "https://www.youtube.com/embed/pCx5Std7mCo?autoplay=1&loop=1&mute=0"
+},{
+  iframe1: "https://freekong.org/",
+  iframe2: "https://www.youtube.com/embed/A3svABDnmio?autoplay=1&loop=1&mute=0"
+},{
+  iframe1: "https://freepacman.org/",
+  iframe2: "https://www.youtube.com/embed/JvNQLJ1_HQ0?autoplay=1&loop=1&mute=0"
+},{
+  iframe1: "https://freeasteroids.org/",
+  iframe2: "https://www.youtube.com/embed/6HbrymTIbyg?autoplay=1&loop=1&mute=0"
+}]
+
 
 const nodesList = [
   'Phone_Looper_Text',
