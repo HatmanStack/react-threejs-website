@@ -21,6 +21,7 @@ export default function App() {
   const [iframe2, setIframe2] = useState(true); 
   const [vibe, setVibe] = useState(null);
   const [scrollStarted, setScrollStarted] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const setClickCountWrapper = (x) =>{setClickCount(x);}
   const setClickLightWrapper = (x) =>{setClickLight(x);}
   const setClickPointWrapper = (x) =>{setClickPoint(x);}
@@ -32,6 +33,16 @@ export default function App() {
   const setIframe2Wrapper = (x) =>{setIframe2(x);}
   const setVibeWrapper = (x) =>{setVibe(x);}
   const setScrollStartedWrapper = (x) =>{setScrollStarted(x);}
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   function Loader() {
     const { progress } = useProgress()
@@ -69,14 +80,14 @@ export default function App() {
               <Sounds clickLight={clickLight} clickCount={clickCount} clickPoint={clickPoint}/>
               <Model setClickPoint={setClickPointWrapper} setClickLight={setClickLightWrapper} setClickCount={setClickCountWrapper}
                 setGLTF={setGLTFWrapper} setIsDragging={setIsDraggingWrapper} closeUp={closeUp}/>
-              <CameraControls setScrollStarted={setScrollStartedWrapper} clickPoint={clickPoint} setClickPoint={setClickPointWrapper} setCloseUp={setCloseUpWrapper} isDragging={isDragging} 
+              <CameraControls windowWidth={windowWidth} setScrollStarted={setScrollStartedWrapper} clickPoint={clickPoint} setClickPoint={setClickPointWrapper} setCloseUp={setCloseUpWrapper} isDragging={isDragging} 
               setIframe1={setIframe1Wrapper} setIframe2={setIframe2Wrapper} closeUp={closeUp} />     
               <Environment vibe={vibe} clickLight={clickLight} lightIntensity={lightIntensity} clickCount={clickCount}/> 
-              <Animations scrollStarted={scrollStarted} vibe={vibe} gltf={gltf} setIsDragging={setIsDraggingWrapper} setLightIntensity={setLightIntensityWrapper} 
+              <Animations windowWidth={windowWidth} scrollStarted={scrollStarted} vibe={vibe} gltf={gltf} setIsDragging={setIsDraggingWrapper} setLightIntensity={setLightIntensityWrapper} 
                clickPoint={clickPoint} iframe1={iframe1} iframe2={iframe2} closeUp={closeUp}/>  
           </Canvas>
         </Suspense> ):(   
-            <LaunchScreen setVibe={setVibeWrapper} fullscreen/>
+            <LaunchScreen windowWidth={windowWidth} setVibe={setVibeWrapper} fullscreen/>
         ) }
       </>
   )

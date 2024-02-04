@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import {Checkbox} from './Checkbox';
 import './launch.css';
 
-export function LaunchScreen({ setVibe }) {
+export function LaunchScreen({ windowWidth, setVibe }) {
   const textAnimationRef = useRef(null);
   const [selectedVibe, setSelectedVibe] = useState(null);
   const resetButtonRef = useRef(null);
@@ -48,22 +48,13 @@ export function LaunchScreen({ setVibe }) {
     );
   };
 
-  /**
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-        <svg className="text-stroke" ref={textAnimationRef}>
-          <text y="50%" dy=".3em">BAD</text>
-        </svg>
-        <Checkbox color="chill" active={selectedVibe === '3'} onClick={() => handleClick('3')} />
-      </div>
-   */
-
   return (
     <>   
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '2em' }}>
     <svg className="title-stroke" ref={textAnimationRef}>
         <text y="50%" dy=".3em">VIBE</text>
     </svg>
-    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}> 
+    <div className="checkbox-container" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}> 
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', margin: '2em' }}> 
         <svg className="text-stroke-urban" ref={textAnimationRef}>
           <text y="50%" dy=".3em">URBAN</text>

@@ -17,6 +17,7 @@ A site written in React to showcase work from recent projects in 3D design with 
 ## Getting Started
 
     - Working Node install
+    - Download the custom .glb from [here](https://www.cg-portfolio.site/compressed.glb) and include it's absolute path in Model.js in filePath
     
 ```
 git clone https://github.com/hatmanstack/react-threejs-website.git

@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "description": "This is a website for Gemenie Labs",
     "keywords": [],
+    "homepage": "https://www.cg-portfolio.site",
     "main": "src/index.js",
     "dependencies": {
         "@react-spring/three": "^9.7.3",

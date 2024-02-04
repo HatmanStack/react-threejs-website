@@ -1,3 +1,5 @@
+/** Credit to Nicolas Jesenberger https://codepen.io/nicolasjesenberger/pen/bGQwBYo */
+
 body {
     justify-content: center;
     align-items: center;
@@ -88,17 +90,21 @@ body {
     opacity: 0;
     transition: opacity 0.2s linear;
   }
+  /**Chill icons created by Freepik - Flaticon*/
   .toggle-container.rural .toggle-thumb::after{
-    background-image: url("./assets/stock.svg");
+    background-image: url("./assets/rural.svg");
   }
+  /**Chill icons created by Freepik - Flaticon*/
   .toggle-container.chill .toggle-thumb::after{
-    background-image: url("./assets/music.svg");
+    background-image: url("./assets/chill.svg");
   }
+  /**City icons created by Eucalyp - Flaticon*/
   .toggle-container.urban .toggle-thumb::after{
-    background-image: url("./assets/logo.svg");
+    background-image: url("./assets/urban.svg");
   }
+  /**Material Icon created by Google */
   .toggle-container.classy .toggle-thumb::after{
-    background-image: url("./assets/trachtenberg.svg");
+    background-image: url("./assets/classy.svg");
   }
   
   .toggle-container.rural > .toggle-checkbox:checked + .toggle-track > .toggle-thumb::after,

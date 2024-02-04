@@ -1,3 +1,5 @@
+/** Credit to Taluska https://codepen.io/Taluska/pen/yLRZRoY */
+
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap");
 
 *,
@@ -8,6 +10,28 @@
     --fill-color: #9b9dad;
     --hover-color: #B68672; 
 }
+
+.checkbox-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  /* Below 1200px, checkboxes take half the width (2 per row) */
+  @media (max-width: 1200px) {
+    .checkbox-container > div {
+      width: 50%;
+    }
+  }
+  
+  /* Below 800px, checkboxes take full width (1 per row) */
+  @media (max-width: 800px) {
+    .checkbox-container {
+      flex-direction: column;
+    }
+    .checkbox-container > div {
+      width: 100%;
+    }
+  }
 
 body {
     gap: 1rem;

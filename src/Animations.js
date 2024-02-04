@@ -26,10 +26,11 @@ function useSliderSpring( slider, index, initialY, sliderPosition, setIsDragging
   return { y, bind };
 }
 
-export function Animations({scrollStarted, vibe, gltf, setIsDragging, setLightIntensity, clickPoint, iframe1, iframe2, closeUp}) {
+export function Animations({windowWidth, scrollStarted, vibe, gltf, setIsDragging, setLightIntensity, clickPoint, iframe1, iframe2, closeUp}) {
   const [nodes, setNodes] = useState();
   const [phoneClicked, setPhoneClicked] = useState();
-
+  const position = windowWidth < 800 ? [-4.055, -2.7, -1.6] : [-4.055, -2.7, -1.6];
+  const className = windowWidth < 800 ? "arcadewrapper-small" : "arcadewrapper";
   const iframe1Ref = useRef(null);
   const iframe2Ref = useRef(null);
    
@@ -140,7 +141,7 @@ export function Animations({scrollStarted, vibe, gltf, setIsDragging, setLightIn
         key="zelda_screen"
         object={nodes["zelda_screen"]}
         >
-        <Html className="arcadewrapper" position={[-4.055, -2.7, -1.6]} transform distanceFactor={1.16} >
+        <Html className={className} position={position}  transform distanceFactor={1.16} >
         <div className="arcade">
           <iframe ref={iframe1Ref} src={vibeURLs[vibe].iframe1}  />
           </div>

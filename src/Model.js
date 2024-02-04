@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import * as THREE from 'three';
 import { useThree } from '@react-three/fiber';
-import modelPath from './assets/compressed.glb'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { useGLTF } from '@react-three/drei';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
@@ -20,8 +19,9 @@ function useGLTFLoaderWithDRACO(path) {
 
 export default function Model({setClickPoint, setClickLight, setClickCount, setGLTF, closeUp}) {
   const [count, setCount] = useState(true);
-  
-  const gltf = useGLTFLoaderWithDRACO(modelPath);
+  const filePath = 'https://www.cg-portfolio.site/compressed.glb';
+  console.log(filePath);
+  const gltf = useGLTFLoaderWithDRACO(filePath);
   
   const videoRefs = meshNames.reduce((acc, name) => {
     acc[name] = React.useRef();

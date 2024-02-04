@@ -15,6 +15,13 @@
     overflow: hidden;
   }
 
+  .arcadewrapper-small {
+    width: 140px;
+    height: 220px; /* adjust as needed */
+    padding: 0;
+    overflow: hidden;
+  }
+
   .arcade iframe {
     width: 560px;
     height: 840px;
