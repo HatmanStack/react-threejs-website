@@ -32,6 +32,5 @@ npm start
 - ⬜ Finish .glb of model for import
     - ⬜ Finish Knockout for Pacman Arcade  
     - ⬜ <strong>Second Pass Objects / Textures</strong>
-- ⬜ Z Rotations for PhoneScreens
-- ⬜ Come up with a Solution for Mobile Scroll   
+- ⬜ Z Rotations for PhoneScreens 
 - ⬜ Performance testing

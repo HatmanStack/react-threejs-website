@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import {Checkbox} from './Checkbox';
-import './launch.css';
+import '../css/launch.css';
 
 export function LaunchScreen({ windowWidth, setVibe }) {
   const textAnimationRef = useRef(null);
@@ -17,10 +17,10 @@ export function LaunchScreen({ windowWidth, setVibe }) {
           resetButtonRef.current.style.setProperty('--hover-color', '#80C080');
           break;
         case '2':
-          resetButtonRef.current.style.setProperty('--hover-color', '#9FA8DA');
+          resetButtonRef.current.style.setProperty('--hover-color', '#EF5555');
           break;
         case '3':
-          resetButtonRef.current.style.setProperty('--hover-color', '#EF5555');
+          resetButtonRef.current.style.setProperty('--hover-color', '#9FA8DA');
           break;
         default:
           resetButtonRef.current.style.setProperty('--hover-color', '#B68672');

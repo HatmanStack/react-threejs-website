@@ -1,13 +1,16 @@
-import React, {  Suspense, useState, useEffect } from 'react'
+import React, {  Suspense, useState, useEffect, useRef } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { Environment } from './Environment'
+import { Environment } from './components/Environment'
 import { useProgress } from '@react-three/drei'
-import Model from './Model'
-import { CameraControls } from './CameraControls'
-import { Animations } from './Animations'
-import { Sounds } from './Sounds'
-import {LaunchScreen} from './LaunchScreen'
+import Model from './components/Model'
+import { CameraControls } from './components/CameraControls'
+import { Animations } from './components/Animations'
+import { Sounds } from './components/Sounds'
+import {LaunchScreen} from './components/LaunchScreen'
 import handGif from './assets/hand.gif';
+
+
+
 
 export default function App() {
   const [clickPoint, setClickPoint] = useState(null);
@@ -22,6 +25,8 @@ export default function App() {
   const [vibe, setVibe] = useState(null);
   const [scrollStarted, setScrollStarted] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [mobileScroll, setMobileScroll] = useState(null);
+  const navigateButtonRef = useRef(null);
   const setClickCountWrapper = (x) =>{setClickCount(x);}
   const setClickLightWrapper = (x) =>{setClickLight(x);}
   const setClickPointWrapper = (x) =>{setClickPoint(x);}
@@ -33,6 +38,33 @@ export default function App() {
   const setIframe2Wrapper = (x) =>{setIframe2(x);}
   const setVibeWrapper = (x) =>{setVibe(x);}
   const setScrollStartedWrapper = (x) =>{setScrollStarted(x);}
+  
+  useEffect(() => {
+    if (vibe !== null && navigateButtonRef.current) {
+      switch (vibe) {
+        case '0':
+          navigateButtonRef.current.style.setProperty('--active-color', '#E96929');
+          navigateButtonRef.current.style.setProperty('--rest-color', '#B68672');
+          break;
+        case '1':
+          navigateButtonRef.current.style.setProperty('--active-color', '#80C080');
+          navigateButtonRef.current.style.setProperty('--rest-color', '#869582');
+          break;
+        case '2':
+          navigateButtonRef.current.style.setProperty('--active-color', '#EF5555');
+          navigateButtonRef.current.style.setProperty('--rest-color', '#f38484');
+          break;
+        case '3':
+          navigateButtonRef.current.style.setProperty('--active-color', '#9FA8DA');
+          navigateButtonRef.current.style.setProperty('--rest-color', '#8F909D');
+          break;
+        default:
+          navigateButtonRef.current.style.setProperty('--hover-color', '#B68672');
+          navigateButtonRef.current.style.setProperty('--rest-color', '#E96929');
+          break;
+      }
+    }
+  }, [vibe]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -68,25 +100,36 @@ export default function App() {
         <img src={handGif} width="250" />
         {Math.round(progress)} % loaded 
       </div>    
-      
     </>)
   }
+  
+  const handleStart = () => {
+    setMobileScroll(prevCount => prevCount + 1);
+  };
   
   return (
       <>
       {vibe != null ? 
         (<Suspense fallback={<Loader />}>
-          <Canvas>
-              <Sounds clickLight={clickLight} clickCount={clickCount} clickPoint={clickPoint}/>
-              <Model setClickPoint={setClickPointWrapper} setClickLight={setClickLightWrapper} setClickCount={setClickCountWrapper}
-                setGLTF={setGLTFWrapper} setIsDragging={setIsDraggingWrapper} closeUp={closeUp}/>
-              <CameraControls windowWidth={windowWidth} setScrollStarted={setScrollStartedWrapper} clickPoint={clickPoint} setClickPoint={setClickPointWrapper} setCloseUp={setCloseUpWrapper} isDragging={isDragging} 
-              setIframe1={setIframe1Wrapper} setIframe2={setIframe2Wrapper} closeUp={closeUp} />     
-              <Environment vibe={vibe} clickLight={clickLight} lightIntensity={lightIntensity} clickCount={clickCount}/> 
-              <Animations windowWidth={windowWidth} scrollStarted={scrollStarted} vibe={vibe} gltf={gltf} setIsDragging={setIsDraggingWrapper} setLightIntensity={setLightIntensityWrapper} 
-               clickPoint={clickPoint} iframe1={iframe1} iframe2={iframe2} closeUp={closeUp}/>  
-          </Canvas>
-        </Suspense> ):(   
+          <div className="button-container">
+            <Canvas>
+                <Sounds vibe={vibe} clickLight={clickLight} clickCount={clickCount} clickPoint={clickPoint}/>
+                <Model setClickPoint={setClickPointWrapper} setClickLight={setClickLightWrapper} setClickCount={setClickCountWrapper}
+                  setGLTF={setGLTFWrapper} setIsDragging={setIsDraggingWrapper} closeUp={closeUp}/>
+                <CameraControls mobileScroll={mobileScroll} windowWidth={windowWidth} setScrollStarted={setScrollStartedWrapper} clickPoint={clickPoint} setClickPoint={setClickPointWrapper} setCloseUp={setCloseUpWrapper} isDragging={isDragging} 
+                setIframe1={setIframe1Wrapper} setIframe2={setIframe2Wrapper} closeUp={closeUp} />     
+                <Environment vibe={vibe} clickLight={clickLight} lightIntensity={lightIntensity} clickCount={clickCount}/> 
+                <Animations windowWidth={windowWidth} scrollStarted={scrollStarted} vibe={vibe} gltf={gltf} setIsDragging={setIsDraggingWrapper} setLightIntensity={setLightIntensityWrapper} 
+                clickPoint={clickPoint} iframe1={iframe1} iframe2={iframe2} closeUp={closeUp}/>           
+            </Canvas>
+            <button className="navigate" 
+              ref={navigateButtonRef}
+              onMouseDown={handleStart} 
+              onTouchStart={handleStart}
+              />
+            </div>
+          </Suspense>
+           ):(   
             <LaunchScreen windowWidth={windowWidth} setVibe={setVibeWrapper} fullscreen/>
         ) }
       </>

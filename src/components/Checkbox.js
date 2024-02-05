@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import './checkbox.css';
+import '../css/checkbox.css';
 
 export function Checkbox({ color, active, onClick }) {
   const checkboxRef = useRef(null);

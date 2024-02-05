@@ -3,8 +3,8 @@ import { useMemo, useRef } from "react";
 
 import * as THREE from "three";
 
-import vertexShader from "!!raw-loader!./shaders/vertex.glsl";
-import fragmentShader from "!!raw-loader!./shaders/fragment.glsl";
+import vertexShader from "!!raw-loader!../shaders/vertex.glsl";
+import fragmentShader from "!!raw-loader!../shaders/fragment.glsl";
 
 export function CustomGeometryParticles({ count }) {
   const radius = 2;

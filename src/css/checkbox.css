@@ -46,10 +46,10 @@ body {
     background-color:  #80C080;
   }
   .toggle-container.classy > .toggle-checkbox:checked + .toggle-track {
-    background-color: #9FA8DA;
+    background-color:  #EF5555;
   }
   .toggle-container.chill > .toggle-checkbox:checked + .toggle-track {
-    background-color: #EF5555;
+    background-color: #9FA8DA;
   }
   
   .toggle-thumb {
@@ -92,19 +92,19 @@ body {
   }
   /**Chill icons created by Freepik - Flaticon*/
   .toggle-container.rural .toggle-thumb::after{
-    background-image: url("./assets/rural.svg");
+    background-image: url("../assets/rural.svg");
   }
   /**Chill icons created by Freepik - Flaticon*/
   .toggle-container.chill .toggle-thumb::after{
-    background-image: url("./assets/chill.svg");
+    background-image: url("../assets/chill.svg");
   }
   /**City icons created by Eucalyp - Flaticon*/
   .toggle-container.urban .toggle-thumb::after{
-    background-image: url("./assets/urban.svg");
+    background-image: url("../assets/urban.svg");
   }
   /**Material Icon created by Google */
   .toggle-container.classy .toggle-thumb::after{
-    background-image: url("./assets/classy.svg");
+    background-image: url("../assets/classy.svg");
   }
   
   .toggle-container.rural > .toggle-checkbox:checked + .toggle-track > .toggle-thumb::after,

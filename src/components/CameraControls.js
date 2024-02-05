@@ -25,10 +25,14 @@ class OrbitControls extends ThreeOrbitControls {
 
 extend({ OrbitControls });
 
-export function CameraControls({ windowWidth, setScrollStarted, clickPoint, setClickPoint, setCloseUp, isDragging, setIframe1, setIframe2, closeUp}) {
+export function CameraControls({ mobileScroll, windowWidth, setScrollStarted, clickPoint, setClickPoint, setCloseUp, isDragging, setIframe1, setIframe2, closeUp}) {
   const [closeUpPosIndex, setCloseUpPosIndex] = useState(0);
   const [rotationPoint, setRotationPoint] = useState(new Vector3());
   const [patchCamera, setPatchCamera] = useState(true);
+  const [holderprogress, setProgress] = useState(0);
+  const currentPos = useRef(new Vector3());
+  const nextPos = useRef(new Vector3());
+  const newPos = useRef(new Vector3());
 
   const {
     camera,
@@ -78,33 +82,57 @@ export function CameraControls({ windowWidth, setScrollStarted, clickPoint, setC
     setRotationPoint(newRotationPoint);
   }, [closeUp, closeUpPosIndex, currentPosIndex]);
 
-useEffect(() => {
-  controls.current = new OrbitControls(camera, domElement);
-  let progress = 0;
-  const handleScroll = (event) => {
-      setScrollStarted(true);
-      setCloseUp(false);
-      setCloseUpPosIndex(8);
-      const scrollAmount = Math.abs(event.deltaY) * 0.001; 
-      progress += scrollAmount; 
-      const currentPos = new Vector3(...positions[currentPosIndex]);
-      const nextPos = new Vector3(...positions[(currentPosIndex + 1) % positions.length]);
-      const steps = (currentPosIndex >= 1 && currentPosIndex <= 3) ? 3 : 2;
-      const newPos = new Vector3().lerpVectors(currentPos, nextPos, Math.max(0, Math.min(1, progress / steps)));
-      camera.position.copy(newPos);
-        if (progress >= steps) {
-          progress = 0;
-          setCurrentPosIndex((currentPosIndex + 1) % positions.length);
-        } 
+  useEffect(() => {
+    if (mobileScroll) {
+      const event = { deltaY: 400 };
+      handleMobileScroll(event);
     }
+  }, [mobileScroll]);
 
-    domElement.addEventListener('wheel', handleScroll);
-
-    return () => {
-      controls.current.dispose();
-      domElement.removeEventListener('wheel', handleScroll);
-    };
-  }, [camera, domElement, currentPosIndex]);
+  const handleMobileScroll = (event) => {
+    setScrollStarted(true);
+    setCloseUp(false);
+    setCloseUpPosIndex(8);
+    const scrollAmount = Math.abs(event.deltaY) * 0.001; 
+    const newProgress = holderprogress + scrollAmount;
+    currentPos.current.set(...positions[currentPosIndex]);
+    nextPos.current.set(...positions[(currentPosIndex + 1) % positions.length]);
+    const steps = (currentPosIndex >= 1 && currentPosIndex <= 3) ? 3 : 2;
+    newPos.current.lerpVectors(currentPos.current, nextPos.current, Math.max(0, Math.min(1, newProgress / steps)));
+    camera.position.copy(newPos.current);
+    if (newProgress >= steps) {
+      setProgress(0);
+      setCurrentPosIndex((currentPosIndex + 1) % positions.length);
+    } else {
+      setProgress(newProgress);
+    }
+  }
+  
+  useEffect(() => {
+    controls.current = new OrbitControls(camera, domElement);
+    let progress = 0;
+    const handleScroll = (event) => {
+        setScrollStarted(true);
+        setCloseUp(false);
+        setCloseUpPosIndex(8);
+        const scrollAmount = Math.abs(event.deltaY) * 0.001; 
+        progress += scrollAmount; 
+        const currentPos = new Vector3(...positions[currentPosIndex]);
+        const nextPos = new Vector3(...positions[(currentPosIndex + 1) % positions.length]);
+        const steps = (currentPosIndex >= 1 && currentPosIndex <= 3) ? 3 : 2;
+        const newPos = new Vector3().lerpVectors(currentPos, nextPos, Math.max(0, Math.min(1, progress / steps)));
+        camera.position.copy(newPos);
+          if (progress >= steps) {
+            progress = 0;
+            setCurrentPosIndex((currentPosIndex + 1) % positions.length);
+          } 
+      }
+      domElement.addEventListener('wheel', handleScroll);
+      return () => {
+        controls.current.dispose();
+        domElement.removeEventListener('wheel', handleScroll);
+      };
+    }, [camera, domElement, currentPosIndex]);
 
   useEffect(() => {
     if(clickPoint){
@@ -134,9 +162,7 @@ useEffect(() => {
   useEffect(() => {
     camera.position.set(...positions[0]);
   },[]);
-
   return(null);
-  
 }
 
 

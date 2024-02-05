@@ -1,13 +1,13 @@
 import { useEffect, useRef } from 'react';
 
 import useSound from 'use-sound';
-import buttonClickSound from './assets/click.mp3';
+import buttonClickSound from '../assets/click.mp3';
+import segaSound from '../assets/sega.mp3';
 
-export function Sounds({ clickLight, clickCount, clickPoint, gltf }) {
+export function Sounds({ vibe, clickLight, clickCount, clickPoint }) {
     const [playActive] = useSound(buttonClickSound, { volume: 0.25 });
-
-    const meshRef = useRef();
-    const iframeRef = useRef();
+    const [playSega] = useSound(segaSound, {volume: 1})
+    
 
   useEffect(() => {
     playActive();
@@ -16,6 +16,9 @@ export function Sounds({ clickLight, clickCount, clickPoint, gltf }) {
   useEffect(() => {
     if(clickPoint && clickPoint !== 'Light_Control_Box' && clickPoint !== 'Music_Control_Box'){
       playActive(); 
+    }
+    if(vibe == 0 && clickPoint == "Cube009_2"){
+      playSega();
     }
   }, [clickPoint]);
   

@@ -17,8 +17,8 @@ const pointLightPositions = [
 
 const vibeToLight = [{ lightColor1: "#B68672", lightColor2: "#9E9149", lightColor3: "#E96929"},
  { lightColor1: "#869582", lightColor2: "#72979D", lightColor3: "#80C080"},
-  { lightColor1: "#8F909D", lightColor2: "#A28A9B", lightColor3: "#9FA8DA"},
-  { lightColor1: "#BA827F", lightColor2: "#B38A3C", lightColor3: "#EF5555"}]
+  { lightColor1: "#8F909D", lightColor2: "#A28A9B", lightColor3: "#f59b9b"},
+  { lightColor1: "#BA827F", lightColor2: "#B38A3C", lightColor3: "#7a87cc"}]
  
 export function Environment({ vibe, clickLight, lightIntensity, clickCount }) {
   

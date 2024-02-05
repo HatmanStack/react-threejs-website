@@ -134,7 +134,7 @@ export function Animations({windowWidth, scrollStarted, vibe, gltf, setIsDraggin
     <primitive
     scale={.15}
     object={nodes["Tball"]}
-    position={[5.12, 0.33, 2.16]}>
+    position={[5.11, 0.33, 2.145]}>
     <CustomGeometryParticles count={3000} /> 
     </primitive>
       <primitive

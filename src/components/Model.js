@@ -19,8 +19,8 @@ function useGLTFLoaderWithDRACO(path) {
 
 export default function Model({setClickPoint, setClickLight, setClickCount, setGLTF, closeUp}) {
   const [count, setCount] = useState(true);
-  const filePath = 'https://www.cg-portfolio.site/compressed.glb';
-  console.log(filePath);
+  //const filePath = 'https://www.cg-portfolio.site/compressed.glb';
+  const filePath = process.env.PUBLIC_URL + '/compressed.glb'
   const gltf = useGLTFLoaderWithDRACO(filePath);
   
   const videoRefs = meshNames.reduce((acc, name) => {
@@ -135,10 +135,10 @@ const lightNames = ["small_middle_left", "small_middle_right", "lamppost", "lamp
 const meshNames = ["Phone_Vocabulary_5", "Phone_Movies_5", "Phone_Looper_5", "Phone_Trachtenberg_5", "Phone_Italian_5", "Phone_Stocks"]
 
 const videoPaths = [
-  require("./assets/Vocabulary.mp4"),
-  require("./assets/Movies.mp4"),
-  require("./assets/Looper.mp4"),
-  require("./assets/Trachtenberg.mp4"),
-  require("./assets/Italian.mp4"),
-  require("./assets/Stocks.mp4"),
+  require("../assets/Vocabulary.mp4"),
+  require("../assets/Movies.mp4"),
+  require("../assets/Looper.mp4"),
+  require("../assets/Trachtenberg.mp4"),
+  require("../assets/Italian.mp4"),
+  require("../assets/Stocks.mp4"),
 ];
