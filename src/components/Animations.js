@@ -108,12 +108,13 @@ export function Animations({windowWidth, scrollStarted, vibe, gltf, setIsDraggin
       );
     })}
     {nodes && nodesList.map((node, index) => {
+      
       return (
         <animated.primitive
           key={node}
           scale={textSpring[index].scale}
           object={nodes[node]}
-          position={position[index]}
+          position={textPosition[index]}
           rotation={rotation[index]}
         />
       );
@@ -241,7 +242,7 @@ const navigationRotation = [
   [54.8, 3.1,14.7],
 ];
 
-const position = [
+const textPosition = [
   [-0.668423, 0.008689, 4.06791],
   [5.53658, -0.1, 2.3211],
   [4.66377, -0.1 , 2.61365 ],
