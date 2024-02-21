@@ -32,6 +32,9 @@
         "not op_mini all"
     ],
     "devDependencies": {
+        "eslint": ">=5.16.0",
+        "eslint-config-google": "^0.14.0",
+        "eslint-plugin-react": "^7.33.2",
         "raw-loader": "^4.0.2"
     }
 }

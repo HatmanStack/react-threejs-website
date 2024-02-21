@@ -1,7 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+/* eslint-disable max-len */
+/* eslint-disable react/prop-types */
+/* eslint-disable require-jsdoc */
+import React, {useEffect, useRef} from 'react';
 import '../css/checkbox.css';
 
-export function Checkbox({ color, active, onClick }) {
+export function Checkbox({color, active, onClick}) {
   const checkboxRef = useRef(null);
 
   useEffect(() => {
@@ -10,7 +13,7 @@ export function Checkbox({ color, active, onClick }) {
     };
 
     const checkbox = checkboxRef.current;
-    checkbox.addEventListener('click', detectToggleOnce, { once: true });
+    checkbox.addEventListener('click', detectToggleOnce, {once: true});
 
     return () => {
       checkbox.removeEventListener('click', detectToggleOnce);

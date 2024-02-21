@@ -1,70 +1,75 @@
-import { useState, useEffect, useRef } from 'react';
-import { useSpring, animated, useSprings} from '@react-spring/three';
-import { Html } from '@react-three/drei';
-import { useDrag } from '@use-gesture/react';
-import { CustomGeometryParticles } from './Lamp';
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable max-len */
+/* eslint-disable react/prop-types */
+/* eslint-disable require-jsdoc */
+import {useState, useEffect, useRef} from 'react';
+import {useSpring, animated, useSprings} from '@react-spring/three';
+import {Html} from '@react-three/drei';
+import {useDrag} from '@use-gesture/react';
+import {CustomGeometryParticles} from './Lamp';
 
 function useSliderSpring( slider, index, initialY, sliderPosition, setIsDragging, setLightIntensity) {
-  const [{ y }, set] = useSpring(() => ({ 
+  const [{y}, set] = useSpring(() => ({
     y: initialY,
     config: {
-      tension: 15, 
+      tension: 15,
       friction: 10,
     },
   }));
 
-  const bind = useDrag(({down, movement: [, my]}) => { 
-    let movementY = (-my * .001)  + sliderPosition[index][1];
+  const bind = useDrag(({down, movement: [, my]}) => {
+    const movementY = (-my * .001) + sliderPosition[index][1];
     const newY = down ? Math.min(Math.max(movementY, index === 7 ? .375 - 0.033 : .538 - 0.033),
      index === 7 ? .375 + 0.025 : .538 + 0.025) : sliderPosition[index][1];
-    set.start({ y: newY });
+    set.start({y: newY});
     setIsDragging(down);
     sliderPosition[index][1] = newY;
-    setLightIntensity({ sliderName: slider, intensity: newY });  
-  }, { filterTaps: true });
+    setLightIntensity({sliderName: slider, intensity: newY});
+  }, {filterTaps: true});
 
-  return { y, bind };
+  return {y, bind};
 }
 
 export function Animations({windowWidth, scrollStarted, vibe, gltf, setIsDragging, setLightIntensity, clickPoint, iframe1, iframe2, closeUp}) {
   const [nodes, setNodes] = useState();
   const [phoneClicked, setPhoneClicked] = useState();
   const position = windowWidth < 800 ? [-4.055, -2.7, -1.6] : [-4.055, -2.7, -1.6];
-  const className = windowWidth < 800 ? "arcadewrapper-small" : "arcadewrapper";
+  const className = windowWidth < 800 ? 'arcadewrapper-small' : 'arcadewrapper';
   const iframe1Ref = useRef(null);
   const iframe2Ref = useRef(null);
-   
-  useEffect(() => { 
-    if(nodes){
-      if(iframe1){
-        iframe1Ref.current.style.display = 'block'; 
-      }else {
-        iframe1Ref.current.style.display = 'none'; 
+
+  useEffect(() => {
+    if (nodes) {
+      if (iframe1) {
+        iframe1Ref.current.style.display = 'block';
+      } else {
+        iframe1Ref.current.style.display = 'none';
       }
-      if(iframe2){
+      if (iframe2) {
         iframe2Ref.current.style.display = 'block';
-      }else {
+      } else {
         iframe2Ref.current.style.display = 'none';
-      } 
+      }
     }
-  },[iframe1, iframe2]);
-  
- 
+  }, [iframe1, iframe2]);
+
+
   const textSpring = useSprings(nodesList.length, nodesList.map((node, index) => {
     const isMatch = phoneList.indexOf(phoneClicked) === index;
     return {
       scale: isMatch && closeUp ? [100, 100, 100] : [1, 1, 1],
-      config: { tension: 200, friction: 5 },
+      config: {tension: 200, friction: 5},
     };
   }));
 
   const navigationSpring = useSprings(instructionsList.length, instructionsList.map((node, index) => ({
-    scale: scrollStarted ? [0,0,0] : [1, 1, 1],
-    config: { tension: 280, friction: 60 },
+    scale: scrollStarted ? [0, 0, 0] : [1, 1, 1],
+    config: {tension: 280, friction: 60},
   })));
 
-  const sliderSpring = slidersList.map((slider, index) => 
-  useSliderSpring(slider, index, sliderPosition[index][1], sliderPosition, setIsDragging, setLightIntensity)
+  const sliderSpring = slidersList.map((slider, index) =>
+    useSliderSpring(slider, index, sliderPosition[index][1], sliderPosition, setIsDragging, setLightIntensity),
   );
 
   useEffect(() => {
@@ -75,90 +80,77 @@ export function Animations({windowWidth, scrollStarted, vibe, gltf, setIsDraggin
 
   useEffect(() => {
     if (gltf) {
-      const { nodes } = gltf;
+      const {nodes} = gltf;
       setNodes(nodes);
     }
   }, [gltf]);
 
-  
-
-  useEffect(() => {
-    if (nodes) {
-      const sliderPositions = slidersList.map((slider) => {
-        const mesh = nodes[slider];
-        return mesh ? mesh.position.toArray() : [0, 0, 0];
-      });
-    }
-    
-  }, [nodes, slidersList]);
-
   return (
     <>
-    {nodes && slidersList.map((slider, index) => {
-      return (
-        <animated.primitive
-          key={slider}
-          object={nodes[slider]}
-          {...sliderSpring[index].bind()}
-          position={sliderPosition[index]}
-          rotation={sliderRotation}
-          position-y={sliderSpring[index].y}
-          scale={sliderScale}
-        />
-      );
-    })}
-    {nodes && nodesList.map((node, index) => {
-      
-      return (
-        <animated.primitive
-          key={node}
-          scale={textSpring[index].scale}
-          object={nodes[node]}
-          position={textPosition[index]}
-          rotation={rotation[index]}
-        />
-      );
-    })}
-    {nodes && instructionsList.map((node, index) => {
-      return (
-        <animated.primitive
-          key={node}
-          scale={navigationSpring[index].scale}
-          object={nodes[node]}
-          position={navigationPosition[index]}
-          rotation={navigationRotation[index]}
-        />
-      );
-    })}
-    {nodes &&    
+      {nodes && slidersList.map((slider, index) => {
+        return (
+          <animated.primitive
+            key={slider}
+            object={nodes[slider]}
+            {...sliderSpring[index].bind()}
+            position={sliderPosition[index]}
+            rotation={sliderRotation}
+            position-y={sliderSpring[index].y}
+            scale={sliderScale}
+          />
+        );
+      })}
+      {nodes && nodesList.map((node, index) => {
+        return (
+          <animated.primitive
+            key={node}
+            scale={textSpring[index].scale}
+            object={nodes[node]}
+            position={textPosition[index]}
+            rotation={rotation[index]}
+          />
+        );
+      })}
+      {nodes && instructionsList.map((node, index) => {
+        return (
+          <animated.primitive
+            key={node}
+            scale={navigationSpring[index].scale}
+            object={nodes[node]}
+            position={navigationPosition[index]}
+            rotation={navigationRotation[index]}
+          />
+        );
+      })}
+      {nodes &&
     <>
-    <primitive
-    scale={.15}
-    object={nodes["Tball"]}
-    position={[5.11, 0.33, 2.145]}>
-    <CustomGeometryParticles count={3000} /> 
-    </primitive>
+      <primitive
+        scale={.15}
+        object={nodes['Tball']}
+        position={[5.11, 0.33, 2.145]}>
+        <CustomGeometryParticles count={3000} />
+      </primitive>
       <primitive
         key="zelda_screen"
-        object={nodes["zelda_screen"]}
-        >
-        <Html className={className} position={position}  transform distanceFactor={1.16} >
-        <div className="arcade">
-          <iframe ref={iframe1Ref} src={vibeURLs[vibe].iframe1}  />
+        object={nodes['zelda_screen']}
+      >
+        <Html className={className} position={position} transform distanceFactor={1.16} >
+          <div className="arcade">
+            <iframe ref={iframe1Ref} src={vibeURLs[vibe].iframe1} />
           </div>
         </Html>
       </primitive>
       <primitive
         key="music_screen"
-        object={nodes["music_screen"]}>
+        object={nodes['music_screen']}>
         <Html className="musicwrapper" position={[-.073, -.145, -.01]} transform distanceFactor={1.16} >
-        <div className="music">
-          <iframe ref={iframe2Ref} src={vibeURLs[vibe].iframe2} allow="autoplay" title="description"  />
+          <div className="music">
+            <iframe ref={iframe2Ref} src={vibeURLs[vibe].iframe2} allow="autoplay" title="description" />
           </div>
         </Html>
       </primitive>
-      </>
-    }
+    </>
+      }
     </>
   );
 }
@@ -170,30 +162,30 @@ const slidersList = [
   'Slider_4',
   'Slider_5',
   'Slider_6',
-  'Slider_7'
-  ];
+  'Slider_7',
+];
 
 const instructionsList = [
   'text_navigate',
   'text_rotate',
   'text_scroll',
   'text_middle',
-  'text_click'
-]
+  'text_click',
+];
 
 const vibeURLs = [{
-  iframe1: "https://freesonic.org/",
-  iframe2: "https://www.youtube.com/embed/pCx5Std7mCo?autoplay=1&loop=1&mute=0"
-},{
-  iframe1: "https://freekong.org/",
-  iframe2: "https://www.youtube.com/embed/A3svABDnmio?autoplay=1&loop=1&mute=0"
-},{
-  iframe1: "https://freepacman.org/",
-  iframe2: "https://www.youtube.com/embed/JvNQLJ1_HQ0?autoplay=1&loop=1&mute=0"
-},{
-  iframe1: "https://freeasteroids.org/",
-  iframe2: "https://www.youtube.com/embed/6HbrymTIbyg?autoplay=1&loop=1&mute=0"
-}]
+  iframe1: 'https://freesonic.org/',
+  iframe2: 'https://www.youtube.com/embed/pCx5Std7mCo?autoplay=1&loop=1&mute=0',
+}, {
+  iframe1: 'https://freekong.org/',
+  iframe2: 'https://www.youtube.com/embed/A3svABDnmio?autoplay=1&loop=1&mute=0',
+}, {
+  iframe1: 'https://freepacman.org/',
+  iframe2: 'https://www.youtube.com/embed/JvNQLJ1_HQ0?autoplay=1&loop=1&mute=0',
+}, {
+  iframe1: 'https://freeasteroids.org/',
+  iframe2: 'https://www.youtube.com/embed/6HbrymTIbyg?autoplay=1&loop=1&mute=0',
+}];
 
 
 const nodesList = [
@@ -201,21 +193,21 @@ const nodesList = [
   'Phone_Vocabulary_Text',
   'Phone_Italian_Text',
   'Phone_Trachtenberg_Text',
-  'Phone_Movies_Text'
+  'Phone_Movies_Text',
 ];
 
 const phoneList = [
-"Phone_Looper_5" ,
-"Phone_Vocabulary_5",
-"Phone_Italian_5", 
-"Phone_Trachtenberg_5",
-"Phone_Movies_5"
-]
+  'Phone_Looper_5',
+  'Phone_Vocabulary_5',
+  'Phone_Italian_5',
+  'Phone_Trachtenberg_5',
+  'Phone_Movies_5',
+];
 
 const sliderRotation = [7.36, 0, 0];
 const sliderScale = [.5, .5, .5];
 
-let sliderPosition = [
+const sliderPosition = [
   [.837, 0.538, 3.986],
   [.867, 0.538, 3.986],
   [.897, 0.538, 3.986],
@@ -223,7 +215,7 @@ let sliderPosition = [
   [.954, 0.538, 3.986],
   [.9841, 0.538, 3.986],
   [1.031, 0.538, 3.986],
-  [.893, 0.375, 3.986]
+  [.893, 0.375, 3.986],
 ];
 
 const navigationPosition = [
@@ -235,17 +227,17 @@ const navigationPosition = [
 ];
 
 const navigationRotation = [
-  [54.8, 3,14.7],
-  [54.8, 3.01,14.7],
-  [54.8, 3.04,14.7],
-  [54.8, 3.07,14.7],
-  [54.8, 3.1,14.7],
+  [54.8, 3, 14.7],
+  [54.8, 3.01, 14.7],
+  [54.8, 3.04, 14.7],
+  [54.8, 3.07, 14.7],
+  [54.8, 3.1, 14.7],
 ];
 
 const textPosition = [
   [-0.668423, 0.008689, 4.06791],
   [5.53658, -0.1, 2.3211],
-  [4.66377, -0.1 , 2.61365 ],
+  [4.66377, -0.1, 2.61365],
   [0.71, 0.03, 3.79],
   [4.73, -0.1, 1.83],
 ];
