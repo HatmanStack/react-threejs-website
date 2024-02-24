@@ -31,7 +31,7 @@ function useSliderSpring( slider, index, initialY, sliderPosition, setIsDragging
   return {y, bind};
 }
 
-export function Animations({windowWidth, scrollStarted, vibe, gltf, setIsDragging, setLightIntensity, clickPoint, iframe1, iframe2, closeUp}) {
+export function Animations({setPlayer, windowWidth, scrollStarted, vibe, gltf, setIsDragging, setLightIntensity, clickPoint, iframe1, iframe2, closeUp}) {
   const [nodes, setNodes] = useState();
   const [phoneClicked, setPhoneClicked] = useState();
   const position = windowWidth < 800 ? [-4.055, -2.7, -1.6] : [-4.055, -2.7, -1.6];
@@ -85,6 +85,21 @@ export function Animations({windowWidth, scrollStarted, vibe, gltf, setIsDraggin
     }
   }, [gltf]);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://www.youtube.com/iframe_api';
+    document.body.appendChild(script);
+
+    window.onYouTubeIframeAPIReady = () => {
+      const playerInstance = new window.YT.Player(iframe2Ref.current, {
+        videoId: vibeURLs[vibe].srcID,
+      });
+      setPlayer(playerInstance);
+    };
+  }, []);
+
+  
+
   return (
     <>
       {nodes && slidersList.map((slider, index) => {
@@ -136,16 +151,17 @@ export function Animations({windowWidth, scrollStarted, vibe, gltf, setIsDraggin
       >
         <Html className={className} position={position} transform distanceFactor={1.16} >
           <div className="arcade">
-            <iframe ref={iframe1Ref} src={vibeURLs[vibe].iframe1} />
+            <iframe ref={iframe1Ref} src={vibeURLs[vibe].iframe1 } allow="muted"/>
           </div>
         </Html>
       </primitive>
+      
       <primitive
         key="music_screen"
         object={nodes['music_screen']}>
         <Html className="musicwrapper" position={[-.073, -.145, -.01]} transform distanceFactor={1.16} >
           <div className="music">
-            <iframe ref={iframe2Ref} src={vibeURLs[vibe].iframe2} allow="autoplay" title="description" />
+            <iframe ref={iframe2Ref} id="player" src={vibeURLs[vibe].iframe2} allow="autoplay" title="description" />
           </div>
         </Html>
       </primitive>
@@ -174,17 +190,21 @@ const instructionsList = [
 ];
 
 const vibeURLs = [{
-  iframe1: 'https://freesonic.org/',
-  iframe2: 'https://www.youtube.com/embed/pCx5Std7mCo?autoplay=1&loop=1&mute=0',
-}, {
-  iframe1: 'https://freekong.org/',
-  iframe2: 'https://www.youtube.com/embed/A3svABDnmio?autoplay=1&loop=1&mute=0',
+  iframe1: 'https://freepacman.org/',
+  iframe2: 'https://www.youtube.com/embed/pCx5Std7mCo?enablejsapi=1&autoplay=1&loop=1&mute=0',
+  srcID: 'pCx5Std7mCo'
 }, {
   iframe1: 'https://freepacman.org/',
-  iframe2: 'https://www.youtube.com/embed/JvNQLJ1_HQ0?autoplay=1&loop=1&mute=0',
+  iframe2: 'https://www.youtube.com/embed/A3svABDnmio?enablejsapi=1&autoplay=1&loop=1&mute=0',
+  srcID: 'A3svABDnmio'
 }, {
-  iframe1: 'https://freeasteroids.org/',
-  iframe2: 'https://www.youtube.com/embed/6HbrymTIbyg?autoplay=1&loop=1&mute=0',
+  iframe1: 'https://freepacman.org/',
+  iframe2: 'https://www.youtube.com/embed/JvNQLJ1_HQ0?enablejsapi=1&autoplay=1&loop=1&mute=0',
+  srcID: 'JvNQLJ1_HQ0'
+}, {
+  iframe1: 'https://freepacman.org/',
+  iframe2: 'https://www.youtube.com/embed/6HbrymTIbyg?enablejsapi=1&autoplay=1&loop=1&mute=0',
+  srcID: '6HbrymTIbyg'
 }];
 
 

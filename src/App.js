@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
+// Portfolio Inspired by Jesse Resse and his portfolio at https://jessereese.com/
 import React, {Suspense, useState, useEffect, useRef} from 'react';
 import {Canvas} from '@react-three/fiber';
 import {Environment} from './components/Environment';
@@ -10,7 +11,8 @@ import {Animations} from './components/Animations';
 import {Sounds} from './components/Sounds';
 import {LaunchScreen} from './components/LaunchScreen';
 import handGif from './assets/hand.gif';
-
+import volumeUp from './assets/volume_up.svg';
+import mute from './assets/volume_mute.svg';
 
 export default function App() {
   const [clickPoint, setClickPoint] = useState(null);
@@ -26,65 +28,28 @@ export default function App() {
   const [scrollStarted, setScrollStarted] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [mobileScroll, setMobileScroll] = useState(null);
+  const [player, setPlayer] = useState(null);
+  const [isMuted, setIsMuted] = useState(false);
   const navigateButtonRef = useRef(null);
-  const setClickCountWrapper = (x) =>{
-    setClickCount(x);
-  };
-  const setClickLightWrapper = (x) =>{
-    setClickLight(x);
-  };
-  const setClickPointWrapper = (x) =>{
-    setClickPoint(x);
-  };
-  const setCloseUpWrapper = (x) =>{
-    setCloseUp(x);
-  };
-  const setGLTFWrapper = (x) =>{
-    setGLTF(x);
-  };
-  const setIsDraggingWrapper = (x) =>{
-    setIsDragging(x);
-  };
-  const setLightIntensityWrapper = (x) =>{
-    setLightIntensity(x);
-  };
-  const setIframe1Wrapper = (x) =>{
-    setIframe1(x);
-  };
-  const setIframe2Wrapper = (x) =>{
-    setIframe2(x);
-  };
-  const setVibeWrapper = (x) =>{
-    setVibe(x);
-  };
-  const setScrollStartedWrapper = (x) =>{
-    setScrollStarted(x);
-  };
+  const muteButtonRef = useRef(null);
+  
 
   useEffect(() => {
-    if (vibe !== null && navigateButtonRef.current) {
-      switch (vibe) {
-        case '0':
-          navigateButtonRef.current.style.setProperty('--active-color', '#E96929');
-          navigateButtonRef.current.style.setProperty('--rest-color', '#B68672');
-          break;
-        case '1':
-          navigateButtonRef.current.style.setProperty('--active-color', '#80C080');
-          navigateButtonRef.current.style.setProperty('--rest-color', '#869582');
-          break;
-        case '2':
-          navigateButtonRef.current.style.setProperty('--active-color', '#EF5555');
-          navigateButtonRef.current.style.setProperty('--rest-color', '#f38484');
-          break;
-        case '3':
-          navigateButtonRef.current.style.setProperty('--active-color', '#9FA8DA');
-          navigateButtonRef.current.style.setProperty('--rest-color', '#8F909D');
-          break;
-        default:
-          navigateButtonRef.current.style.setProperty('--hover-color', '#B68672');
-          navigateButtonRef.current.style.setProperty('--rest-color', '#E96929');
-          break;
-      }
+    if (vibe !== null && navigateButtonRef.current && muteButtonRef.current) {
+      const colorMap = {
+        '0': { active: '#E96929', rest: '#B68672' },
+        '1': { active: '#80C080', rest: '#869582' },
+        '2': { active: '#EF5555', rest: '#f38484' },
+        '3': { active: '#9FA8DA', rest: '#8F909D' },
+        'default': { active: '#B68672', rest: '#E96929' }
+      };
+  
+      const colors = colorMap[vibe] || colorMap['default'];
+  
+      [navigateButtonRef.current, muteButtonRef.current].forEach(button => {
+        button.style.setProperty('--active-color', colors.active);
+        button.style.setProperty('--rest-color', colors.rest);
+      });
     }
   }, [vibe]);
 
@@ -97,6 +62,17 @@ export default function App() {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  const handleMute = () => {
+    if (player && player.isMuted() === false) {
+      player.mute(); 
+      setIsMuted(true);
+    }
+    if (player && player.isMuted() === true) {
+      player.unMute();
+      setIsMuted(false);
+    }
+  };
 
   const {progress} = useProgress();
 
@@ -137,12 +113,12 @@ export default function App() {
           <div className="button-container">
             <Canvas>
               <Sounds vibe={vibe} clickLight={clickLight} clickCount={clickCount} clickPoint={clickPoint}/>
-              <Model setClickPoint={setClickPointWrapper} setClickLight={setClickLightWrapper} setClickCount={setClickCountWrapper}
-                setGLTF={setGLTFWrapper} setIsDragging={setIsDraggingWrapper} closeUp={closeUp}/>
-              <CameraControls mobileScroll={mobileScroll} windowWidth={windowWidth} setScrollStarted={setScrollStartedWrapper} clickPoint={clickPoint} setClickPoint={setClickPointWrapper} setCloseUp={setCloseUpWrapper} isDragging={isDragging}
-                setIframe1={setIframe1Wrapper} setIframe2={setIframe2Wrapper} closeUp={closeUp} />
+              <Model setClickPoint={setClickPoint} setClickLight={setClickLight} setClickCount={setClickCount}
+                setGLTF={setGLTF} setIsDragging={setIsDragging} closeUp={closeUp}/>
+              <CameraControls mobileScroll={mobileScroll} windowWidth={windowWidth} setScrollStarted={setScrollStarted} clickPoint={clickPoint} setClickPoint={setClickPoint} setCloseUp={setCloseUp} isDragging={isDragging}
+                setIframe1={setIframe1} setIframe2={setIframe2} closeUp={closeUp} />
               <Environment vibe={vibe} clickLight={clickLight} lightIntensity={lightIntensity} clickCount={clickCount}/>
-              <Animations windowWidth={windowWidth} scrollStarted={scrollStarted} vibe={vibe} gltf={gltf} setIsDragging={setIsDraggingWrapper} setLightIntensity={setLightIntensityWrapper}
+              <Animations setPlayer={setPlayer} windowWidth={windowWidth} scrollStarted={scrollStarted} vibe={vibe} gltf={gltf} setIsDragging={setIsDragging} setLightIntensity={setLightIntensity}
                 clickPoint={clickPoint} iframe1={iframe1} iframe2={iframe2} closeUp={closeUp}/>
             </Canvas>
             <button className="navigate"
@@ -151,10 +127,18 @@ export default function App() {
               onMouseDown={handleStart}
               onTouchStart={handleStart}
             />
+            <button className="mute"
+              ref={muteButtonRef}
+              style={{opacity: progress < 100 ? 0 : 1,
+                backgroundImage: `url(${isMuted ? mute : volumeUp})`,
+                backgroundColor: `var(${isMuted ? '--rest-color': '--active-color'})`
+              }}
+              onClick={handleMute}
+              />
           </div>
         </Suspense>
            ):(
-            <LaunchScreen windowWidth={windowWidth} setVibe={setVibeWrapper} fullscreen/>
+            <LaunchScreen windowWidth={windowWidth} setVibe={setVibe} fullscreen/>
         ) }
     </>
   );

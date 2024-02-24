@@ -23,7 +23,7 @@ function useGLTFLoaderWithDRACO(path) {
 export default function Model({setClickPoint, setClickLight, setClickCount, setGLTF, closeUp}) {
   const [count, setCount] = useState(true);
   const filePath = 'https://www.cg-portfolio.site/compressed.glb';
-  // const filePath = process.env.PUBLIC_URL + '/compressed.glb';
+  //const filePath = process.env.PUBLIC_URL + '/compressed.glb';
   const gltf = useGLTFLoaderWithDRACO(filePath);
 
   const videoRefs = meshNames.reduce((acc, name) => {
