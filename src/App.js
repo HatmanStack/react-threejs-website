@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
-// Portfolio Inspired by Jesse Resse and his portfolio at https://jessereese.com/
+// Inspired by https://jesse-zhou.com/
 import React, {Suspense, useState, useEffect, useRef} from 'react';
 import {Canvas} from '@react-three/fiber';
 import {Environment} from './components/Environment';

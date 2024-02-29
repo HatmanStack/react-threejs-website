@@ -24,6 +24,7 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setG
   const [count, setCount] = useState(true);
   const filePath = 'https://www.cg-portfolio.site/compressed.glb';
   //const filePath = process.env.PUBLIC_URL + '/compressed.glb';
+  //google data analytics tag
   const gltf = useGLTFLoaderWithDRACO(filePath);
 
   const videoRefs = meshNames.reduce((acc, name) => {
