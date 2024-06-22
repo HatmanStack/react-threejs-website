@@ -1,17 +1,18 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import * as THREE from 'three';
-import {useThree} from '@react-three/fiber';
-import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
-import {useGLTF} from '@react-three/drei';
-import {DRACOLoader} from 'three/examples/jsm/loaders/DRACOLoader';
+import { useThree } from '@react-three/fiber';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { useGLTF } from '@react-three/drei';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+
 
 function useGLTFLoaderWithDRACO(path) {
   useThree();
   const dracoLoader = new DRACOLoader();
-  dracoLoader.setDecoderConfig({type: 'js'});
+  dracoLoader.setDecoderConfig({ type: 'js' });
   dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
   const loader = new GLTFLoader();
   loader.setDRACOLoader(dracoLoader);
@@ -20,10 +21,10 @@ function useGLTFLoaderWithDRACO(path) {
   return gltf;
 }
 
-export default function Model({setClickPoint, setClickLight, setClickCount, setGLTF, closeUp}) {
+export default function Model({ setClickPoint, setClickLight, setClickCount, setGLTF, closeUp }) {
   const [count, setCount] = useState(true);
   //const filePath = 'https://www.cg-portfolio.site/compressed.glb';
-  const filePath = process.env.PUBLIC_URL + '/compressed.glb';
+  const filePath = process.env.PUBLIC_URL + 'compressed.glb';
   //google data analytics tag
   const gltf = useGLTFLoaderWithDRACO(filePath);
 
@@ -34,42 +35,43 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setG
 
   useEffect(() => {
     if (gltf) {
-      for (let i = 0; i < meshNames.length; i++) {
-        const objectPositions = {};
-        gltf.scene.traverse((node) => {
-          objectPositions[node.name] = node.position.clone();
-          if (node.isMesh && node.name === meshNames[i]) {
-            const video = videoRefs[meshNames[i]].current = document.createElement('video');
-            video.src = videoPaths[i];
-            video.loop = true;
-            video.muted = true;
-            video.play();
-            const videoTexture = new THREE.VideoTexture(video);
-            videoTexture.wrapS = THREE.RepeatWrapping;
-            videoTexture.repeat.x = -1;
-            node.material.map = videoTexture;
-            node.material.needsUpdate = true;
-          }
-          if (node.name == 'Base') {
-            const circle = node.children.find((child) => child.name === 'Circle_1');
-            if (circle) {
-              const material = circle.material;
-              if (material && material.name === 'Glass1.002') {
-                material.transparent = true;
+
+      gltf.scene.traverse((node) => {
+        if (node) {
+          for (let i = 0; i < meshNames.length; i++) {
+            if (node.isMesh && node.name === meshNames[i]) {
+
+              const video = videoRefs[meshNames[i]].current = document.createElement('video');
+              video.src = videoPaths[i];
+              video.loop = true;
+              video.muted = true;
+              video.play();
+              const videoTexture = new THREE.VideoTexture(video);
+              videoTexture.wrapS = THREE.RepeatWrapping;
+              videoTexture.repeat.x = -1;
+              node.material.map = videoTexture;
+              node.material.needsUpdate = true;
+            }
+            if (node.name == 'Base') {
+              const circle = node.children.find((child) => child.name === 'Circle_1');
+              if (circle) {
+                const material = circle.material;
+                if (material && material.name === 'Glass1.002') {
+                  material.transparent = true;
+                }
               }
             }
           }
+        }
+      });
 
-        });
-        console.log(objectPositions);
-      }
-      
       setGLTF(gltf);
     }
   }, [gltf]);
 
   const handleClick = (event) => {
     const signName = event.object.name;
+
     if (urlMap[signName]) {
       setClickCount((prevCount) => prevCount + 1);
       window.open(urlMap[signName], '_blank');
@@ -101,7 +103,6 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setG
     </>);
 }
 
-
 const closeUpClickThrough = 2; // How many times to click before opening the link
 
 const urlMap = {
@@ -119,14 +120,14 @@ const urlMap = {
 };
 
 const phoneUrls = [
-  {'signName': ['Phone_Stocks', 'Phone_Stocks_Text'], 'url': 'https://www.gemenielabs.com/#stocks'},
-  {'signName': ['Phone_Vocabulary_5', 'Phone_Vocabulary_Text'], 'url': 'https://www.gemenielabs.com/#vocabulary'},
-  {'signName': ['Phone_Movies_5', 'Phone_Movies_Text'], 'url': 'https://www.gemenielabs.com/#movies'},
-  {'signName': ['Phone_Trachtenberg_5', 'Phone_Trachtenberg_Text'], 'url': 'https://www.gemenielabs.com/#trachtenberg'},
-  {'signName': ['Phone_Italian_5', 'Phone_Italian_Text'], 'url': 'https://www.gemenielabs.com/#italian'},
-  {'signName': ['Phone_Looper_5', 'Phone_Looper_Text'], 'url': 'https://www.gemenielabs.com/#looper'},
-  {'signName': ['Cube009_2'], 'url': ''},
-  {'signName': ['Music_Control_Box', 'Light_Control_Box'], 'url': 'https://www.google.com'},
+  { 'signName': ['Phone_Stocks', 'Phone_Stocks_Text'], 'url': 'https://www.gemenielabs.com/#stocks' },
+  { 'signName': ['Phone_Vocabulary_5', 'Phone_Vocabulary_Text'], 'url': 'https://www.gemenielabs.com/#vocabulary' },
+  { 'signName': ['Phone_Movies_5', 'Phone_Movies_Text'], 'url': 'https://www.gemenielabs.com/#movies' },
+  { 'signName': ['Phone_Trachtenberg_5', 'Phone_Trachtenberg_Text'], 'url': 'https://www.gemenielabs.com/#trachtenberg' },
+  { 'signName': ['Phone_Italian_5', 'Phone_Italian_Text'], 'url': 'https://www.gemenielabs.com/#italian' },
+  { 'signName': ['Phone_Looper_5', 'Phone_Looper_Text'], 'url': 'https://www.gemenielabs.com/#looper' },
+  { 'signName': ['Cube009_2'], 'url': '' },
+  { 'signName': ['Music_Control_Box', 'Light_Control_Box'], 'url': 'https://www.google.com' },
 ];
 
 const lightNames = ['small_middle_left', 'small_middle_right', 'lamppost', 'lamp_back', 'lamp_front', 'small_right', 'small_left', 'Button_Light_1',

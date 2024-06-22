@@ -3,14 +3,14 @@
 /* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 /* eslint-disable require-jsdoc */
-import {useState, useEffect, useRef} from 'react';
-import {useSpring, animated, useSprings} from '@react-spring/three';
-import {Html} from '@react-three/drei';
-import {useDrag} from '@use-gesture/react';
-import {CustomGeometryParticles} from './Lamp';
+import { useState, useEffect, useRef } from 'react';
+import { useSpring, animated, useSprings } from '@react-spring/three';
+import { Html } from '@react-three/drei';
+import { useDrag } from '@use-gesture/react';
+import { CustomGeometryParticles } from './Lamp';
 
-function useSliderSpring( slider, index, initialY, sliderPosition, setIsDragging, setLightIntensity) {
-  const [{y}, set] = useSpring(() => ({
+function useSliderSpring(slider, index, initialY, sliderPosition, setIsDragging, setLightIntensity) {
+  const [{ y }, set] = useSpring(() => ({
     y: initialY,
     config: {
       tension: 15,
@@ -18,20 +18,20 @@ function useSliderSpring( slider, index, initialY, sliderPosition, setIsDragging
     },
   }));
 
-  const bind = useDrag(({down, movement: [, my]}) => {
+  const bind = useDrag(({ down, movement: [, my] }) => {
     const movementY = (-my * .001) + sliderPosition[index][1];
     const newY = down ? Math.min(Math.max(movementY, index === 7 ? .375 - 0.033 : .538 - 0.033),
-     index === 7 ? .375 + 0.025 : .538 + 0.025) : sliderPosition[index][1];
-    set.start({y: newY});
+      index === 7 ? .375 + 0.025 : .538 + 0.025) : sliderPosition[index][1];
+    set.start({ y: newY });
     setIsDragging(down);
     sliderPosition[index][1] = newY;
-    setLightIntensity({sliderName: slider, intensity: newY});
-  }, {filterTaps: true});
+    setLightIntensity({ sliderName: slider, intensity: newY });
+  }, { filterTaps: true });
 
-  return {y, bind};
+  return { y, bind };
 }
 
-export function Animations({setPlayer, windowWidth, scrollStarted, vibe, gltf, setIsDragging, setLightIntensity, clickPoint, iframe1, iframe2, closeUp}) {
+export function Animations({ setPlayer, windowWidth, scrollStarted, vibe, gltf, setIsDragging, setLightIntensity, clickPoint, iframe1, iframe2, closeUp }) {
   const [nodes, setNodes] = useState();
   const [phoneClicked, setPhoneClicked] = useState();
   const position = windowWidth < 800 ? [-4.055, -2.7, -1.6] : [-4.055, -2.7, -1.6];
@@ -59,7 +59,7 @@ export function Animations({setPlayer, windowWidth, scrollStarted, vibe, gltf, s
     const isMatch = phoneList.indexOf(phoneClicked) === index;
     return {
       scale: isMatch && closeUp ? [100, 100, 100] : [1, 1, 1],
-      config: {tension: 200, friction: 5},
+      config: { tension: 200, friction: 5 },
     };
   }));
 
@@ -76,7 +76,7 @@ export function Animations({setPlayer, windowWidth, scrollStarted, vibe, gltf, s
 
   useEffect(() => {
     if (gltf) {
-      const {nodes} = gltf;
+      const { nodes } = gltf;
       setNodes(nodes);
     }
   }, [gltf]);
@@ -94,7 +94,7 @@ export function Animations({setPlayer, windowWidth, scrollStarted, vibe, gltf, s
     };
   }, []);
 
-  
+
 
   return (
     <>
@@ -122,36 +122,36 @@ export function Animations({setPlayer, windowWidth, scrollStarted, vibe, gltf, s
           />
         );
       })}
-      
+
       {nodes &&
-    <>
-      <primitive
-        scale={.15}
-        object={nodes['Tball']}
-        position={[5.11, 0.33, 2.145]}>
-        <CustomGeometryParticles count={3000} />
-      </primitive>
-      <primitive
-        key="zelda_screen"
-        object={nodes['zelda_screen']}
-      >
-        <Html className={className} position={position} transform distanceFactor={1.16} >
-          <div className="arcade">
-            <iframe ref={iframe1Ref} src={vibeURLs[vibe].iframe1 } allow="muted"/>
-          </div>
-        </Html>
-      </primitive>
-      
-      <primitive
-        key="music_screen"
-        object={nodes['music_screen']}>
-        <Html className="musicwrapper" position={[-.073, -.145, -.01]} transform distanceFactor={1.16} >
-          <div className="music">
-            <iframe ref={iframe2Ref} id="player" src={vibeURLs[vibe].iframe2} allow="autoplay" title="description" />
-          </div>
-        </Html>
-      </primitive>
-    </>
+        <>
+          <primitive
+            scale={.15}
+            object={nodes['Tball']}
+            position={[5.11, 0.33, 2.145]}>
+            <CustomGeometryParticles count={3000} />
+          </primitive>
+          <primitive
+            key="zelda_screen"
+            object={nodes['zelda_screen']}
+          >
+            <Html className={className} position={position} transform distanceFactor={1.16} >
+              <div className="arcade">
+                <iframe ref={iframe1Ref} src={vibeURLs[vibe].iframe1} allow="muted" />
+              </div>
+            </Html>
+          </primitive>
+
+          <primitive
+            key="music_screen"
+            object={nodes['music_screen']}>
+            <Html className="musicwrapper" position={[-.073, -.145, -.01]} transform distanceFactor={1.16} >
+              <div className="music">
+                <iframe ref={iframe2Ref} id="player" src={vibeURLs[vibe].iframe2} allow="autoplay" title="description" />
+              </div>
+            </Html>
+          </primitive>
+        </>
       }
     </>
   );

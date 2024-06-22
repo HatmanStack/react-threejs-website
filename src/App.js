@@ -1,15 +1,15 @@
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 // Inspired by https://jesse-zhou.com/
-import React, {Suspense, useState, useEffect, useRef} from 'react';
-import {Canvas} from '@react-three/fiber';
-import {Environment} from './components/Environment';
-import {useProgress} from '@react-three/drei';
+import React, { Suspense, useState, useEffect, useRef } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { Environment } from './components/Environment';
+import { useProgress } from '@react-three/drei';
 import Model from './components/Model';
-import {CameraControls} from './components/CameraControls';
-import {Animations} from './components/Animations';
-import {Sounds} from './components/Sounds';
-import {LaunchScreen} from './components/LaunchScreen';
+import { CameraControls } from './components/CameraControls';
+import { Animations } from './components/Animations';
+import { Sounds } from './components/Sounds';
+import { LaunchScreen } from './components/LaunchScreen';
 import handGif from './assets/hand.gif';
 import volumeUp from './assets/volume_up.svg';
 import mute from './assets/volume_mute.svg';
@@ -21,7 +21,7 @@ export default function App() {
   const [closeUp, setCloseUp] = useState(false);
   const [gltf, setGLTF] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [lightIntensity, setLightIntensity] = useState({sliderName: 'Slider_7', intensity: 10});
+  const [lightIntensity, setLightIntensity] = useState({ sliderName: 'Slider_7', intensity: 10 });
   const [iframe1, setIframe1] = useState(true);
   const [iframe2, setIframe2] = useState(true);
   const [vibe, setVibe] = useState(null);
@@ -32,7 +32,7 @@ export default function App() {
   const [isMuted, setIsMuted] = useState(false);
   const navigateButtonRef = useRef(null);
   const muteButtonRef = useRef(null);
-  
+
 
   useEffect(() => {
     if (vibe !== null && navigateButtonRef.current && muteButtonRef.current) {
@@ -43,9 +43,9 @@ export default function App() {
         '3': { active: '#9FA8DA', rest: '#8F909D' },
         'default': { active: '#B68672', rest: '#E96929' }
       };
-  
+
       const colors = colorMap[vibe] || colorMap['default'];
-  
+
       [navigateButtonRef.current, muteButtonRef.current].forEach(button => {
         button.style.setProperty('--active-color', colors.active);
         button.style.setProperty('--rest-color', colors.rest);
@@ -65,7 +65,7 @@ export default function App() {
 
   const handleMute = () => {
     if (player && player.isMuted() === false) {
-      player.mute(); 
+      player.mute();
       setIsMuted(true);
     }
     if (player && player.isMuted() === true) {
@@ -74,7 +74,7 @@ export default function App() {
     }
   };
 
-  const {progress} = useProgress();
+  const { progress } = useProgress();
 
   function Loader() {
     return (
@@ -93,8 +93,8 @@ export default function App() {
             textDecoration: 'none',
             transition: 'transform 0.3s ease-in-out',
           }}
-          onMouseEnter={(e) => e.target.style.transform = 'scale(2)'}
-          onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+            onMouseEnter={(e) => e.target.style.transform = 'scale(2)'}
+            onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
           >Gemenie Labs</a>
           <img src={handGif} width="250" />
           {Math.round(progress)} % loaded
@@ -112,36 +112,37 @@ export default function App() {
         (<Suspense fallback={<Loader />}>
           <div className="button-container">
             <Canvas>
-              <Sounds vibe={vibe} clickLight={clickLight} clickCount={clickCount} clickPoint={clickPoint}/>
+              <Sounds vibe={vibe} clickLight={clickLight} clickCount={clickCount} clickPoint={clickPoint} />
               <Model setClickPoint={setClickPoint} setClickLight={setClickLight} setClickCount={setClickCount}
-                setGLTF={setGLTF} setIsDragging={setIsDragging} closeUp={closeUp}/>
+                setGLTF={setGLTF} setIsDragging={setIsDragging} closeUp={closeUp} />
               <CameraControls mobileScroll={mobileScroll} windowWidth={windowWidth} setScrollStarted={setScrollStarted} clickPoint={clickPoint} setClickPoint={setClickPoint} setCloseUp={setCloseUp} isDragging={isDragging}
                 setIframe1={setIframe1} setIframe2={setIframe2} closeUp={closeUp} />
-              <Environment vibe={vibe} clickLight={clickLight} lightIntensity={lightIntensity} clickCount={clickCount}/>
+              <Environment vibe={vibe} clickLight={clickLight} lightIntensity={lightIntensity} clickCount={clickCount} />
               <Animations setPlayer={setPlayer} windowWidth={windowWidth} scrollStarted={scrollStarted} vibe={vibe} gltf={gltf} setIsDragging={setIsDragging} setLightIntensity={setLightIntensity}
-                clickPoint={clickPoint} iframe1={iframe1} iframe2={iframe2} closeUp={closeUp}/>
+                clickPoint={clickPoint} iframe1={iframe1} iframe2={iframe2} closeUp={closeUp} />
             </Canvas>
             <button className="navigate"
               ref={navigateButtonRef}
-              style={{opacity: progress < 100 ? 0 : 1, marginLeft: 20, marginBottom: 20}}
+              style={{ opacity: progress < 100 ? 0 : 1, marginLeft: 20, marginBottom: 20 }}
               onMouseDown={handleStart}
               onTouchStart={handleStart}
             />
             <button className="mute"
               ref={muteButtonRef}
-              style={{opacity: progress < 100 ? 0 : 1,
+              style={{
+                opacity: progress < 100 ? 0 : 1,
                 backgroundImage: `url(${isMuted ? mute : volumeUp})`,
-                backgroundColor: `var(${isMuted ? '--rest-color': '--active-color'})`,
-                marginTop:20,
-                marginRight:20,
+                backgroundColor: `var(${isMuted ? '--rest-color' : '--active-color'})`,
+                marginTop: 20,
+                marginRight: 20,
               }}
               onClick={handleMute}
-              />
+            />
           </div>
         </Suspense>
-           ):(
-            <LaunchScreen windowWidth={windowWidth} setVibe={setVibe} fullscreen/>
-        ) }
+        ) : (
+          <LaunchScreen windowWidth={windowWidth} setVibe={setVibe} fullscreen />
+        )}
     </>
   );
 }

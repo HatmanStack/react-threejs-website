@@ -1,15 +1,15 @@
 /* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 /* eslint-disable require-jsdoc */
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 
 import useSound from 'use-sound';
 import buttonClickSound from '../assets/click.mp3';
 import segaSound from '../assets/sega.mp3';
 
-export function Sounds({vibe, clickLight, clickCount, clickPoint}) {
-  const [playActive] = useSound(buttonClickSound, {volume: 0.25});
-  const [playSega] = useSound(segaSound, {volume: 1});
+export function Sounds({ vibe, clickLight, clickCount, clickPoint }) {
+  const [playActive] = useSound(buttonClickSound, { volume: 0.25 });
+  const [playSega] = useSound(segaSound, { volume: 1 });
 
 
   useEffect(() => {

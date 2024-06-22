@@ -3,15 +3,15 @@
 /* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 /* eslint-disable require-jsdoc */
-import {useFrame} from '@react-three/fiber';
-import {useMemo, useRef} from 'react';
+import { useFrame } from '@react-three/fiber';
+import { useMemo, useRef } from 'react';
 
 import * as THREE from 'three';
 
 import vertexShader from '!!raw-loader!../shaders/vertex.glsl';
 import fragmentShader from '!!raw-loader!../shaders/fragment.glsl';
 
-export function CustomGeometryParticles({count}) {
+export function CustomGeometryParticles({ count }) {
   const radius = 2;
 
   // This reference gives us direct access to our points
@@ -46,7 +46,7 @@ export function CustomGeometryParticles({count}) {
   }), []);
 
   useFrame((state) => {
-    const {clock} = state;
+    const { clock } = state;
 
     points.current.material.uniforms.uTime.value = clock.elapsedTime;
   });
