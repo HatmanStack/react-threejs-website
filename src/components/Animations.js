@@ -63,10 +63,6 @@ export function Animations({setPlayer, windowWidth, scrollStarted, vibe, gltf, s
     };
   }));
 
-  const navigationSpring = useSprings(instructionsList.length, instructionsList.map((node, index) => ({
-    scale: scrollStarted ? [0, 0, 0] : [1, 1, 1],
-    config: {tension: 280, friction: 60},
-  })));
 
   const sliderSpring = slidersList.map((slider, index) =>
     useSliderSpring(slider, index, sliderPosition[index][1], sliderPosition, setIsDragging, setLightIntensity),
@@ -126,17 +122,7 @@ export function Animations({setPlayer, windowWidth, scrollStarted, vibe, gltf, s
           />
         );
       })}
-      {nodes && instructionsList.map((node, index) => {
-        return (
-          <animated.primitive
-            key={node}
-            scale={navigationSpring[index].scale}
-            object={nodes[node]}
-            position={navigationPosition[index]}
-            rotation={navigationRotation[index]}
-          />
-        );
-      })}
+      
       {nodes &&
     <>
       <primitive
@@ -236,22 +222,6 @@ const sliderPosition = [
   [.9841, 0.538, 3.986],
   [1.031, 0.538, 3.986],
   [.893, 0.375, 3.986],
-];
-
-const navigationPosition = [
-  [5.019, -.307, 10.185],
-  [5.438, -.470, 11.318],
-  [5.802, -.598, 11.41],
-  [6.236, -.698, 11.951],
-  [6.415, -.809, 12.207],
-];
-
-const navigationRotation = [
-  [54.8, 3, 14.7],
-  [54.8, 3.01, 14.7],
-  [54.8, 3.04, 14.7],
-  [54.8, 3.07, 14.7],
-  [54.8, 3.1, 14.7],
 ];
 
 const textPosition = [

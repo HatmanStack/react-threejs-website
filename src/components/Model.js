@@ -22,8 +22,8 @@ function useGLTFLoaderWithDRACO(path) {
 
 export default function Model({setClickPoint, setClickLight, setClickCount, setGLTF, closeUp}) {
   const [count, setCount] = useState(true);
-  const filePath = 'https://www.cg-portfolio.site/compressed.glb';
-  //const filePath = process.env.PUBLIC_URL + '/compressed.glb';
+  //const filePath = 'https://www.cg-portfolio.site/compressed.glb';
+  const filePath = process.env.PUBLIC_URL + '/compressed.glb';
   //google data analytics tag
   const gltf = useGLTFLoaderWithDRACO(filePath);
 
@@ -35,7 +35,9 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setG
   useEffect(() => {
     if (gltf) {
       for (let i = 0; i < meshNames.length; i++) {
+        const objectPositions = {};
         gltf.scene.traverse((node) => {
+          objectPositions[node.name] = node.position.clone();
           if (node.isMesh && node.name === meshNames[i]) {
             const video = videoRefs[meshNames[i]].current = document.createElement('video');
             video.src = videoPaths[i];
@@ -57,8 +59,11 @@ export default function Model({setClickPoint, setClickLight, setClickCount, setG
               }
             }
           }
+
         });
+        console.log(objectPositions);
       }
+      
       setGLTF(gltf);
     }
   }, [gltf]);
@@ -103,11 +108,13 @@ const urlMap = {
   'text_name': 'https://www.gemenielabs.com/contact/',
   'Sign_About': 'https://www.gemenielabs.com/contact/',
   'Sign_Articles': 'https://medium.com/@HatmanStack',
+  'Sign_Github': 'https://github.com/HatmanStack',
+  'Sign_HuggingFace': 'https://huggingface.co/Hatman',
   'Sign_Privacy': 'https://www.gemenielabs.com/app-privacy-policy/',
   'Sign_Old': 'https://www.gemenielabs.com/',
   'logo_writersalmanac': 'https://d6d8ny9p8jhyg.cloudfront.net/',
-  'logo_nba': 'https://hatmanstack-streamlit-nba-app-dz3nxx.streamlit.app/',
-  'logo_hf': 'https://huggingface.co/spaces/Hatman/react-native-serve-ml',
+  'logo_nba': 'https://huggingface.co/spaces/Hatman/NBA-Fantasy-Game',
+  'logo_hf': 'https://huggingface.co/spaces/Hatman/pixel-prompt',
   'logo_google_forms': 'https://docs.google.com/forms/d/e/1FAIpQLSce94QihTjunjBvYzFdalz0mYGhVS6Ngy17uRrXkqLI_Da7nA/viewform',
 };
 

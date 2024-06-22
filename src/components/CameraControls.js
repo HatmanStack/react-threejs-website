@@ -30,7 +30,7 @@ extend({OrbitControls});
 export function CameraControls({mobileScroll, windowWidth, setScrollStarted, clickPoint, setClickPoint, setCloseUp, isDragging, setIframe1, setIframe2, closeUp}) {
   const [closeUpPosIndex, setCloseUpPosIndex] = useState(0);
   const [rotationPoint, setRotationPoint] = useState(new Vector3());
-  const [patchCamera, setPatchCamera] = useState(true);
+  const [cameraClone, setCameraClone] = useState(null);
   const [holderprogress, setProgress] = useState(0);
   const currentPos = useRef(new Vector3());
   const nextPos = useRef(new Vector3());
@@ -43,16 +43,13 @@ export function CameraControls({mobileScroll, windowWidth, setScrollStarted, cli
   const [currentPosIndex, setCurrentPosIndex] = useState(0);
   const controls = useRef();
 
-  if (patchCamera) {
-    camera.position.set(...positions[0]);
-    setPatchCamera(false);
-  }
-
+  
   useFrame(() => {
     if (controls.current) {
       controls.current.update();
       controls.current.target.copy(rotationPoint);
       controls.current.update();
+      
       if (camera.position.x > 1.78 && camera.position.y > 0 && camera.position.z > .25) {
         setIframe1(true);
       } else {
@@ -126,13 +123,19 @@ export function CameraControls({mobileScroll, windowWidth, setScrollStarted, cli
       setCloseUpPosIndex(8);
       const scrollAmount = Math.abs(event.deltaY) * 0.001;
       progress += scrollAmount;
-      const currentPos = new Vector3(...positions[currentPosIndex]);
+      let currentPos;
+      if(cameraClone) {
+        currentPos = cameraClone;
+      }else {
+        currentPos = new Vector3(...positions[currentPosIndex]);
+      }
       const nextPos = new Vector3(...positions[(currentPosIndex + 1) % positions.length]);
       const steps = (currentPosIndex >= 1 && currentPosIndex <= 3) ? 3 : 2;
       const newPos = new Vector3().lerpVectors(currentPos, nextPos, Math.max(0, Math.min(1, progress / steps)));
       camera.position.copy(newPos);
       if (progress >= steps) {
         progress = 0;
+        setCameraClone(null);
         setCurrentPosIndex((currentPosIndex + 1) % positions.length);
       }
     };
@@ -168,8 +171,42 @@ export function CameraControls({mobileScroll, windowWidth, setScrollStarted, cli
     }
   }, [closeUpPosIndex]);
 
+  const animateCameraPosition = (camera, targetPoint, arcCenter, radius, startAngle, endAngle, duration) => {
+    let startTime = null;
+    const vectorToTarget = new Vector3().subVectors(targetPoint, arcCenter);
+    const initialPosition = camera.position.clone();
+  
+    const animate = (time) => {
+      if (!startTime) startTime = time;
+      const elapsedTime = time - startTime;
+      const fraction = elapsedTime / duration;
+      setCameraClone(camera.position.clone());
+      if (fraction < 1) {
+        const angle = startAngle + (endAngle - startAngle) * fraction;
+        const x = arcCenter.y + radius * Math.cos(angle);
+        const z = arcCenter.z + radius * Math.sin(angle);
+        camera.position.z = x;
+        camera.position.y = z;
+        camera.lookAt(targetPoint);
+  
+        requestAnimationFrame(animate);
+      } 
+    };
+    
+    requestAnimationFrame(animate);
+  };
+
   useEffect(() => {
-    camera.position.set(...positions[0]);
+    const targetPoint = new Vector3(...rotationPoints[0]); 
+    const arcCenter = new Vector3(10, 15, 15);
+    const radius = 15; 
+    const startAngle = Math.PI / 2; 
+    const endAngle = Math.PI * 3 / 2;
+    const duration = 3000; 
+
+    if (camera) {
+      animateCameraPosition(camera, targetPoint, arcCenter, radius, startAngle, endAngle, duration);
+    }
   }, []);
   return (null);
 }

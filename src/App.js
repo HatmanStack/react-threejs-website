@@ -123,7 +123,7 @@ export default function App() {
             </Canvas>
             <button className="navigate"
               ref={navigateButtonRef}
-              style={{opacity: progress < 100 ? 0 : 1}}
+              style={{opacity: progress < 100 ? 0 : 1, marginLeft: 20, marginBottom: 20}}
               onMouseDown={handleStart}
               onTouchStart={handleStart}
             />
@@ -131,7 +131,9 @@ export default function App() {
               ref={muteButtonRef}
               style={{opacity: progress < 100 ? 0 : 1,
                 backgroundImage: `url(${isMuted ? mute : volumeUp})`,
-                backgroundColor: `var(${isMuted ? '--rest-color': '--active-color'})`
+                backgroundColor: `var(${isMuted ? '--rest-color': '--active-color'})`,
+                marginTop:20,
+                marginRight:20,
               }}
               onClick={handleMute}
               />
