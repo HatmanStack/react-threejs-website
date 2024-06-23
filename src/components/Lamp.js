@@ -3,13 +3,13 @@
 /* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 /* eslint-disable require-jsdoc */
-import { useFrame } from '@react-three/fiber';
-import { useMemo, useRef } from 'react';
+import { useFrame } from "@react-three/fiber";
+import { useMemo, useRef } from "react";
 
-import * as THREE from 'three';
+import * as THREE from "three";
 
-import vertexShader from '!!raw-loader!../shaders/vertex.glsl';
-import fragmentShader from '!!raw-loader!../shaders/fragment.glsl';
+import vertexShader from "!!raw-loader!../shaders/vertex.glsl";
+import fragmentShader from "!!raw-loader!../shaders/fragment.glsl";
 
 export function CustomGeometryParticles({ count }) {
   const radius = 2;
@@ -36,21 +36,23 @@ export function CustomGeometryParticles({ count }) {
     return positions;
   }, [count]);
 
-  const uniforms = useMemo(() => ({
-    uTime: {
-      value: 0.0,
-    },
-    uRadius: {
-      value: radius,
-    },
-  }), []);
+  const uniforms = useMemo(
+    () => ({
+      uTime: {
+        value: 0.0,
+      },
+      uRadius: {
+        value: radius,
+      },
+    }),
+    []
+  );
 
   useFrame((state) => {
     const { clock } = state;
 
     points.current.material.uniforms.uTime.value = clock.elapsedTime;
   });
-
 
   return (
     <points ref={points}>
@@ -71,7 +73,6 @@ export function CustomGeometryParticles({ count }) {
       />
     </points>
   );
-};
+}
 
 export default CustomGeometryParticles;
-
