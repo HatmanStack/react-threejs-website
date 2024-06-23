@@ -3,7 +3,7 @@
 A site written in React to showcase work from recent projects in 3D design with relevant links and art.  You can see the unfinished project [here](https://cg-portfolio.site/).
 
  <p align="center">
-    <td><img src="https://github.com/HatmanStack/pixel-prompt/blob/main/public/ez.gif" alt="Image 1"></td></p>
+    <td><img src="https://github.com/HatmanStack/react-threejs-website/blob/main/public/ez.gif" alt="Image 1"></td></p>
 
 ## Features
 
